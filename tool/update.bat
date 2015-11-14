@@ -5,8 +5,8 @@ echo ^>^>%UPDATE_ANNOUNCE1%
 echo;
 
 if exist "..\Archives\update" rmdir /s /q "..\Archives\update"
-.\curl.exe -o %UPD_PATH% -L %UPD_URL%
-if not exist %UPD_PATH% (
+.\curl.exe --connect-timeout 5 -f -o %UPD_PATH% -L %UPD_URL%
+if ERRORLEVEL 22 (
     echo;
     echo ^>^>%UPDATE_ERROR%
     echo;
@@ -20,10 +20,10 @@ move ..\Archives\tde* ..\Archives\update
 del ..\Archives\update\setting\user_setting.bat
 
 echo;
-xcopy /y /s ..\Archives\update\* ..\
+xcopy /y /s ..\Archives\update\* ..\ 2>nul
 
 echo;
-rmdir /s /q ..\Archives\update
+rmdir /s /q ..\Archives\update 2>nul
 
 echo;
 echo ^>^>%UPDATE_ANNOUNCE2%

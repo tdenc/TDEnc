@@ -151,7 +151,7 @@ set CANCEL_MESSAGE=シャットダウンをキャンセルしたわよ！
 
 rem tool_downloader.batのメッセージ
 set DOWNLOADER_TITLE=ちょっと！何も準備できてないじゃない。ほら、どきなさいよ！
-set DOWNLOADER_ANNOUNCE=必要なツールをダウンロードするわよ！
+set DOWNLOADER_ANNOUNCE=ツールをダウンロード・更新するわよ！
 set DOWNLOADER_QUESTION1=すべてのツールを全部自動で落とす？（y/n）
 set DOWNLOADER_QUESTION2=（自分で手動で落としたい場合はnよ）
 set NERO_LICENSE1=neroAacEnc.exeを使用するにはライセンスに同意が必要よ

@@ -9,9 +9,8 @@ echo;
 
 rem ################初期処理################
 if not exist ..\Archives mkdir ..\Archives
+if exist %X264_PATH% del %X264_PATH%
 call :file_check_sub
-
-if "%AVS%%DSS%%DIL%%FSS%%QTS%%MIF%%YDF%%A2P%%WVI%%NERO%%X264%"=="ttttttttttt" exit
 
 
 rem ################モード選択################
@@ -38,53 +37,56 @@ rem ################自動モード################
 :auto_mode_on
 if not "%AVS%"=="t" (
     echo ^>^>Avisynth
-    .\curl.exe -o %AVS_PATH% -L %AVS_URL%
+    .\curl.exe --connect-timeout 5 -f -o %AVS_PATH% -L %AVS_URL%
     echo;
 )
 if not "%DSS%"=="t" (
     echo ^>^>DirectShowSource
-    .\curl.exe -o %DSS_PATH% -L %DSS_URL%
+    .\curl.exe --connect-timeout 5 -f -o %DSS_PATH% -L %DSS_URL%
     echo;
 )
 if not "%DIL%"=="t" (
     echo ^>^>DevIL
-    .\curl.exe -o %DIL_PATH% -L %DIL_URL%
+    .\curl.exe --connect-timeout 5 -f -o %DIL_PATH% -L %DIL_URL%
     echo;
 )
 
 if not "%FSS%"=="t" (
     echo ^>^>FFMpegSource
-    .\curl.exe -o %FSS_PATH% -L %FSS_URL%
+    .\curl.exe --connect-timeout 5 -f -o %FSS_PATH% -L %FSS_URL%
     echo;
 )
 if not "%QTS%"=="t" (
     echo ^>^>QTSource
-    .\curl.exe -o %QTS_PATH% -L %QTS_URL%
+    .\curl.exe --connect-timeout 5 -f -o %QTS_PATH% -L %QTS_URL%
     echo;
 )
 if not "%MIF%"=="t" (
     echo ^>^>MediaInfo
-    .\curl.exe -o %MIF_PATH% -L %MIF_URL%
+    .\curl.exe --connect-timeout 5 -f -o %MIF_PATH% -L %MIF_URL%
     echo;
 )
 if not "%YDF%"=="t" (
     echo ^>^>Yadif
-    .\curl.exe -o %YDF_PATH% -L %YDF_URL%
+    .\curl.exe --connect-timeout 5 -f -o %YDF_PATH% -L %YDF_URL%
     echo;
 )
 if not "%A2P%"=="t" (
     echo ^>^>avs2pipe
-    .\curl.exe -o %A2P_PATH% -L %A2P_URL%
+    .\curl.exe --connect-timeout 5 -f -o %A2P_PATH% -L %A2P_URL%
     echo;
 )
 if not "%WVI%"=="t" (
     echo ^>^>wavi
-    .\curl.exe -o %WVI_PATH% -L %WVI_URL%
+    .\curl.exe --connect-timeout 5 -f -o %WVI_PATH% -L %WVI_URL%
     echo;
 )
 if not "%X264%"=="t" (
     echo ^>^>x264
-    .\curl.exe -o %X264_PATH% -L %X264_URL%
+    .\curl.exe --connect-timeout 5 -f -o %X264_PATH% -L %X264_URL%
+    if ERRORLEVEL 22 (
+        .\curl.exe --connect-timeout 5 -f -o %X264_PATH% -L %X264_S_URL%
+    )
     echo;
 )
 if "%NERO%"=="t" goto check
@@ -114,7 +116,7 @@ goto agree
 
 :agree_main
 echo ^>^>neroAacEnc
-.\curl.exe -o %NERO_PATH% -L %NERO_URL%
+.\curl.exe --connect-timeout 5 -f -o %NERO_PATH% -L %NERO_URL%
 echo;
 
 goto check
@@ -212,5 +214,5 @@ for %%i in (%NERO_PATH%) do if %%~zi EQU %NERO_SIZE% set NERO=t
 if not exist %X264_PATH% exit /b
 %X264_PATH% --version>"%TEMP_DIR%\x264_version.txt" 2>nul
 findstr /i "%X264_VERSION%" "%TEMP_DIR%\x264_version.txt">nul 2>&1
-if "%ERRORLEVEL%"=="0" set X264=t
+if ERRORLEVEL 0 set X264=t
 exit /b

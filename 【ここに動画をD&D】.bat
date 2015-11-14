@@ -8,11 +8,10 @@ title %TDENC_TITLE%
 rem ################ƒ†[ƒU[Ý’è“Ç‚Ýž‚Ý################
 call version.bat
 
-.\curl.exe -o tool_url.zip -L "http://bit.ly/sdELss" 2>nul
-.\7z.exe e -bd -y ".\tool_url.zip" "tool_url.bat" 1>nul 2>&1
-call tool_url.bat 1>nul 2>&1
-if not "%VER_PATH%"=="" (
+.\curl.exe --connect-timeout 5 -f -o tool_url.zip -L "http://bit.ly/sdELss" 2>nul
+if ERRORLEVEL 0 (
     set URL_PATH=".\tool_url.bat"
+    .\7z.exe e -bd -y ".\tool_url.zip" "tool_url.bat" 1>nul 2>&1
     copy /y tool_url.bat tool_url_bk.bat 1>nul 2>&1
 ) else (
     set URL_PATH=".\tool_url_bk.bat"
