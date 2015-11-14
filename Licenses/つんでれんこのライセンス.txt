@@ -1,0 +1,21 @@
+つんでれんこに関しては、再配布、同梱等含めご自由にどうぞ(特に制限することはありません)。
+ただし、同梱している7zip、MP4Box、JMPlayer、qtaacenc、DevIL、curlについては各ライセンス(同梱してあります)に従ってください。
+　7z.exe、7z.dll(Igor Pavlov、http://sevenzip.sourceforge.jp/ )
+　MP4Box.exe(Jean Le Feuver & ENST、http://kurtnoise.free.fr/ )
+　MP4Box patch(VFR maniac、http://www.esnips.com/web/VFRmaniac-Softwares )
+　player-viral.swf、swfobject.js（LongTail Video、http://www.longtailvideo.com/players/jw-flv-player/ ）
+　qtaacenc.exe（tmkk、http://tmkk.pv.land.to/qtaacenc/ ）
+　curl.exe(Daniel Stenberg、http://curl.haxx.se/ )
+
+
+また、以下のソフトに関しても各々のライセンスに従ってください。
+　Avisynth.dll(AviSynth developers、http://sourceforge.net/projects/avisynth2/ )
+　DirectShowSource.dll（AviSynth developers、http://sourceforge.net/projects/avisynth2/ ）
+　DevIL.dll（Denton Woods & Nicolas Weber & Meloni Dario、http://openil.sourceforge.net/ ）
+　FFMS2.dll(Myrsloik、http://code.google.com/p/ffmpegsource/ )
+　MediaInfo.dll、MediaInfo.exe(MediaArea.net SARL.、http://mediainfo.sourceforge.net/ )
+　yadif.dll(Fizick、http://avisynth.org.ru/yadif/yadif.html )
+　wavi.exe、silence.exe(Tamas Kurucsai、http://sourceforge.net/projects/wavi-avi2wav/ )
+　x264.exe(x264 team、http://www.videolan.org/developers/x264.html )
+　neroAacEnc.exe(Nero AG、http://www.nero.com/jpn/downloads-nerodigital-nero-aac-codec.php )
+※neroAacEnc.exe以外はソースも上記URLから取得できます。
