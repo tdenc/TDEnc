@@ -25,9 +25,16 @@ if "%COLORMATRIX%"=="BT.709" (
 ) else (
     set X264_COLORMATRIX=smpte170m
 )
+if "%FULL_RANGE%"=="off" (
+    set RANGE=tv
+) else if "%FULL_RANGE%"=="on" (
+    set RANGE=pc
+) else (
+    set RANGE=auto
+)
 if "%X264_VFR_ENC%"=="true" set X264_TIMECODE=--tcfile-in %X264_TC_FILE%
 
-set X264_COMMON=--fullrange %FULL_RANGE% -I %KEYINT% -i %MIN_KEYINT% --scenecut %SCENECUT% -b %BFRAMES% --b-adapt %B_ADAPT% --b-pyramid %B_PYRAMID% -r %REF% -B %V_BITRATE% --rc-lookahead %RC_LOOKAHEAD% --qpstep %QPSTEP% --aq-mode %AQ_MODE% --aq-strength %AQ_STRENGTH% --qcomp %QCOMP% --weightp %WEIGHTP% --me %ME% -m %SUBME% --psy-rd %PSY_RD% -t %TRELLIS% --threads %THREADS% --colormatrix %X264_COLORMATRIX% %X264_TIMECODE% %COMMON_MISC% %MISC% %VIDEO_AVS%
+set X264_COMMON=--range %RANGE% -I %KEYINT% -i %MIN_KEYINT% --scenecut %SCENECUT% -b %BFRAMES% --b-adapt %B_ADAPT% --b-pyramid %B_PYRAMID% -r %REF% -B %V_BITRATE% --rc-lookahead %RC_LOOKAHEAD% --qpstep %QPSTEP% --aq-mode %AQ_MODE% --aq-strength %AQ_STRENGTH% --qcomp %QCOMP% --weightp %WEIGHTP% --me %ME% -m %SUBME% --psy-rd %PSY_RD% -t %TRELLIS% --threads %THREADS% --colormatrix %X264_COLORMATRIX% %X264_TIMECODE% %COMMON_MISC% %MISC% %VIDEO_AVS%
 
 echo ^>^>%OPTION_SUCCESS%
 echo;

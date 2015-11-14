@@ -103,13 +103,22 @@ rem 264‚ÉƒGƒ“ƒR[ƒh
 rem ‚Ppassˆ—
 echo ^>^>‚Ppass–Ú`ô
 echo;
-.\x264.exe --fullrange %FULL_RANGE% -I 10 -i 10 --no-scenecut -b 0 -r 1 -f -1:-1 -B %V_BITRATE% --ipratio 1.0 --aq-mode 2 --aq-strength 0.70 -p 1 --stats TEMP\x264_2pass.log --qcomp 0.8 --direct auto --weightp 0 --me dia -m 1 -t 1 --no-fast-pskip --no-dct-decimate --threads 0 --thread-input --colormatrix smpte170m --quiet -o "nul" %VIDEO_AVS%
+
+if "%FULL_RANGE%"=="off" (
+    set RANGE=tv
+) else if "%FULL_RANGE%"=="on" (
+    set RANGE=pc
+) else (
+    set RANGE=auto
+)
+
+.\x264.exe --range %RANGE% -I 10 -i 10 --no-scenecut -b 0 -r 1 -f -1:-1 -B %V_BITRATE% --ipratio 1.0 --aq-mode 2 --aq-strength 0.70 -p 1 --stats TEMP\x264_2pass.log --qcomp 0.8 --direct auto --weightp 0 --me dia -m 1 -t 1 --no-fast-pskip --no-dct-decimate --threads 0 --thread-input --colormatrix smpte170m --quiet -o "nul" %VIDEO_AVS%
 echo;
 
 rem ‚Qpassˆ—
 echo ^>^>‚Qpass–Ú`ô
 echo;
-.\x264.exe --fullrange %FULL_RANGE% -I 10 -i 10 --no-scenecut -b 0 -r 1 -f -1:-1 -B %V_BITRATE% --ipratio 1.0 --aq-mode 2 --aq-strength 0.70 -p 2 --stats TEMP\x264_2pass.log --qcomp 0.8 --direct auto --weightp 0 --me dia -m 1 -t 1 --no-fast-pskip --no-dct-decimate --threads 0 --thread-input --colormatrix smpte170m --quiet -o %TEMP_264% %VIDEO_AVS%
+.\x264.exe --range %RANGE% -I 10 -i 10 --no-scenecut -b 0 -r 1 -f -1:-1 -B %V_BITRATE% --ipratio 1.0 --aq-mode 2 --aq-strength 0.70 -p 2 --stats TEMP\x264_2pass.log --qcomp 0.8 --direct auto --weightp 0 --me dia -m 1 -t 1 --no-fast-pskip --no-dct-decimate --threads 0 --thread-input --colormatrix smpte170m --quiet -o %TEMP_264% %VIDEO_AVS%
 echo;
 
 echo ^>^>%VIDEO_ENC_END%
@@ -130,7 +139,7 @@ if "%A_BITRATE%"=="0" (
 
 echo ^>^>%AUDIO_ENC_ANNOUNCE%
 echo;
-    
+
 (
     echo WAVSource^(%INPUT_AUDIO%^)
     echo;
@@ -389,7 +398,7 @@ if /i "%RGB%"=="true" (
         )
     )
 ) else (
-    set AVS_SCALE= 
+    set AVS_SCALE=
 )
 
 if /i "%DECODER%"=="avi" goto avisource_video
