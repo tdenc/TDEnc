@@ -105,6 +105,22 @@ if "%~1"=="" (
     call quit.bat
 )
 
+set ALL_ARGUMENTS=%*
+set ALL_ARGUMENTS_CMD=%ALL_ARGUMENTS:"=%
+echo %ALL_ARGUMENTS_CMD%> %TEMP_INFO%
+for /f "delims=" %%i in (%TEMP_INFO%) do set ALL_ARGUMENTS_TXT=%%i
+if not "%ALL_ARGUMENTS_CMD%"=="%ALL_ARGUMENTS_TXT%" (
+    echo ^<List1^>
+    echo   "%ALL_ARGUMENTS_CMD%"
+    echo ^<List2^>
+    echo   "%ALL_ARGUMENTS_TXT%"
+    echo;
+    echo ^>^>%FILENAME_ERROR1%
+    echo ^>^>%FILENAME_ERROR2%
+    echo;
+    call quit.bat
+)
+
 if not "%~3"=="" goto sequence_mode
 if not "%~2"=="" goto mux_mode
 

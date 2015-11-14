@@ -1,4 +1,4 @@
-set USER_VERSION=18
+set USER_VERSION=19
 
 rem ↓ここから下を適当に弄って自分好みの設定にしてくだしあ↓
 
@@ -16,15 +16,15 @@ rem エコノミーモード回避用の限界総ビットレート（kbps）
 set E_MAX_BITRATE_NEW=445
 
 rem 一般アカウントの解像度の上限の設定
-rem 幅のデフォルトは800pixels、高さのデフォルトは600pixels
-set I_MAX_WIDTH=800
-set I_MAX_HEIGHT=600
+rem 幅のデフォルトは1280pixels、高さのデフォルトは720pixels
+set I_MAX_WIDTH=1280
+set I_MAX_HEIGHT=720
 
 rem リサイズの質問時にyを答えたときの幅と高さの設定
-rem 幅のデフォルトは640pixels。変えたいときは「DEFAULT_WIDTH=768」などのようにする
+rem 幅のデフォルトは864pixels。変えたいときは「DEFAULT_WIDTH=768」などのようにする
 rem 高さは、空欄のときは自動計算（動画ファイルのアスペクト比を維持）
 rem 指定したい場合は「DEFAULT_HEIGHT=432」などのようにする
-set DEFAULT_WIDTH=640
+set DEFAULT_WIDTH=864
 set DEFAULT_HEIGHT=
 
 rem FPSを指定したいときは、「DEFAULT_FPS=24」などのようにする

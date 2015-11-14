@@ -61,6 +61,7 @@ echo;
 
 
 rem ################容量チェック################
+if /i "%PRETYPE%"=="y" goto last
 .\MediaInfo.exe --Inform=General;%%FileSize%% "%MP4_DIR%\%FINAL_MP4%"> %TEMP_INFO%
 for /f %%i in (%TEMP_INFO%) do set /a FINAL_MP4_SIZE=%%i
 if /i "%ACTYPE%"=="y" goto mp4_check_premium

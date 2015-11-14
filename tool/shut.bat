@@ -3,10 +3,10 @@ title %SHUT_TITLE%
 if /i "%SHUTDOWN%"=="y" goto shut
 
 :open_mp4
+call :delete_dir
 echo;
 echo ^>^>%PAUSE_MESSAGE2%
 pause>nul
-call :delete_dir
 start %MP4_DIR%
 if "%MOVIE_CHECK%"=="y" call "..\MP4\ここにD&Dして動画をチェック.bat" "%MP4_DIR%\%FINAL_MP4%"
 exit
