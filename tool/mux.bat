@@ -328,20 +328,20 @@ for /f "delims=" %%i in (%TEMP_DIR%\rgb.txt) do set RGB=%%i>nul
 for /f "delims=" %%i in (%TEMP_DIR%\keyint.txt) do set /a KEYINT=%%i*10>nul
 for /f "delims=" %%i in (%TEMP_DIR%\premium_bitrate.txt) do set /a P_TEMP_BITRATE=%%i>nul
 for /f "delims=" %%i in (%TEMP_DIR%\normal_bitrate.txt) do set /a I_TEMP_BITRATE=%%i>nul
-for /f "delims=" %%i in (%TEMP_DIR%\in_width.txt) do set IN_WIDTH=%%i>nul
+for /f "delims=" %%i in (%TEMP_DIR%\in_width.txt) do set IN_WIDTH_MOD=%%i>nul
 
 for /f "delims=" %%i in (%TEMP_DIR%\fps.txt) do set AVS_FPS=%%i>nul 2>&1
 if "%FPS%"=="" set FPS=%AVS_FPS%
 
 rem èoóÕâëúìxÇÃê›íË
-set /a IN_WIDTH_ODD=%IN_WIDTH% %% 2
+set /a IN_WIDTH_ODD=%IN_WIDTH_MOD% %% 2
 set /a IN_HEIGHT_ODD=%IN_HEIGHT% %% 2
-set /a OUT_WIDTH=%IN_WIDTH%
+set /a OUT_WIDTH=%IN_WIDTH_MOD%
 if not "%DEFAULT_HEIGHT%"=="" (
     set /a OUT_HEIGHT=%DEFAULT_HEIGHT%
     goto info_check
 )
-set /a OUT_HEIGHT_TEMP=%DEFAULT_WIDTH% * %IN_HEIGHT% / %IN_WIDTH%
+set /a OUT_HEIGHT_TEMP=%DEFAULT_WIDTH% * %IN_HEIGHT% / %IN_WIDTH_MOD%
 set /a OUT_HEIGHT_ODD=%OUT_HEIGHT_TEMP% %% 2
 set /a OUT_HEIGHT=%OUT_HEIGHT_TEMP% - %OUT_HEIGHT_ODD%
 

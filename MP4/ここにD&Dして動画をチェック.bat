@@ -31,7 +31,7 @@ for /f %%i in (%TEMP_FILE%) do set /a A_BITRATE=(%%i+500)/1000
 for /f %%i in (%TEMP_FILE%) do set SIZE=%%i
 
 set /a PLAYER_HEIGHT=384
-set /a PLAYER_WIDTH=%PLAYER_HEIGHT% * %IN_WIDTH% / %IN_HEIGHT%
+set /a PLAYER_WIDTH=640
 
 (
   echo var n = %SIZE%/1024.0/1024.0;
@@ -59,7 +59,8 @@ set /a PLAYER_WIDTH=%PLAYER_HEIGHT% * %IN_WIDTH% / %IN_HEIGHT%
   echo ^<h3^>%~nx1^</h3^>
   echo ^<p^>動画のチェックは他のプレイヤーじゃなくこのプレイヤーでチェックしてよね！^<br^>
   echo このプレイヤーは若干カクカクするけどニコニコと「ほぼ」同じ見え方よ！^<br^>
-  echo （一番いい確認方法はやっぱりニコニコへの仮アップロードなんだけどね）^</p^>
+  echo （一番いい確認方法はやっぱりニコニコへの仮アップロードなんだけどね）^<br^>
+  echo ※ 上下左右に黒い領域がある場合があるけどプレイヤーの仕様だから気にしないでね^</p^>
   echo ^<script type='text/javascript' src='swfobject.js'^>^</script^>
   echo ^<div id='mediaspace'^>プレイヤーが表示されない場合は情報バーをクリックしてプログラムを許可してね^</div^>
   echo;
@@ -70,7 +71,7 @@ set /a PLAYER_WIDTH=%PLAYER_HEIGHT% * %IN_WIDTH% / %IN_HEIGHT%
   echo   so.addParam^('wmode','opaque'^);
   echo   so.addVariable^('file',"file:///%MOVIE_FILE:\=/%"^);
   echo   so.addVariable^('volume','50'^);
-  echo   so.addVariable^('stretching','fill'^);
+  echo   so.addVariable^('stretching','uniform'^);
   echo   so.write^('mediaspace'^);
   echo ^</script^>
   echo;
