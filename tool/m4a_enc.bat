@@ -1,5 +1,13 @@
 if not exist %TEMP_WAV% goto wav_not_exist
 
+(
+    echo WAVSource^("%TEMP_WAV%"^)
+    echo;
+    echo ResampleAudio^(%SAMPLERATE%^)
+    echo;
+    echo return last
+)> %AUDIO_AVS%
+
 rem 音声エンコード
 if /i "%AAC_PROFILE%"=="auto" (
     goto auto_profile
@@ -21,7 +29,7 @@ if %A_BITRATE% LEQ 32 (
 )
 
 if /i "%A_SYNC%"=="n" (
-    move %TEMP_WAV% %FINAL_WAV% 1>nul 2>&1
+    .\avs2pipe_gcc.exe audio %AUDIO_AVS% > %FINAL_WAV%
     goto m4a_encode
 )
 if /i "%A_SYNC%"=="y" goto auto_sync
@@ -31,7 +39,7 @@ goto wav_avs
 
 :auto_sync
 if /i "%AAC_ENCODER%"=="qt" (
-    move %TEMP_WAV% %FINAL_WAV% 1>nul 2>&1
+    .\avs2pipe_gcc.exe audio %AUDIO_AVS% > %FINAL_WAV%
     goto m4a_encode
 )
 
@@ -41,7 +49,7 @@ echo ^>^>%SYNC_ANNOUNCE%
 if exist %PROCESS_E_FILE% del %PROCESS_E_FILE%
 echo s>%PROCESS_S_FILE%
 start /b process.bat 2>nul
-.\neroAacEnc.exe %AAC% -br %A_BITRATE%000 -if %TEMP_WAV% -of %TEMP_M4A% 1>nul 2>&1
+.\avs2pipe_gcc.exe audio %AUDIO_AVS% 2>nul | .\neroAacEnc.exe %AAC% -ignorelength -br %A_BITRATE%000 -if - -of %TEMP_M4A% 1>nul 2>&1
 .\MediaInfo.exe --Inform=General;%%PlayTime%% --LogFile=%TEMP_INFO% %TEMP_M4A%>nul
 for /f "delims=" %%i in (%TEMP_INFO%) do set M4A_TIME=%%i
 .\MediaInfo.exe --Inform=General;%%PlayTime%% --LogFile=%TEMP_INFO% %TEMP_WAV%>nul
@@ -57,6 +65,8 @@ del %PROCESS_E_FILE%
 :wav_avs
 (
     echo WAVSource^("%TEMP_WAV%"^)
+    echo;
+    echo ResampleAudio^(%SAMPLERATE%^)
     echo;
     echo _lag = Float^(%M4A_LAG%^) / 1000
     echo DelayAudio^(_lag^)

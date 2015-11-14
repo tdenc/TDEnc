@@ -1,4 +1,4 @@
-set THIS_VERSION=14
+set THIS_VERSION=15
 
 rem ↓ここから下を適当に弄って自分好みの設定にしてくだしあ↓
 
@@ -21,7 +21,7 @@ rem 指定したい場合は「DEFAULT_HEIGHT=432」などのようにする
 set DEFAULT_WIDTH=640
 set DEFAULT_HEIGHT=
 
-rem FPSを指定したいときは、「FPS=24」などのようにする
+rem FPSを指定したいときは、「DEFAULT_FPS=24」などのようにする
 rem 元の動画と同じのままなら空欄のままにしておく
 set DEFAULT_FPS=
 
@@ -32,6 +32,10 @@ set AAC_ENCODER=nero
 rem AACエンコードのプロファイル選択(hev2はAAC_ENCODER=neroの時のみ有効)
 rem auto、lc、he、hev2から選択(デフォルトのautoを推奨)
 set AAC_PROFILE=auto
+
+rem 音声のサンプルレートを指定したいときは「SAMPLERATE=48000」などのようにする
+rem デフォルトは44100
+set SAMPLERATE=44100
 
 rem デコーダの選択
 rem auto、avi、ffmpeg、directshow、qtから選択(デフォルトのautoを推奨)

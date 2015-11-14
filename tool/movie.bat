@@ -289,7 +289,9 @@ goto vbr_avs
 :vbr_avs
 echo;>> %VIDEO_AVS%
 if "%ABITRATE_MODE%"=="VBR" (
-    echo EnsureVBRMP3Sync^(^)>> %VIDEO_AVS%
+    if not "%A_SYNC%"=="n" (
+        echo EnsureVBRMP3Sync^(^)>> %VIDEO_AVS%
+    )
 )
 echo;>> %VIDEO_AVS%
 if "%SCAN_TYPE%"=="Interlaced" goto interlace
