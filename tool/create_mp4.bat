@@ -68,7 +68,7 @@ if %FINAL_MP4_SIZE% LEQ 41943040 (
 ) else (
     echo ^>^>%SIZE_ERROR%
     echo;
-    call :eof
+    goto :eof
 )
 
 :mp4_check_premium
@@ -80,7 +80,7 @@ if %FINAL_MP4_SIZE% LEQ 104857600 (
 ) else (
     echo ^>^>%SIZE_ERROR%
     echo;
-    call :eof
+    goto :eof
 )
 
 

@@ -62,7 +62,7 @@ set MP4_ERROR2=ごめんなさい・・・
 set MP4_SUCCESS=MP4作成完了～♪
 set SIZE_SUCCESS1=動画ファイルの容量のチェック完了～♪
 set SIZE_SUCCESS2=容量オーバーしてないわよ♪
-set SIZE_ERROR=よ、容量オーバー・・・ごめんなさい・・・
+set SIZE_ERROR=ニコニコの容量制限をオーバーしちゃったわ・・・
 set DERE_MESSAGE1=完成～♪
 set DERE_MESSAGE2=ま、また使ってくれると・・・う、うれしいな・・・（/ω＼）
 

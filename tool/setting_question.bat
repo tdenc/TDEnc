@@ -8,6 +8,12 @@ echo;
 
 rem プリセット選択
 :preset
+echo %INPUT_AUDIO% | findstr /r "\.wav\>">nul
+if "%ERRORLEVEL%"=="0" (
+    if /i "%INPUT_FILE_TYPE%"==".mp4" (
+        set MUX_MODE=y
+    )
+)
 if not "%PRETYPE%"=="" goto preset_main
 :preset_question
 echo;
@@ -20,12 +26,7 @@ echo   n:%PRESET_LIST3%
 echo   o:%PRESET_LIST4%
 echo   p:%PRESET_LIST5%
 echo   q:%PRESET_LIST6%
-echo %INPUT_AUDIO% | findstr /r "\.wav\>">nul  
-if "%ERRORLEVEL%"=="0" (  
-    if /i "%INPUT_FILE_TYPE%"==".mp4" (
-        echo   s:%PRESET_LIST7%
-    )
-)
+if "%MUX_MODE%"=="y" echo   s:%PRESET_LIST7%
 echo   x:%PRESET_LIST8%
 echo %HORIZON%
 set /p PRETYPE=^>^>
@@ -33,18 +34,18 @@ set /p PRETYPE=^>^>
 if "%PRETYPE%"=="" (
     goto preset_question
 ) else if /i "%PRETYPE%"=="s" (
-    if /i not "%INPUT_FILE_TYPE%"==".mp4" (
-        echo ^>^>%PRESET_MESSAGE%
-        echo ^>^>%PAUSE_MESSAGE2%
-        pause>nul
-        goto preset_question
+    if "%MUX_MODE%"=="y" (
+        set DECTYPE=n
+        set RESIZE=n
+        set T_BITRATE=%P_TEMP_BITRATE%
+        set X264_VFR_ENC=true
+        set TEMP_264=%INPUT_VIDEO%
+        goto account
     )
-    set DECTYPE=n
-    set RESIZE=n
-    set T_BITRATE=%P_TEMP_BITRATE%
-    set X264_VFR_ENC=true
-    set TEMP_264=%INPUT_VIDEO%
-    goto account
+    echo ^>^>%PRESET_MESSAGE%
+    echo ^>^>%PAUSE_MESSAGE2%
+    pause>nul
+    goto preset_question
 ) else if /i "%PRETYPE%"=="x" (
     set ENCTYPE=n
     set DECTYPE=n

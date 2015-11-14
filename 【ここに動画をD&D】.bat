@@ -269,6 +269,11 @@ if "%ERRORLEVEL%"=="0" (
     set DECODER=ffmpeg
     exit /b
 )
+findstr /i "mpeg" "%TEMP_INFO%">nul 2>&1
+if "%ERRORLEVEL%"=="0" (
+    set DECODER=directshow
+    exit /b
+)
 .\MediaInfo.exe --Inform=Video;%%CodecID%% --LogFile=%TEMP_INFO% %1>nul
 findstr /i "xtor" "%TEMP_INFO%">nul 2>&1
 if "%ERRORLEVEL%"=="0" (

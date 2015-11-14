@@ -9,7 +9,7 @@ set QPSTEP=12
 set AQ_MODE=2
 set AQ_STRENGTH=0.80
 set ME=tesa
-set SUBME=10
+set SUBME=11
 set PSY_RD=0.8:0
 set TRELLIS=2
 
