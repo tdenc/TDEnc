@@ -15,6 +15,7 @@ if ERRORLEVEL 22 (
     exit /b
 )
 for /f "delims=" %%i in (current_version) do set C_VERSION=%%i
+if not exist latest_version goto :eof
 for /f "delims=" %%i in (latest_version) do set L_VERSION=%%i
 if "%C_VERSION%"=="%L_VERSION%" goto :eof
 

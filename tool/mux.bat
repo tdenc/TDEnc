@@ -11,7 +11,7 @@ if "%ERRORLEVEL%"=="1" goto movie_mux_mode
 
 rem 画像と音声のMUX
 .\MediaInfo.exe --Inform=Audio;%%PlayTime%% --LogFile=%TEMP_INFO% %INPUT_AUDIO%>nul
-for /f "delims=" %%i in (%TEMP_INFO%) do set TOTAL_TIME=%%i
+for /f "delims.=" %%i in (%TEMP_INFO%) do set TOTAL_TIME=%%i
 if "%TOTAL_TIME%"=="" (
     echo ^>^>%ANALYZE_ERROR%
     echo;
@@ -187,7 +187,7 @@ rem 再生時間の書き出し
 .\MediaInfo.exe --Inform=General;%%PlayTime%% --LogFile=%TEMP_INFO% %INPUT_VIDEO%>nul
 
 rem 再生時間・上限ビットレートの設定
-for /f "delims=" %%i in (%TEMP_INFO%) do set TOTAL_TIME=%%i
+for /f "delims=." %%i in (%TEMP_INFO%) do set TOTAL_TIME=%%i
 echo PlayTime     : %TOTAL_TIME%ms
 
 rem CFR（固定フレームレート）とVFR（可変フレームレート）の判断
