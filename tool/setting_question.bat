@@ -1,5 +1,7 @@
 rem ################エンコ設定選択開始################
 
+set CONFIRM=
+
 echo %HORIZON%
 echo %QUESTION_START1%
 echo %QUESTION_START2%
@@ -40,8 +42,6 @@ if "%PRETYPE%"=="" (
         set DECTYPE=n
         set RESIZE=n
         set T_BITRATE=%P_TEMP_BITRATE%
-        set X264_VFR_ENC=true
-        set TEMP_264=%INPUT_VIDEO%
         goto account
     )
     echo ^>^>%PRESET_MESSAGE%
@@ -56,7 +56,7 @@ if "%PRETYPE%"=="" (
     set RESIZE=y
     set /a T_BITRATE=1000
     set /a TEMP_BITRATE=128
-    set a_SYNC=y
+    set A_SYNC=y
     goto account
 ) else if /i "%PRETYPE%"=="y" (
     set ENCTYPE=n
@@ -185,17 +185,19 @@ rem プレアカビットレート質問
 if /i "%PRETYPE%"=="y" (
     if /i "%ACTYPE%"=="y" (
         set /a T_BITRATE=%Y_P_TEMP_BITRATE%
-        set /a P_TEMP_BITRATE=%Y_P_TEMP_BITRATE%
+        set /a TP_TEMP_BITRATE=%Y_P_TEMP_BITRATE%
     ) else (
         set /a T_BITRATE=%Y_I_TEMP_BITRATE%
-        set /a P_TEMP_BITRATE=%Y_I_TEMP_BITRATE%
+        set /a TP_TEMP_BITRATE=%Y_I_TEMP_BITRATE%
     )
+) else (
+    set /a TP_TEMP_BITRATE=%P_TEMP_BITRATE%
 )
 if not "%T_BITRATE%"=="" goto premium_bitrate_main
 :premium_bitrate_question
 echo;
 echo ^>^>%BITRATE_START1%
-echo ^>^>%BITRATE_START2% %P_TEMP_BITRATE%kbps
+echo ^>^>%BITRATE_START2% %TP_TEMP_BITRATE%kbps
 echo ^>^>%BITRATE_START3%
 set /p T_BITRATE=^>^>
 :premium_bitrate_main
@@ -206,9 +208,9 @@ if "%ERRORLEVEL%"=="0" (
     echo;
     goto premium_bitrate_question
 )
-if %P_TEMP_BITRATE% LSS %T_BITRATE% (
+if %TP_TEMP_BITRATE% LSS %T_BITRATE% (
     if "%BEGINNER%"=="true" (
-        set /a T_BITRATE=%P_TEMP_BITRATE%
+        set /a T_BITRATE=%TP_TEMP_BITRATE%
     ) else (
         echo;
         echo ^>^>%RETURN_MESSAGE3%
@@ -284,10 +286,10 @@ goto resize_question2
 :convert
 echo %RESIZE%> %TEMP_INFO%
 set RESIZE=y
-for /f "delims=:x tokens=1" %%i in (%TEMP_INFO%) do set DEFAULT_WIDTH=%%i
-set /a WIDTH=%DEFAULT_WIDTH% - %DEFAULT_WIDTH% %% 2
-for /f "delims=:x tokens=2" %%i in (%TEMP_INFO%) do set DEFAULT_HEIGHT=%%i
-set /a HEIGHT=%DEFAULT_HEIGHT% - %DEFAULT_HEIGHT% %% 2
+for /f "delims=:x tokens=1" %%i in (%TEMP_INFO%) do set WIDTH=%%i
+set /a WIDTH=%WIDTH% - %WIDTH% %% 2
+for /f "delims=:x tokens=2" %%i in (%TEMP_INFO%) do set HEIGHT=%%i
+set /a HEIGHT=%HEIGHT% - %HEIGHT% %% 2
 if %IN_WIDTH% LSS %WIDTH% (
     set SETTING2=up_convert
     set RESIZER=BlackmanResize
@@ -339,8 +341,11 @@ if /i "%PRETYPE%"=="s" (
     echo;
     echo ^>^>%PAUSE_MESSAGE2%
     pause>nul
-    call ..\setting\default_setting.bat
     set PRETYPE=
+    set ENCTYPE=
+    set DECTYPE=
+    set RESIZE=
+    set T_BITRATE=
 ) else (
     echo ^>^>%RETURN_MESSAGE10%
     echo ^>^>%RETURN_MESSAGE11%
@@ -365,10 +370,11 @@ if %M_BITRATE% LSS 0 (
     echo ^>^>%PAUSE_MESSAGE2%
     pause>nul
     set PRETYPE=
-    set ACTYPE=
-    set T_BITRATE=
     set ENCTYPE=
-    goto preset_question
+    set DECTYPE=
+    set RESIZE=
+    set T_BITRATE=
+    goto preset
 )
 if not "%TEMP_BITRATE%"=="" goto audio_bitrate_main
 :audio_bitrate_question
@@ -440,6 +446,7 @@ exit /b
 rem 設定最終確認
 :confirm
 if /i "%SKIP_MODE%"=="true" exit /b
+if /i "%CONFIRM%"=="y" exit /b
 echo;
 echo %HORIZON%
 if /i "%PRETYPE%"=="l" echo %CONFIRM_PRETYPE%:%PRESET_LIST1%
@@ -500,8 +507,17 @@ if /i "%CONFIRM%"=="y" (
 if /i "%CONFIRM%"=="n" (
     echo;
     echo ^>^>%CONFIRM_LAST2%
-    call ..\setting\default_setting.bat
+    set PRETYPE=
+    set ACTYPE=
+    set YTTYPE=
+    set T_BITRATE=
+    set ENCTYPE=
+    set DECTYPE=
+    set RESIZE=
+    set TEMP_BITRATE=
+    set A_SYNC=
     set SKIP_MODE=
+    set BEGINNER=
     echo;
     goto preset
 )

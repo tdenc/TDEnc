@@ -127,6 +127,7 @@ set SYNC_START1=音ズレ処理をする？（入力例：y、n、-20、30）
 set SYNC_START2=（yだとズレを差分から自動計算して音声の冒頭をカット。それが嫌ならnを選択）
 set SYNC_START3=（数値入力だと数値分だけ調整。負だとカット、正だと無音追加。単位はミリ秒）
 set SYNC_START4=（よくわからない場合はとりあえずyを選べばいいと思うわ）
+set RETURN_MESSAGE7=ちょっとぉ！きちんと入力してよね！
 set RETURN_MESSAGE8=この映像ファイルは一般アカウントだとプリセットsは使えないわよ！
 set RETURN_MESSAGE9=プレミアムアカウントになるか、プリセットs以外を使ってよね！
 set RETURN_MESSAGE10=目標解像度が一般アカウントの制限より高いわよ！

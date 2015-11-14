@@ -392,8 +392,10 @@ call setting_question.bat
 
 
 rem ###############プリセットs################
-if /i "%PRETYPE%"=="s" goto mux_audio_start
-
+if /i "%PRETYPE%"=="s" (
+    set TEMP_264=%INPUT_VIDEO%
+    goto mux_audio_start
+)
 
 rem ################エンコ作業開始################
 echo;

@@ -1,7 +1,11 @@
 rem ################MP4ì¬################
 echo ^>^>%MP4_ANNOUNCE%
 echo;
-if not "%X264_VFR_ENC%"=="true" set MP4_FPS=-fps %FPS%
+if /i not "%PRETYPE%"=="s" (
+    if not "%X264_VFR_ENC%"=="true" (
+        set MP4_FPS=-fps %FPS%
+    )
+)
 
 .\MP4Box.exe %MP4_FPS% -add %TEMP_264%#video:delay=noct -add %TEMP_M4A% -new %TEMP_MP4%
 

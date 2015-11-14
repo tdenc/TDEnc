@@ -395,7 +395,6 @@ if /i "%DECODER%"=="directshow" goto directshowsource_audio
 if /i "%DECODER%"=="qt" goto qtsource_audio
 
 :directshowsource_audio
-if /i "%DECODER%"=="ffmpeg" set INPUT_FILE_PATH="input%INPUT_FILE_TYPE%"
 (
     echo LoadPlugin^("DirectShowSource.dll"^)
     echo;
