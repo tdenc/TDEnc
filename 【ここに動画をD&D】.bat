@@ -119,14 +119,15 @@ if /i "%DECODER%"=="qt" (
     call shut.bat
 )
 if /i "%DECODER%"=="ffmpeg" (
-    call :movie_cache "%~1"
+    set INPUT_FILE_PATH="%~1"
     call :normal_main
     call shut.bat
 )
 echo %INPUT_FILE_TYPE% | findstr /i "mkv wmv asf flv mp4 mov dv">nul
+rem echo %INPUT_FILE_TYPE% | findstr /i "mkv wmv asf flv mp4 mov dv mts m2ts">nul
 if "%ERRORLEVEL%"=="0" (
     set DECODER=ffmpeg
-    call :movie_cache "%~1"
+    set INPUT_FILE_PATH="%~1"
     call :normal_main
     call shut.bat
 )
@@ -166,13 +167,14 @@ if /i "%DECODER%"=="qt" (
     goto ext_check
 )
 if /i "%DECODER%"=="ffmpeg" (
-    call :movie_cache "%~1"
+    set INPUT_FILE_PATH="%~1"
     goto ext_check
 )
 echo %INPUT_FILE_TYPE% | findstr /i "mkv wmv asf flv mp4 mov dv">nul
+rem echo %INPUT_FILE_TYPE% | findstr /i "mkv wmv asf flv mp4 mov dv mts m2ts">nul
 if "%ERRORLEVEL%"=="0" (
     set DECODER=ffmpeg
-    call :movie_cache "%~1"
+    set INPUT_FILE_PATH="%~1"
     goto ext_check
 )
 
@@ -291,21 +293,6 @@ if "%ERRORLEVEL%"=="0" (
 )
 exit /b
 
-:movie_cache
-echo ^>^>%CACHE_ANNOUNCE%
-if exist %PROCESS_E_FILE% del %PROCESS_E_FILE%
-echo s>%PROCESS_S_FILE%
-start /b process.bat 2>nul
-copy /y "%~1" %TEMP_DIR%\input%INPUT_FILE_TYPE% 1>nul 2>&1
-set INPUT_FILE_PATH="%TEMP_DIR%\input%INPUT_FILE_TYPE%"
-del %PROCESS_S_FILE% 2>nul
-:cache_sleep_start
-ping localhost -n 1 >nul
-if not exist %PROCESS_E_FILE% goto cache_sleep_start 1>nul 2>&1
-del %PROCESS_E_FILE%
-echo ^>^>%CACHE_END%
-exit /b
-
 :cat_avi
 set CAT_DIR=%~1
 set CAT_AVI_LIST=%TEMP_DIR%\cat_avi.txt
@@ -380,12 +367,11 @@ if /i "%INPUT_FILE_TYPE%"==".nvv" (
     echo;
     call quit.bat
 )
-if /i "%DECODER%"=="ffmpeg" call :movie_cache %INPUT_VIDEO%
 if /i not "%DECODER%"=="auto" exit /b
 echo %INPUT_FILE_TYPE% | findstr /i "mkv wmv asf flv mp4 mov dv">nul
+rem echo %INPUT_FILE_TYPE% | findstr /i "mkv wmv asf flv mp4 mov dv mts m2ts">nul
 if "%ERRORLEVEL%"=="0" (
     set DECODER=ffmpeg
-    call :movie_cache %INPUT_VIDEO%
     exit /b
 )
 if /i "%INPUT_FILE_TYPE%"==".avi" (

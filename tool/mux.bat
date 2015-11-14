@@ -290,7 +290,7 @@ if "%VFR%"=="true" (
 (
     echo LoadPlugin^("ffms2.dll"^)
     echo;
-    echo FFVideoSource^("input%INPUT_FILE_TYPE%",cache=false^)
+    echo FFVideoSource^(%INPUT_VIDEO%,cache=false,threads=1^)
 )> %INFO_AVS%
 
 :infoavs
@@ -432,11 +432,24 @@ echo AVISource^(%INPUT_VIDEO%, audio = false^)> %VIDEO_AVS%
 goto vbr_avs
 
 :ffmpegsource_video
+rem echo %INPUT_FILE_TYPE% | findstr /i "mts m2ts">nul
+rem if "%ERRORLEVEL%"=="0" (
+rem     set SEEKMODE=0
+rem     ffmsindex.exe -m lavf -f %INPUT_VIDEO% %TEMP_DIR%\input.ffindex
+rem ) else (
+    set SEEKMODE=1
+    ffmsindex.exe -m default -f %INPUT_VIDEO% %TEMP_DIR%\input.ffindex
+rem )
+echo;
 (
     echo LoadPlugin^("ffms2.dll"^)
     echo;
     echo fps_num = Int^(%FPS% * 1000^)
-    echo FFVideoSource^("input%INPUT_FILE_TYPE%",cache=false, fpsnum=fps_num,fpsden=1000^)
+    if "%VFR%"=="true" (
+        echo FFVideoSource^(%INPUT_VIDEO%,cachefile="input.ffindex",seekmode=%SEEKMODE%,threads=1^)
+    ) else (
+        echo FFVideoSource^(%INPUT_VIDEO%,cachefile="input.ffindex",seekmode=%SEEKMODE%,threads=1,fpsnum=fps_num,fpsden=1000^)
+    )
 )> %VIDEO_AVS%
 
 :vbr_avs

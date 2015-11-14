@@ -35,15 +35,15 @@ set MIF_URL="http://voxel.dl.sourceforge.net/project/mediainfo/binary/mediainfo/
 set MIF_PATH="..\Archives\MediaInfo_CLI_0.7.32_Windows_i386.zip"
 set MIF_SIZE=1144205
 
-set YDF_URL="http://avisynth.org.ru/yadif/yadif17.zip"
+set YDF_URL="http://bit.ly/xRGzAq"
 set YDF_PATH="..\Archives\yadif17.zip"
 set YDF_SIZE=52095
 
-set A2P_URL="http://doobrymedia.com/avs2pipe-0.0.3.zip"
+set A2P_URL="http://bit.ly/x32LdY"
 set A2P_PATH="..\Archives\avs2pipe-0.0.3.zip"
 set A2P_SIZE=77539
 
-set WVI_URL="http://voxel.dl.sourceforge.net/project/wavi-avi2wav/wavi/1.06/wavi106.zip"
+set WVI_URL="http://bit.ly/xBZBo3"
 set WVI_PATH="..\Archives\wavi106.zip"
 set WVI_SIZE=24271
 

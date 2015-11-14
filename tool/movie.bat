@@ -33,7 +33,7 @@ rem 再生時間の書き出し
 .\MediaInfo.exe --Inform=General;%%PlayTime%% --LogFile=%TEMP_INFO% %INPUT_FILE_PATH%>nul
 
 rem 再生時間の設定
-for /f "delims=" %%i in (%TEMP_INFO%) do set TOTAL_TIME=%%i
+for /f "delims=." %%i in (%TEMP_INFO%) do set TOTAL_TIME=%%i
 echo PlayTime     : %TOTAL_TIME%ms
 
 rem CFR（固定フレームレート）とVFR（可変フレームレート）の判断
@@ -135,7 +135,7 @@ if "%VFR%"=="true" (
 )
 (
     echo LoadPlugin^("ffms2.dll"^)
-    echo FFVideoSource^("input%INPUT_FILE_TYPE%",cache=false^)
+    echo FFVideoSource^(%INPUT_FILE_PATH%,seekmode=-1,cache=false,threads=1^)
 )> %INFO_AVS%
 
 :infoavs
@@ -275,14 +275,23 @@ echo AVISource^(%INPUT_FILE_PATH%, audio = false^)> %VIDEO_AVS%
 goto vbr_avs
 
 :ffmpegsource_video
+rem echo %INPUT_FILE_TYPE% | findstr /i "mts m2ts">nul
+rem if "%ERRORLEVEL%"=="0" (
+rem     set SEEKMODE=-1
+rem     ffmsindex.exe -m lavf -f %INPUT_FILE_PATH% %TEMP_DIR%\input.ffindex
+rem ) else (
+    set SEEKMODE=1
+    ffmsindex.exe -m default -f %INPUT_FILE_PATH% %TEMP_DIR%\input.ffindex
+rem )
+echo;
 (
     echo LoadPlugin^("ffms2.dll"^)
     echo;
     echo fps_num = Int^(%FPS% * 1000^)
     if "%VFR%"=="true" (
-        echo FFVideoSource^("input%INPUT_FILE_TYPE%",cache=false^)
+        echo FFVideoSource^(%INPUT_FILE_PATH%,cachefile="input.ffindex",seekmode=%SEEKMODE%,threads=1^)
     ) else (
-        echo FFVideoSource^("input%INPUT_FILE_TYPE%",cache=false , fpsnum=fps_num, fpsden=1000^)
+        echo FFVideoSource^(%INPUT_FILE_PATH%,cachefile="input.ffindex",seekmode=%SEEKMODE%,threads=1,fpsnum=fps_num, fpsden=1000^)
     )
 )> %VIDEO_AVS%
 
@@ -397,12 +406,11 @@ goto temp_wav
 goto temp_wav
 
 :ffmpegsource_audio
-ffmsindex.exe -f %INPUT_FILE_PATH% %TEMP_DIR%\input%INPUT_FILE_TYPE%.ffindex
 echo;
 (
     echo LoadPlugin^("ffms2.dll"^)
     echo;
-    echo FFAudioSource^("input%INPUT_FILE_TYPE%", cachefile="input%INPUT_FILE_TYPE%.ffindex"^)
+    echo FFAudioSource^(%INPUT_FILE_PATH%, cachefile="input.ffindex"^)
     echo;
     echo return last
 )> %AUDIO_AVS%
