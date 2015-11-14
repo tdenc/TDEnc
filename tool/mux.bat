@@ -30,7 +30,7 @@ echo PlayTime     : %TOTAL_TIME%ms
     echo return last
 )> %INFO_AVS%
 
-.\wavi.exe %INFO_AVS% 1>nul 2>&1
+.\avs2pipe_gcc.exe info %INFO_AVS% 1>nul 2>&1
 
 for /f "delims=" %%i in (%TEMP_DIR%\premium_bitrate.txt) do set /a P_TEMP_BITRATE=%%i>nul
 for /f "delims=" %%i in (%TEMP_DIR%\normal_bitrate.txt) do set /a I_TEMP_BITRATE=%%i>nul
@@ -135,7 +135,7 @@ echo;
 )> %AUDIO_AVS%
 
 echo ^>^>%WAV_ANNOUNCE%
-.\wavi.exe %AUDIO_AVS% %TEMP_WAV% 1>nul 2>&1
+.\avs2pipe_gcc.exe audio %AUDIO_AVS% > %TEMP_WAV%
 echo;
 
 call m4a_enc.bat
@@ -290,7 +290,7 @@ if "%VFR%"=="true" (
     echo return last
 )>> %INFO_AVS%
 
-.\wavi.exe %INFO_AVS% 1>nul 2>&1
+.\avs2pipe_gcc.exe info %INFO_AVS% 1>nul 2>&1
 
 for /f "delims=" %%i in (%TEMP_DIR%\yv12.txt) do set YV12=%%i>nul
 for /f "delims=" %%i in (%TEMP_DIR%\rgb.txt) do set RGB=%%i>nul
@@ -472,11 +472,11 @@ echo;
 
 echo ^>^>%WAV_ANNOUNCE%
 set PROMPT=$S$H
+if exist %PROCESS_E_FILE% del %PROCESS_E_FILE%
 echo s>%PROCESS_S_FILE%
 start process.bat 2>nul
-.\wavi.exe %AUDIO_AVS% %TEMP_WAV% 1>nul 2>&1
+.\avs2pipe_gcc.exe audio %AUDIO_AVS% > %TEMP_WAV%
 del %PROCESS_S_FILE% 2>nul
-if exist %PROCESS_E_FILE% del %PROCESS_E_FILE%
 :wav_sleep_start
 ping localhost -n 1 >nul
 if not exist %PROCESS_E_FILE% goto wav_sleep_start 1>nul 2>&1

@@ -59,7 +59,7 @@ set /a M4A_LAG=-%M4A_LAG_TEMP%/2
 echo ^>^>^(%M4A_LAG%ms^)
 echo;
 
-.\wavi.exe %AUDIO_AVS% %FINAL_WAV%
+.\avs2pipe_gcc.exe audio %AUDIO_AVS% > %FINAL_WAV%
 
 rem m4aにエンコード
 :m4a_encode

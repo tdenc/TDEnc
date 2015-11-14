@@ -35,7 +35,7 @@ rem Ä¶ŠÔæ“¾
     echo return last
 )> %INFO_AVS1%
 
-.\wavi.exe %INFO_AVS1% 1>nul 2>&1
+.\avs2pipe_gcc.exe info %INFO_AVS1% 1>nul 2>&1
 
 for /f %%i in (%TEMP_DIR%\time.txt) do set /a TOTAL_TIME=%%i * 1000
 echo PlayTime     : %TOTAL_TIME%ms
@@ -78,7 +78,7 @@ rem ‚»‚Ì‘¼‚Ìî•ñ‚Ìæ“¾
 )> %INFO_AVS2%
 echo return last>> %INFO_AVS2%
 
-.\wavi.exe %INFO_AVS2% 1>nul 2>&1
+.\avs2pipe_gcc.exe info %INFO_AVS2% 1>nul 2>&1
 
 for /f %%i in (%TEMP_DIR%\premium_bitrate.txt) do set /a P_TEMP_BITRATE=%%i 2>nul
 for /f %%i in (%TEMP_DIR%\normal_bitrate.txt) do set /a I_TEMP_BITRATE=%%i 2>nul
@@ -153,8 +153,10 @@ echo;
 
 echo ^>^>%WAV_ANNOUNCE%
 set PROMPT=$S$H
+if exist %PROCESS_E_FILE% del %PROCESS_E_FILE%
+echo s>%PROCESS_S_FILE%
 start process.bat 2>nul
-.\wavi.exe %AUDIO_AVS% %TEMP_WAV% 1>nul 2>&1
+.\avs2pipe_gcc.exe audio %AUDIO_AVS% > %TEMP_WAV%
 echo;
 del %PROCESS_S_FILE% 2>nul
 :wav_start

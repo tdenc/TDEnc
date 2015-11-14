@@ -149,7 +149,7 @@ if "%VFR%"=="true" (
     echo return last
 )>> %INFO_AVS%
 
-.\wavi.exe %INFO_AVS% 1>nul 2>&1
+.\avs2pipe_gcc.exe info %INFO_AVS% 1>nul 2>&1
 
 for /f "delims=" %%i in (%TEMP_DIR%\yv12.txt) do set YV12=%%i>nul
 for /f "delims=" %%i in (%TEMP_DIR%\rgb.txt) do set RGB=%%i>nul
@@ -333,6 +333,7 @@ if /i "%DECODER%"=="ffmpeg" goto ffmpegsource_audio
 if /i "%DECODER%"=="directshow" goto directshowsource_audio
 
 :directshowsource_audio
+if /i "%DECODER%"=="ffmpeg" set INPUT_FILE_PATH="input%INPUT_FILE_TYPE%"
 (
     echo LoadPlugin^("DirectShowSource.dll"^)
     echo;
@@ -351,14 +352,12 @@ goto temp_wav
 goto temp_wav
 
 :ffmpegsource_audio
-ffmsindex.exe -f %TEMP_DIR%\input%INPUT_FILE_TYPE% %TEMP_DIR%\input%INPUT_FILE_TYPE%.ffindex
+ffmsindex.exe -f %INPUT_FILE_PATH% %TEMP_DIR%\input%INPUT_FILE_TYPE%.ffindex
 echo;
 (
     echo LoadPlugin^("ffms2.dll"^)
-rem echo LoadPlugin^("DirectShowSource.dll"^)
     echo;
     echo FFAudioSource^("input%INPUT_FILE_TYPE%", cachefile="input%INPUT_FILE_TYPE%.ffindex"^)
-rem echo DirectShowSource^("input%INPUT_FILE_TYPE%", video = false^)
     echo;
     echo return last
 )> %AUDIO_AVS%
@@ -366,10 +365,14 @@ rem echo DirectShowSource^("input%INPUT_FILE_TYPE%", video = false^)
 :temp_wav
 echo ^>^>%WAV_ANNOUNCE%
 set PROMPT=$S$H
+if exist %PROCESS_E_FILE% del %PROCESS_E_FILE%
+echo s>%PROCESS_S_FILE%
 start process.bat 2>nul
-.\wavi.exe %AUDIO_AVS% %TEMP_WAV% 1>nul 2>&1
-echo;
+.\avs2pipe_gcc.exe audio %AUDIO_AVS% > %TEMP_WAV% 2>nul
 del %PROCESS_S_FILE% 2>nul
+if "%WAV_FAIL%"=="y" goto wav_start
+for %%i in (%TEMP_WAV%) do if %%~zi EQU 0 set WAV_FAIL=y
+if "%WAV_FAIL%"=="y" goto directshowsource_audio
 :wav_start
 ping localhost -n 1 >nul
 if not exist %PROCESS_E_FILE% goto wav_start 1>nul 2>&1

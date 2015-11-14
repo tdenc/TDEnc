@@ -1,9 +1,9 @@
 rem プリセット用オプション設定（激重） 
 
-set BFRAMES=16
+set BFRAMES=8
 set B_ADAPT=2
 set B_PYRAMID=normal
-set REF=16
+set REF=8
 set RC_LOOKAHEAD=60
 set QPSTEP=12
 set AQ_MODE=2

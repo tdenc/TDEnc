@@ -2,10 +2,10 @@
 
 call "version.bat"
 
-set VER_URL="http://tde.es.land.to/files/latest_version"
+set VER_URL="http://bit.ly/lWGhYA"
 set VER_PATH=".\latest_version"
 
-set LOG_URL="http://tde.es.land.to/files/ChangeLog"
+set LOG_URL="http://bit.ly/kZmCh7"
 set LOG_PATH=".\ChangeLog"
 
 set AVS_URL="http://voxel.dl.sourceforge.net/project/avisynth2/AviSynth%%202.5/AviSynth%%202.5.8/Avisynth_258.exe"
@@ -31,6 +31,10 @@ set MIF_SIZE=1144205
 set YDF_URL="http://avisynth.org.ru/yadif/yadif17.zip"
 set YDF_PATH="..\Archives\yadif17.zip"
 set YDF_SIZE=52095
+
+set A2P_URL="http://doobrymedia.com/avs2pipe-0.0.3.zip"
+set A2P_PATH="..\Archives\avs2pipe-0.0.3.zip"
+set A2P_SIZE=77539
 
 set WVI_URL="http://voxel.dl.sourceforge.net/project/wavi-avi2wav/wavi/1.06/wavi106.zip"
 set WVI_PATH="..\Archives\wavi106.zip"

@@ -40,7 +40,7 @@ echo ^>^>%UPDATE_QUESTION2%
 echo ^>^>%UPDATE_QUESTION3%
 set /p VERSION_UP=^>^>
 if /i "%VERSION_UP%"=="y" (
-    start "ie" "http://tdenc.net/"
+    start "ie" "http://tde.es.land.to/"
     goto :eof
 )
 if /i "%VERSION_UP%"=="n" goto :eof

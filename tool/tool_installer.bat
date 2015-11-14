@@ -22,7 +22,8 @@ echo;
 .\7z.exe e -bd -y %FSS_PATH% "ffms2.dll" "ffmsindex.exe"
 .\7z.exe e -bd -y %MIF_PATH% "MediaInfo.exe" "MediaInfo.dll"
 .\7z.exe e -bd -y %YDF_PATH% "yadif.dll"
-.\7z.exe e -bd -y %WVI_PATH% "wavi.exe" "silence.exe"
+.\7z.exe e -bd -y %A2P_PATH% "avs2pipe_gcc.exe"
+.\7z.exe e -bd -y %WVI_PATH% "silence.exe"
 .\7z.exe e -bd -y %NERO_PATH% "win32\neroAacEnc.exe"
 echo;
 copy /y %X264_PATH% ".\x264.exe"

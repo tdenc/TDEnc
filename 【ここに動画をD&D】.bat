@@ -8,7 +8,8 @@ title %TDENC_TITLE%
 rem ################ƒ†[ƒU[Ý’è“Ç‚Ýž‚Ý################
 call version.bat
 
-.\curl.exe -o tool_url.bat -L "http://tde.es.lant.to/files/tool_url.bat" 2>nul
+.\curl.exe -o tool_url.zip -L "http://bit.ly/lHnPjd" 2>nul
+.\7z.exe e -bd -y ".\tool_url.zip" "tool_url.bat" 1>nul 2>&1
 call tool_url.bat 1>nul 2>&1
 if not "%VER_PATH%"=="" (
     set URL_PATH=".\tool_url.bat"
@@ -251,7 +252,7 @@ if not exist ffmsindex.exe start /wait call initialize.bat
 if not exist MediaInfo.exe start /wait call initialize.bat
 if not exist MediaInfo.dll start /wait call initialize.bat
 if not exist yadif.dll start /wait call initialize.bat
-if not exist wavi.exe start /wait call initialize.bat
+if not exist avs2pipe_gcc.exe start /wait call initialize.bat
 if not exist silence.exe start /wait call initialize.bat
 if not exist neroAacEnc.exe start /wait call initialize.bat
 if not exist x264.exe start /wait call initialize.bat
@@ -278,12 +279,12 @@ exit /b
 :movie_cache
 echo ^>^>%CACHE_ANNOUNCE%
 set PROMPT=$S$H
+if exist %PROCESS_E_FILE% del %PROCESS_E_FILE%
 echo s>%PROCESS_S_FILE%
 start process.bat 2>nul
 copy /y "%~1" %TEMP_DIR%\input%INPUT_FILE_TYPE% 1>nul 2>&1
 set INPUT_FILE_PATH="%TEMP_DIR%\input%INPUT_FILE_TYPE%"
 del %PROCESS_S_FILE% 2>nul
-if exist %PROCESS_E_FILE% del %PROCESS_E_FILE%
 :cache_sleep_start
 ping localhost -n 1 >nul
 if not exist %PROCESS_E_FILE% goto cache_sleep_start 1>nul 2>&1

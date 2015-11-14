@@ -15,7 +15,8 @@
 　FFMS2.dll(Myrsloik、http://code.google.com/p/ffmpegsource/ )
 　MediaInfo.dll、MediaInfo.exe(MediaArea.net SARL.、http://mediainfo.sourceforge.net/ )
 　yadif.dll(Fizick、http://avisynth.org.ru/yadif/yadif.html )
-　wavi.exe、silence.exe(Tamas Kurucsai、http://sourceforge.net/projects/wavi-avi2wav/ )
+　avs2pipe_gcc.exe(Chris Beswick、http://doobrymedia.com/avs2pipe-0.0.3.zip )
+　silence.exe(Tamas Kurucsai、http://sourceforge.net/projects/wavi-avi2wav/ )
 　x264.exe(x264 team、http://www.videolan.org/developers/x264.html )
 　neroAacEnc.exe(Nero AG、http://www.nero.com/jpn/downloads-nerodigital-nero-aac-codec.php )
 ※neroAacEnc.exe以外はソースも上記URLから取得できます。

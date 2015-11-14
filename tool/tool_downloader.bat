@@ -11,7 +11,7 @@ rem ################初期処理################
 if not exist ..\Archives mkdir ..\Archives
 call :file_check_sub
 
-if "%AVS%%DSS%%DIL%%FSS%%MIF%%YDF%%WVI%%NERO%%X264%"=="ttttttttt" exit
+if "%AVS%%DSS%%DIL%%FSS%%MIF%%YDF%%A2P%%WVI%%NERO%%X264%"=="tttttttttt" exit
 
 
 rem ################モード選択################
@@ -65,6 +65,11 @@ if not "%MIF%"=="t" (
 if not "%YDF%"=="t" (
     echo ^>^>Yadif
     .\curl.exe -o %YDF_PATH% -L %YDF_URL%
+    echo;
+)
+if not "%A2P%"=="t" (
+    echo ^>^>avs2pipe
+    .\curl.exe -o %A2P_PATH% -L %A2P_URL%
     echo;
 )
 if not "%WVI%"=="t" (
@@ -126,6 +131,8 @@ if not "%MIF%"=="t" echo MediaInfo→%MIF_URL%
 echo;
 if not "%YDF%"=="t" echo yadif→%YDF_URL%
 echo;
+if not "%A2P%"=="t" echo avs2pipe→%A2P_URL%
+echo;
 if not "%WVI%"=="t" echo wavi→%WVI_URL%
 echo;
 if not "%NERO%"=="t" echo NeroDigitalAudio→%NERO_URL%
@@ -143,7 +150,7 @@ rem ################落とせたかどうかをチェック################
 :check
 call :file_check_sub
 
-if not "%AVS%%DSS%%DIL%%FSS%%MIF%%YDF%%WVI%%NERO%%X264%"=="ttttttttt" goto dl_fail
+if not "%AVS%%DSS%%DIL%%FSS%%MIF%%YDF%%A2P%%WVI%%NERO%%X264%"=="tttttttttt" goto dl_fail
 
 
 rem ################成功################
@@ -168,6 +175,7 @@ if "%DIL%"=="" echo DevIL
 if "%FSS%"=="" echo FFmpegSource
 if "%MIF%"=="" echo MediaInfo
 if "%YDF%"=="" echo yadif
+if "%A2P%"=="" echo avs2pipe
 if "%WVI%"=="" echo wavi
 if "%NERO%"=="" echo NeroDigitalAudio
 if "%X264%"=="" echo x264
@@ -189,6 +197,7 @@ for %%i in (%DIL_PATH%) do if %%~zi EQU %DIL_SIZE% set DIL=t
 for %%i in (%FSS_PATH%) do if %%~zi EQU %FSS_SIZE% set FSS=t
 for %%i in (%MIF_PATH%) do if %%~zi EQU %MIF_SIZE% set MIF=t
 for %%i in (%YDF_PATH%) do if %%~zi EQU %YDF_SIZE% set YDF=t
+for %%i in (%A2P_PATH%) do if %%~zi EQU %A2P_SIZE% set A2P=t
 for %%i in (%WVI_PATH%) do if %%~zi EQU %WVI_SIZE% set WVI=t
 for %%i in (%NERO_PATH%) do if %%~zi EQU %NERO_SIZE% set NERO=t
 if not exist %X264_PATH% exit /b
