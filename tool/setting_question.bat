@@ -695,6 +695,18 @@ echo;
 echo %HORIZON_B%
 echo %CONFIRM_START%
 echo %HORIZON_B%
+if /i "%UP_SITE%"=="y" (
+    if /i "%ACTYPE%"=="y" (
+        echo %CONFIRM_ACCOUNT1% : %CONFIRM_ACCOUNT5%
+    ) else (
+        echo %CONFIRM_ACCOUNT1% : %CONFIRM_ACCOUNT4%
+    )
+    echo %CONFIRM_PRETYPE% : %PRESET_LIST9%
+) else if /i "%ACTYPE%"=="y" (
+    echo %CONFIRM_ACCOUNT1% : %CONFIRM_ACCOUNT2%
+) else (
+    echo %CONFIRM_ACCOUNT1% : %CONFIRM_ACCOUNT3%
+)
 if /i "%PRETYPE%"=="l" echo %CONFIRM_PRETYPE% : %PRESET_LIST1%
 if /i "%PRETYPE%"=="m" echo %CONFIRM_PRETYPE% : %PRESET_LIST2%
 if /i "%PRETYPE%"=="n" echo %CONFIRM_PRETYPE% : %PRESET_LIST3%
@@ -703,18 +715,6 @@ if /i "%PRETYPE%"=="p" echo %CONFIRM_PRETYPE% : %PRESET_LIST5%
 if /i "%PRETYPE%"=="q" echo %CONFIRM_PRETYPE% : %PRESET_LIST6%
 if /i "%PRETYPE%"=="s" echo %CONFIRM_PRETYPE% : %PRESET_LIST7%
 if /i "%PRETYPE%"=="x" echo %CONFIRM_PRETYPE% : %PRESET_LIST8%
-if /i "%UP_SITE%"=="y" (
-    echo %CONFIRM_PRETYPE% : %PRESET_LIST9%
-    if /i "%ACTYPE%"=="y" (
-        echo %CONFIRM_ACCOUNT1% : %CONFIRM_ACCOUNT4%
-    ) else (
-        echo %CONFIRM_ACCOUNT1% : %CONFIRM_ACCOUNT3%
-    )
-) else if /i "%ACTYPE%"=="y" (
-    echo %CONFIRM_ACCOUNT1% : %CONFIRM_ACCOUNT2%
-) else (
-    echo %CONFIRM_ACCOUNT1% : %CONFIRM_ACCOUNT3%
-)
 if /i "%PRETYPE%"=="s" goto audio_list
 echo %CONFIRM_PLAYER% : %FLASH%
 if /i not "%UP_SITE%"=="y" (

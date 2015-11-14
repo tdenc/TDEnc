@@ -1,5 +1,5 @@
 つんでれんこに関しては、再配布、同梱等含めご自由にどうぞ(特に制限することはありません)。
-ただし、同梱している7zip、MP4Box、JMPlayer、qtaacenc、DevIL、curlについては各ライセンス(同梱してあります)に従ってください。
+ただし、同梱している7zip、MP4Box、JWPlayer、qtaacenc、DevIL、curlについては各ライセンス(同梱してあります)に従ってください。
 　7z.exe、7z.dll(Igor Pavlov、http://sevenzip.sourceforge.jp/ )
 　MP4Box.exe(Jean Le Feuver & ENST、http://kurtnoise.free.fr/ )
 　MP4Box patch(VFR maniac、http://www.esnips.com/web/VFRmaniac-Softwares )
