@@ -30,8 +30,8 @@ for /f %%i in (%TEMP_FILE%) do set /a A_BITRATE=(%%i+500)/1000
 .\MediaInfo.exe --Inform=General;%%FileSize%% --LogFile=%TEMP_FILE% "%MOVIE_FILE%">nul
 for /f %%i in (%TEMP_FILE%) do set SIZE=%%i
 
-set /a PLAYER_WIDTH=%IN_WIDTH%
-set /a PLAYER_HEIGHT=%IN_HEIGHT% + 20
+set /a PLAYER_WIDTH=640
+set /a PLAYER_HEIGHT=384
 
 (
   echo var n = %SIZE%/1024.0/1024.0;

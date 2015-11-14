@@ -112,13 +112,13 @@ if "%FULL_RANGE%"=="off" (
     set RANGE=auto
 )
 
-.\x264.exe --range %RANGE% -I 10 -i 10 --no-scenecut -b 0 -r 1 -f -1:-1 -B %V_BITRATE% --ipratio 1.0 --aq-mode 2 --aq-strength 0.70 -p 1 --stats TEMP\x264_2pass.log --qcomp 0.8 --direct auto --weightp 0 --me dia -m 1 -t 1 --no-fast-pskip --no-dct-decimate --threads 0 --thread-input --colormatrix smpte170m --quiet -o "nul" %VIDEO_AVS%
+.\x264.exe --range %RANGE% -I 10 -i 10 --no-scenecut -b 0 -r 1 -f -1:-1 -B %V_BITRATE% --ipratio 1.0 --aq-mode 2 --aq-strength 0.70 -p 1 --stats %TEMP_DIR%\x264_2pass.log --qcomp 0.8 --direct auto --weightp 0 --me dia -m 1 -t 1 --no-fast-pskip --no-dct-decimate --threads 0 --thread-input --colormatrix smpte170m --quiet -o "nul" %VIDEO_AVS%
 echo;
 
 rem ‚Qpassˆ—
 echo ^>^>‚Qpass–Ú`ô
 echo;
-.\x264.exe --range %RANGE% -I 10 -i 10 --no-scenecut -b 0 -r 1 -f -1:-1 -B %V_BITRATE% --ipratio 1.0 --aq-mode 2 --aq-strength 0.70 -p 2 --stats TEMP\x264_2pass.log --qcomp 0.8 --direct auto --weightp 0 --me dia -m 1 -t 1 --no-fast-pskip --no-dct-decimate --threads 0 --thread-input --colormatrix smpte170m --quiet -o %TEMP_264% %VIDEO_AVS%
+.\x264.exe --range %RANGE% -I 10 -i 10 --no-scenecut -b 0 -r 1 -f -1:-1 -B %V_BITRATE% --ipratio 1.0 --aq-mode 2 --aq-strength 0.70 -p 2 --stats %TEMP_DIR%\x264_2pass.log --qcomp 0.8 --direct auto --weightp 0 --me dia -m 1 -t 1 --no-fast-pskip --no-dct-decimate --threads 0 --thread-input --colormatrix smpte170m --quiet -o %TEMP_264% %VIDEO_AVS%
 echo;
 
 echo ^>^>%VIDEO_ENC_END%

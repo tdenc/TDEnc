@@ -30,8 +30,7 @@ if not "%THIS_VERSION%"=="%PRESET_VERSION%" (
 rem ################フォルダ作成################
 rem 一時ファイルを保存するフォルダを変更したいときはここを弄ってください
 rem ただ、エンコ後に一時ファイルを全て削除するので誤作動が怖い場合は弄らないでください
-set TEMP_DIR=TEMP
-if exist %TEMP_DIR% rmdir /s /q %TEMP_DIR%
+set TEMP_DIR=TEMP\%date:~-8,2%%date:~-5,2%%date:~-2,2%%time:~-8,2%%time:~-5,2%%time:~-2,2%
 mkdir %TEMP_DIR%
 if not exist %MP4_DIR% mkdir %MP4_DIR%
 
@@ -65,7 +64,7 @@ if /i "%VERSION_UP%"=="y" goto :eof
 
 
 rem ################ツール類の設定################
-call :file_exist_check   
+call :file_exist_check
 
 
 rem ################レジストリチェック################
