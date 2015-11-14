@@ -79,7 +79,11 @@ goto preset_question
 
 rem アカウント分岐
 :account
-if not "%ACTYPE%"=="" goto account_main
+if /i "%PRETYPE%"=="y" (
+    if not "%YTTYPE%"=="" goto account_main
+) else (
+    if not "%ACTYPE%"=="" goto account_main
+)
 :account_question
 echo;
 if /i not "%PRETYPE%"=="y" (
@@ -93,6 +97,7 @@ if /i not "%PRETYPE%"=="y" (
     set /p YTTYPE=^>^>
 )
 :account_main
+if /i "%PRETYPE%"=="y" set ACTYPE=%YTTYPE%
 set /a TOTAL_TIME_SEC=%TOTAL_TIME% / 1000
 set /a TOTAL_TIME_LIM=15 * 60
 if /i "%YTTYPE%"=="n" (
@@ -103,7 +108,6 @@ if /i "%YTTYPE%"=="n" (
         goto account_question
     )
 )
-if not "%YTTYPE%"=="" set ACTYPE=%YTTYPE%
 if /i "%ACTYPE%"=="y" goto premium
 if /i "%ACTYPE%"=="n" (
     if /i "%PRETYPE%"=="y" (
@@ -336,7 +340,6 @@ if /i "%PRETYPE%"=="s" (
     echo ^>^>%PAUSE_MESSAGE2%
     pause>nul
     call ..\setting\default_setting.bat
-    call ..\setting\user_setting.bat
     set PRETYPE=
 ) else (
     echo ^>^>%RETURN_MESSAGE10%
@@ -498,7 +501,6 @@ if /i "%CONFIRM%"=="n" (
     echo;
     echo ^>^>%CONFIRM_LAST2%
     call ..\setting\default_setting.bat
-    call ..\setting\user_setting.bat
     set SKIP_MODE=
     echo;
     goto preset
