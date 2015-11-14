@@ -20,6 +20,7 @@ echo;
 echo ^>^>%PRESET_START1%
 echo ^>^>%PRESET_START2%
 echo %HORIZON%
+echo   a:%PRESET_LIST0%
 echo   l:%PRESET_LIST1%
 echo   m:%PRESET_LIST2%
 echo   n:%PRESET_LIST3%
@@ -46,6 +47,16 @@ if "%PRETYPE%"=="" (
     echo ^>^>%PAUSE_MESSAGE2%
     pause>nul
     goto preset_question
+) else if /i "%PRETYPE%"=="a" (
+    set BEGINNER=true
+    set PRETYPE=m
+    set ENCTYPE=n
+    set DECTYPE=n
+    set RESIZE=y
+    set /a T_BITRATE=1000
+    set /a TEMP_BITRATE=128
+    set a_SYNC=y
+    goto account
 ) else if /i "%PRETYPE%"=="x" (
     set ENCTYPE=n
     set DECTYPE=n
@@ -150,11 +161,15 @@ if "%ERRORLEVEL%"=="0" (
     goto premium_bitrate_question
 )
 if %P_TEMP_BITRATE% LSS %T_BITRATE% (
-    echo;
-    echo ^>^>%RETURN_MESSAGE3%
-    echo ^>^>%RETURN_MESSAGE4%
-    echo;
-    goto premium_bitrate_question
+    if "%BEGINNER%"=="true" (
+        set T_BITRATE=%P_TEMP_BITRATE%
+    ) else (
+        echo;
+        echo ^>^>%RETURN_MESSAGE3%
+        echo ^>^>%RETURN_MESSAGE4%
+        echo;
+        goto premium_bitrate_question
+    )
 )
 exit /b
 

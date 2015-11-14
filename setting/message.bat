@@ -81,7 +81,8 @@ rem setting_question.batのメッセージ
 set QUESTION_START1=べっ、別にあんたの好みなんてどうでもいいんだけど、しょうがないから聞いてやるわ
 set QUESTION_START2=どんな設定がいいのよ？
 set PRESET_START1=プリセットはどれ？（l～q）
-set PRESET_START2=（よく分からない場合はとりあえずmを選べばいいと思うわ）
+set PRESET_START2=（よく分からない場合はとりあえずaを選べばいいと思うわ）
+set PRESET_LIST0=自動設定モード（エンコードに慣れていない人向けプリセット）
 set PRESET_LIST1=アニメ・アイマス・MMDなど　速度重視（or 低スペックPC用）
 set PRESET_LIST2=アニメ・アイマス・MMDなど　バランス（エンコ速度・画質両立）
 set PRESET_LIST3=アニメ・アイマス・MMDなど　画質重視（or 高スペックPC用）
