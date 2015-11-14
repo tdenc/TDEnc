@@ -189,7 +189,7 @@ rem CFR‚ÌÝ’è
 set VFR=false
 .\MediaInfo.exe --Inform=Video;%%FrameRate%% --LogFile=%TEMP_INFO% %INPUT_VIDEO%>nul
 for /f "delims=" %%i in (%TEMP_INFO%) do set INPUT_FPS=%%i
-echo FPS          : %INPUT_FPS%fps^(CFR^)
+if not "%INPUT_FPS%"=="" echo FPS          : %INPUT_FPS%fps^(CFR^)
 goto fps_main
 
 rem VFR‚ÌÝ’è
@@ -279,13 +279,19 @@ if "%VFR%"=="true" (
     echo;
     echo _isyv12 = IsYV12^(^)
     echo _isrgb = IsRGB^(^)
-    echo _keyint = String^(Round^(%FPS%^)^)
+    echo _fps = Framerate^(^)
+    if not "%FPS%"=="" (
+        echo _keyint = String^(Round^(%FPS%^)^)
+    ) else (
+        echo _keyint = String^(Round^(_fps^)^)
+    )
     echo _premium_bitrate = String^(Floor^(Float^(%DEFAULT_SIZE_PREMIUM%^) * 1024 * 1024 * 8 / %TOTAL_TIME%^)^)
     echo _normal_bitrate = String^(Floor^(Float^(%DEFAULT_SIZE_NORMAL%^) * 1024 * 1024 * 8 / %TOTAL_TIME%^)^)
     echo _in_width = String^(Floor^(Float^(%IN_WIDTH%^) * %P_ASPECT%^)^)
     echo;
     echo WriteFileStart^("yv12.txt","_isyv12",append = false^)
     echo WriteFileStart^("rgb.txt","_isrgb",append = false^)
+    echo WriteFileStart^("fps.txt","_fps",append = false^)
     echo WriteFileStart^("keyint.txt","_keyint",append = false^)
     echo WriteFileStart^("premium_bitrate.txt","_premium_bitrate",append = false^)
     echo WriteFileStart^("normal_bitrate.txt","_normal_bitrate",append = false^)
@@ -304,6 +310,9 @@ for /f "delims=" %%i in (%TEMP_DIR%\keyint.txt) do set /a KEYINT=%%i*10>nul
 for /f "delims=" %%i in (%TEMP_DIR%\premium_bitrate.txt) do set /a P_TEMP_BITRATE=%%i>nul
 for /f "delims=" %%i in (%TEMP_DIR%\normal_bitrate.txt) do set /a I_TEMP_BITRATE=%%i>nul
 for /f "delims=" %%i in (%TEMP_DIR%\in_width.txt) do set IN_WIDTH=%%i>nul
+
+for /f "delims=" %%i in (%TEMP_DIR%\fps.txt) do set AVS_FPS=%%i>nul 2>&1
+if "%FPS%"=="" set FPS=%AVS_FPS%
 
 rem o—Í‰ð‘œ“x‚ÌÝ’è
 set /a IN_WIDTH_ODD=%IN_WIDTH% %% 2

@@ -20,9 +20,9 @@ set DIL_URL="http://voxel.dl.sourceforge.net/project/openil/DevIL%%20Win32/1.7.8
 set DIL_PATH="..\Archives\DevIL-EndUser-x86-1.7.8.zip"
 set DIL_SIZE=676737
 
-set FSS_URL="http://ffmpegsource.googlecode.com/files/ffms2-r507.7z"
-set FSS_PATH="..\Archives\ffms2-r507.7z"
-set FSS_SIZE=2777634
+set FSS_URL="http://ffmpegsource.googlecode.com/files/ffms-2.16.7z"
+set FSS_PATH="..\Archives\ffms-2.16.7z"
+set FSS_SIZE=2384639
 
 set MIF_URL="http://voxel.dl.sourceforge.net/project/mediainfo/binary/mediainfo/0.7.32/MediaInfo_CLI_0.7.32_Windows_i386.zip"
 set MIF_PATH="..\Archives\MediaInfo_CLI_0.7.32_Windows_i386.zip"

@@ -11,7 +11,7 @@ set I_MAX_BITRATE=654
 rem エコノミーモード回避用エンコードで目指す総ビットレート（kbps）
 rem ビットレートオーバーになるときは、この数値を下げる(初期値は290)
 set E_TARGET_BITRATE=290
-rem コノミーモード回避用の限界総ビットレート（kbps）
+rem エコノミーモード回避用の限界総ビットレート（kbps）
 set E_MAX_BITRATE=310
 
 rem リサイズの質問時にyを答えたときの幅と高さの設定
