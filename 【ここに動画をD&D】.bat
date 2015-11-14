@@ -62,6 +62,31 @@ if /i "%DEFAULT_VERSION_CHECK%"=="true" (
 )
 if /i "%VERSION_UP%"=="y" goto :eof
 
+rem user_setting.batの更新
+if "%USER_VERSION%"=="%THIS_VERSION%" goto user_setting_update_end
+:user_setting_update
+echo;
+echo ^>^>%USER_SETTING1%
+echo ^>^>%USER_SETTING2%
+set /p USER_UPDATE=^>^>
+if /i "%USER_UPDATE%"=="y" (
+    copy ..\setting\user_setting_new.bat ..\setting\user_setting.bat
+    call ..\setting\user_setting.bat
+) else if /i "%USER_UPDATE%"=="n" (
+    echo ^>^>%PRESET_ALERT2%
+    echo ^>^>%PAUSE_MESSAGE1%
+    pause>nul
+) else (
+    echo ^>^>%RETURN_MESSAGE1%
+    goto user_setting_update
+)
+if "%E_TARGET_BITRATE_NEW%"=="" (
+    echo ^>^>%USER_SETTING1%
+    echo ^>^>%PRESET_ALERT3%
+)
+echo;
+:user_setting_update_end
+
 
 rem ################ツール類の設定################
 call :file_exist_check
@@ -301,8 +326,8 @@ set INPUT_FILE_PATH="%CAT_DIR%\%~n1.avs"
 set INPUT_FILE_TYPE=.avs
 set FINAL_MP4=%~n1.mp4
 
-dir /b /on "%CAT_DIR%" | findstr .avi$> %CAT_AVI_LIST%
-dir /b "%CAT_DIR%" | findstr .wav$> %CAT_WAV%
+dir /b /on "%CAT_DIR%" | findstr /i .avi$> %CAT_AVI_LIST%
+dir /b "%CAT_DIR%" | findstr /i .wav$> %CAT_WAV%
 for /f "delims=" %%i in (%CAT_WAV%) do set CAT_WAV_PATH=%%i
 (
     if not "%CAT_WAV_PATH%"=="" (

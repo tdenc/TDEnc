@@ -8,7 +8,7 @@ echo;
 
 rem プリセット選択
 :preset
-echo %INPUT_AUDIO% | findstr /r "\.wav\>">nul
+echo %INPUT_AUDIO% | findstr /i /r "\.wav\>">nul
 if "%ERRORLEVEL%"=="0" (
     if /i "%INPUT_FILE_TYPE%"==".mp4" (
         set MUX_MODE=y
@@ -126,20 +126,20 @@ echo ^>^>%RETURN_MESSAGE1%
 echo;
 goto economy_question
 :low
-set /a L_BITRATE=%E_MAX_BITRATE%
+set /a L_BITRATE=%E_MAX_BITRATE_NEW%
 if /i "%ACTYPE%"=="n"  goto normal_bitrate_setting
 
-if %P_TEMP_BITRATE% LSS %E_TARGET_BITRATE% (
+if %P_TEMP_BITRATE% LSS %E_TARGET_BITRATE_NEW% (
     set /a T_BITRATE=%P_TEMP_BITRATE%
 ) else (
-     set /a T_BITRATE=%E_TARGET_BITRATE%
+    set /a T_BITRATE=%E_TARGET_BITRATE_NEW%
 )
 exit /b
 :normal_bitrate_setting
-if %I_TEMP_BITRATE% LSS %E_TARGET_BITRATE% (
+if %I_TEMP_BITRATE% LSS %E_TARGET_BITRATE_NEW% (
     set /a T_BITRATE=%I_TEMP_BITRATE%
 ) else (
-    set /a T_BITRATE=%E_TARGET_BITRATE%
+    set /a T_BITRATE=%E_TARGET_BITRATE_NEW%
 )
 exit /b
 

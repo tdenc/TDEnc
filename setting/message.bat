@@ -8,6 +8,10 @@ set HORIZON=--------------------------------------------------------------------
 rem 【ここに動画をD＆D】.batのメッセージ
 set TDENC_TITLE=ちょっと！いきなりなによ！こ、心の準備が出来てないじゃない…
 set PRESET_ALERT=プリセットのバージョンが古いわよ！
+set USER_SETTING1=user_setting.batのバージョンが古いわよ！
+set USER_SETTING2=user_setting.batを自動更新する？（y/n）
+set PRESET_ALERT2=手動更新する場合はUSER_VERSIONの修正も忘れないでよね！
+set PRESET_ALERT3=（旧バージョンの設定は無視！）
 set DOUBLECLICK_ALERT1=このファイルをダブルクリックしても意味ないわよ？
 set DOUBLECLICK_ALERT2=サイトの使い方をきちんと読みなさいよね！
 set UNITE_AVI_ANNOUNCE1=分割AVI連結えんこも～ど

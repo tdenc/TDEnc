@@ -17,7 +17,7 @@ if ERRORLEVEL 22 (
 
 echo;
 move ..\Archives\tde* ..\Archives\update
-del ..\Archives\update\setting\user_setting.bat
+move /y ..\Archives\update\setting\user_setting.bat ..\Archives\update\setting\user_setting_new.bat
 
 echo;
 xcopy /y /s ..\Archives\update\* ..\ 2>nul

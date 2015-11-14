@@ -1,11 +1,11 @@
 rem このファイルはいじらないでくだしあ。
 rem いじるならuser_setting.batの方をいじってくだしあ＞＜
 
-set THIS_VERSION=15
+set THIS_VERSION=17
 set I_TARGET_BITRATE=600
 set I_MAX_BITRATE=654
-set E_TARGET_BITRATE=290
-set E_MAX_BITRATE=310
+set E_TARGET_BITRATE_NEW=420
+set E_MAX_BITRATE_NEW=445
 set DEFAULT_WIDTH=640
 set DEFAULT_HEIGHT=
 set DEFAULT_FPS=
