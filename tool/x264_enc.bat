@@ -15,6 +15,11 @@ if "%ERRORLEVEL%"=="0" (
     set DEFAULT_PASS=%DEFAULT_PASS_QUALITY%
     goto x264_option_setting
 )
+echo %PRETYPE% | findstr /i "y">nul
+if "%ERRORLEVEL%"=="0" (
+    set DEFAULT_PASS=1
+    goto x264_option_setting
+)
 
 :x264_option_setting
 call ..\setting\x264_common.bat
@@ -83,13 +88,27 @@ goto :eof
 
 rem 強制1passモード
 :1_pass_mode
-echo ^>^>%PASS_ANNOUNCE7%
-echo;
-rem １pass処理
-echo ^>^>%PASS_ANNOUNCE2%
-echo;
+if /i "%PRETYPE%"=="y" (
+    set YOUTUBE=--crf %CRF%
+    echo ^>^>%PASS_ANNOUNCE10%
+    echo;
+) else (
+    echo ^>^>%PASS_ANNOUNCE7%
+    echo;
+    echo ^>^>%PASS_ANNOUNCE2%
+    echo;
+)
 call :abr_encode
-goto :eof
+if /i not "%PRETYPE%"=="y" goto :eof
+.\MediaInfo.exe --Inform=General;%%FileSize%% --LogFile=%TEMP_INFO% %TEMP_264%>nul
+for /f "delims=" %%i in (%TEMP_INFO%) do set /a TEMP_264_BITRATE=%%i/(%TOTAL_TIME%/8)
+if %TEMP_264_BITRATE% LEQ %V_BITRATE% (
+    goto :eof
+) else (
+    set YOUTUBE=
+    set DEFAULT_PASS=0
+    goto auto_pass_mode
+)
 
 rem 強制2passモード
 :2_pass_mode
@@ -124,7 +143,7 @@ call :final_encode
 goto :eof
 
 :abr_encode
-.\x264.exe -o %TEMP_264% %X264_COMMON%
+.\x264.exe -o %TEMP_264% %X264_COMMON% %YOUTUBE%
 echo;
 exit /b
 :first_encode
@@ -139,5 +158,4 @@ exit /b
 .\x264.exe -p 2 -o %TEMP_264% %X264_COMMON%
 echo;
 exit /b
-
 

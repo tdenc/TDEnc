@@ -1,4 +1,4 @@
-set USER_VERSION=17
+set USER_VERSION=18
 
 rem ↓ここから下を適当に弄って自分好みの設定にしてくだしあ↓
 
@@ -14,6 +14,11 @@ rem 12/2/8の仕様変更後に変数名に_NEWを追加
 set E_TARGET_BITRATE_NEW=420
 rem エコノミーモード回避用の限界総ビットレート（kbps）
 set E_MAX_BITRATE_NEW=445
+
+rem 一般アカウントの解像度の上限の設定
+rem 幅のデフォルトは800pixels、高さのデフォルトは600pixels
+set I_MAX_WIDTH=800
+set I_MAX_HEIGHT=600
 
 rem リサイズの質問時にyを答えたときの幅と高さの設定
 rem 幅のデフォルトは640pixels。変えたいときは「DEFAULT_WIDTH=768」などのようにする
@@ -68,6 +73,10 @@ rem 初期設定は「DEFAULT_SIZE_PREMIUM=98.5」、「DEFAULT_SIZE_NOMAL=39」
 rem 容量オーバーするときは「DEFAULT_SIZE_PREMIUM=98」、「DEFAULT_SIZE_NOMAL=38」などにしてみる
 set DEFAULT_SIZE_PREMIUM=98.5
 set DEFAULT_SIZE_NORMAL=39
+rem YouTube用の設定
+rem 上限は20480MB（YouTubeパートナー）か2024MB（YouTube一般）
+set DEFAULT_SIZE_YOUTUBE_PARTNER=20000
+set DEFAULT_SIZE_YOUTUBE_NORMAL=2000
 
 rem 自動バージョンチェック機能の設定
 rem オンにする場合は「DEFAULT_VERSION_CHECK=true」にする（デフォルト＆激しく推奨）
@@ -112,6 +121,10 @@ set PRETYPE=
 
 rem プレミアムアカウントの場合は下を「set ACTYPE=y」に、一般アカウントの場合は下を「set ACTYPE=n」に変えてください
 set ACTYPE=
+
+rem YouTube用のエンコードの場合、パートナープログラムに登録している場合は下を「set YTTYPE=y」に、
+rem していない場合は下を「set YTTYPE=n」に変えてください
+set YTTYPE=
 
 rem プレミアムアカウントの場合の目標ビットレート（単位はkbps、入力例：set T_BITRATE=1000）
 set T_BITRATE=

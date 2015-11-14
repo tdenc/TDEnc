@@ -9,12 +9,12 @@ rem ################ƒ†[ƒU[Ý’è“Ç‚Ýž‚Ý################
 call version.bat
 
 .\curl.exe --connect-timeout 5 -f -o tool_url.zip -L "http://bit.ly/sdELss" 2>nul
-if ERRORLEVEL 0 (
+if ERRORLEVEL 22 (
+    set URL_PATH=".\tool_url_bk.bat"
+) else (
     set URL_PATH=".\tool_url.bat"
     .\7z.exe e -bd -y ".\tool_url.zip" "tool_url.bat" 1>nul 2>&1
     copy /y tool_url.bat tool_url_bk.bat 1>nul 2>&1
-) else (
-    set URL_PATH=".\tool_url_bk.bat"
 )
 call %URL_PATH%
 
@@ -300,14 +300,15 @@ exit /b
 
 :codec_check
 .\MediaInfo.exe --Inform=Video;%%Codec%% --LogFile=%TEMP_INFO% %1>nul
-findstr /i "dv" "%TEMP_INFO%">nul 2>&1
+findstr /i "dv mpeg" "%TEMP_INFO%">nul 2>&1
 if "%ERRORLEVEL%"=="0" (
     set DECODER=ffmpeg
     exit /b
 )
-findstr /i "mpeg" "%TEMP_INFO%">nul 2>&1
+.\MediaInfo.exe --Inform=Video;%%Codec/CC%% --LogFile=%TEMP_INFO% %1>nul
+findstr /i "cvid msvc cram" "%TEMP_INFO%">nul 2>&1
 if "%ERRORLEVEL%"=="0" (
-    set DECODER=directshow
+    set DECODER=ffmpeg
     exit /b
 )
 .\MediaInfo.exe --Inform=Video;%%CodecID%% --LogFile=%TEMP_INFO% %1>nul
@@ -353,11 +354,8 @@ if /i "%INPUT_FILE_TYPE%"==".avs" (
     exit /b
 )
 if /i "%INPUT_FILE_TYPE%"==".nvv" (
-    call :nvv_check
-    call nvv.bat
-    call :temp_264_check
-    call create_mp4.bat
-    exit /b
+    echo ^>^>%NVV_ALERT%
+    call quit.bat
 )
 if /i "%INPUT_FILE_TYPE%"==".swf" (
     echo ^>^>%SWF_ALERT%
@@ -366,22 +364,6 @@ if /i "%INPUT_FILE_TYPE%"==".swf" (
 call movie.bat
 call :temp_264_check
 call create_mp4.bat
-exit /b
-
-:nvv_check
-if not exist "warpsharp.dll" (
-    echo ^>^>%NVV_ALERT1%
-    echo;
-    call quit.bat
-) else if not exist "nicoAE.NVVInOut.UnmanagedUtils.dll" (
-    echo ^>^>%NVV_ALERT2%
-    echo;
-    call quit.bat
-) else if not exist "nvvinput.aui" (
-    echo ^>^>%NVV_ALERT3%
-    echo;
-    call quit.bat
-)
 exit /b
 
 :mux_filetype_check

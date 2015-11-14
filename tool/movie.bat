@@ -11,30 +11,30 @@ echo ^>^>%ANALYZE_ANNOUNCE%
 echo;
 
 rem 動画のフォーマット書き出し
-.\MediaInfo.exe --Inform=Video;%%CodecID%% --LogFile=%TEMP_INFO% %INPUT_FILE_PATH%>nul
-for /f "delims=" %%i in (%TEMP_INFO%) do echo Video Codec  : %%i
-.\MediaInfo.exe --Inform=Video;%%BitRate_Mode%% --LogFile=%TEMP_INFO% %INPUT_FILE_PATH%>nul
-for /f "delims=" %%i in (%TEMP_INFO%) do set VBITRATE_MODE=%%i
-if not "%VBITRATE_MODE%"== "" echo VideoBR Mode : %VBITRATE_MODE%
-.\MediaInfo.exe --Inform=Audio;%%Format%% --LogFile=%TEMP_INFO% %INPUT_FILE_PATH%>nul
-for /f "delims=" %%i in (%TEMP_INFO%) do echo Audio Format : %%i
-.\MediaInfo.exe --Inform=Audio;%%CodecID%% --LogFile=%TEMP_INFO% %INPUT_FILE_PATH%>nul
-for /f "delims=" %%i in (%TEMP_INFO%) do echo Audio Codec  : %%i
+.\MediaInfo.exe --Inform=General;%%Format/String%% --LogFile=%TEMP_INFO% %INPUT_FILE_PATH%>nul
+for /f "delims=" %%i in (%TEMP_INFO%) do echo File Format    : %%i
+.\MediaInfo.exe --Inform=Video;%%Codec%% --LogFile=%TEMP_INFO% %INPUT_FILE_PATH%>nul
+for /f "delims=" %%i in (%TEMP_INFO%) do echo Video Codec    : %%i
+.\MediaInfo.exe --Inform=Audio;%%Codec%% --LogFile=%TEMP_INFO% %INPUT_FILE_PATH%>nul
+for /f "delims=" %%i in (%TEMP_INFO%) do echo Audio Codec    : %%i
+.\MediaInfo.exe --Inform=Audio;%%Channels%% --LogFile=%TEMP_INFO% %INPUT_FILE_PATH%>nul
+for /f "delims=" %%i in (%TEMP_INFO%) do set AUDIO_CHANNELS=%%i
+if not "%AUDIO_CHANNELS%"=="" echo Audio Channels : %AUDIO_CHANNELS%
 .\MediaInfo.exe --Inform=Audio;%%BitRate_Mode%% --LogFile=%TEMP_INFO% %INPUT_FILE_PATH%>nul
 for /f "delims=" %%i in (%TEMP_INFO%) do set ABITRATE_MODE=%%i
-if not "%ABITRATE_MODE%"== "" echo AudioBR Mode : %ABITRATE_MODE%
+if not "%ABITRATE_MODE%"=="" echo AudioBR Mode   : %ABITRATE_MODE%
 
 rem 動画の容量書き出し
 .\MediaInfo.exe --Inform=General;%%FileSize%% --LogFile=%TEMP_INFO% %INPUT_FILE_PATH%>nul
 for /f "delims=" %%i in (%TEMP_INFO%) do set INPUT_FILE_SIZE=%%i
-echo FileSize     : %INPUT_FILE_SIZE%byte
+echo FileSize       : %INPUT_FILE_SIZE%byte
 
 rem 再生時間の書き出し
 .\MediaInfo.exe --Inform=General;%%PlayTime%% --LogFile=%TEMP_INFO% %INPUT_FILE_PATH%>nul
 
 rem 再生時間の設定
 for /f "delims=." %%i in (%TEMP_INFO%) do set TOTAL_TIME=%%i
-echo PlayTime     : %TOTAL_TIME%ms
+echo PlayTime       : %TOTAL_TIME%ms
 
 rem CFR（固定フレームレート）とVFR（可変フレームレート）の判断
 .\MediaInfo.exe --Inform=Video;%%FrameRate_Mode%% --LogFile=%TEMP_INFO% %INPUT_FILE_PATH%>nul
@@ -45,7 +45,7 @@ rem CFRの設定
 set VFR=false
 .\MediaInfo.exe --Inform=Video;%%FrameRate%% --LogFile=%TEMP_INFO% %INPUT_FILE_PATH%>nul
 for /f "delims=" %%i in (%TEMP_INFO%) do set INPUT_FPS=%%i
-if not "%INPUT_FPS%"=="" echo FPS          : %INPUT_FPS%fps^(CFR^)
+if not "%INPUT_FPS%"=="" echo Framerate      : %INPUT_FPS%fps^(CFR^)
 goto fps_main
 
 rem VFRの設定
@@ -53,11 +53,11 @@ rem VFRの設定
 set VFR=true
 .\MediaInfo.exe --Inform=Video;%%FrameRate%% --LogFile=%TEMP_INFO% %INPUT_FILE_PATH%>nul
 for /f "delims=" %%i in (%TEMP_INFO%) do set INPUT_FPS=%%i
-echo FPS          : %INPUT_FPS%fps^(VFR^)
+echo Framerate      : %INPUT_FPS%fps^(VFR^)
 .\MediaInfo.exe --Inform=Video;%%FrameRate_Minimum%% --LogFile=%TEMP_INFO% %INPUT_FILE_PATH%>nul
-for /f "delims=" %%i in (%TEMP_INFO%) do echo Minimum FPS  : %%i
+for /f "delims=" %%i in (%TEMP_INFO%) do echo Minimum FPS    : %%i
 .\MediaInfo.exe --Inform=Video;%%FrameRate_Maximum%% --LogFile=%TEMP_INFO% %INPUT_FILE_PATH%>nul
-for /f "delims=" %%i in (%TEMP_INFO%) do echo Maximum FPS  : %%i
+for /f "delims=" %%i in (%TEMP_INFO%) do echo Maximum FPS    : %%i
 
 :fps_main
 if "%DEFAULT_FPS%"=="" (
@@ -71,15 +71,15 @@ if "%DEFAULT_FPS%"=="" (
 rem 解像度の設定
 .\MediaInfo.exe --Inform=Video;%%Width%% --LogFile=%TEMP_INFO% %INPUT_FILE_PATH%>nul
 for /f "delims=" %%i in (%TEMP_INFO%) do set IN_WIDTH=%%i
-echo Width        : %IN_WIDTH%pixels
+echo Width          : %IN_WIDTH%pixels
 .\MediaInfo.exe --Inform=Video;%%Height%% --LogFile=%TEMP_INFO% %INPUT_FILE_PATH%>nul
 for /f "delims=" %%i in (%TEMP_INFO%) do set IN_HEIGHT=%%i
-echo Height       : %IN_HEIGHT%pixels
+echo Height         : %IN_HEIGHT%pixels
 
 rem アスペクト比
 .\MediaInfo.exe --Inform=Video;%%DisplayAspectRatio%% --LogFile=%TEMP_INFO% %INPUT_FILE_PATH%>nul
 for /f "delims=" %%i in (%TEMP_INFO%) do set D_ASPECT=%%i
-echo AspectRatio  : %D_ASPECT%
+echo Aspect Ratio   : %D_ASPECT%
 .\MediaInfo.exe --Inform=Video;%%PixelAspectRatio%% --LogFile=%TEMP_INFO% %INPUT_FILE_PATH%>nul
 for /f "delims=" %%i in (%TEMP_INFO%) do set P_ASPECT=%%i
 
@@ -87,10 +87,10 @@ rem インターレース関連の設定
 :interlace
 .\MediaInfo.exe --Inform=Video;%%ScanType%% --LogFile=%TEMP_INFO% %INPUT_FILE_PATH%>nul
 for /f "delims=" %%i in (%TEMP_INFO%) do set SCAN_TYPE=%%i
-if not "%SCAN_TYPE%"=="" echo Scan type    : %SCAN_TYPE%
+if not "%SCAN_TYPE%"=="" echo Scan Type      : %SCAN_TYPE%
 .\MediaInfo.exe --Inform=Video;%%ScanOrder%% --LogFile=%TEMP_INFO% %INPUT_FILE_PATH%>nul
 for /f "delims=" %%i in (%TEMP_INFO%) do set SCAN_ORDER=%%i
-if not "%SCAN_ORDER%"=="" echo Scan order   : %SCAN_ORDER%
+if not "%SCAN_ORDER%"=="" echo Scan Order     : %SCAN_ORDER%
 
 rem IDRフレーム間の最大間隔・容量上限の設定
 if /i "%DECODER%"=="avi" goto avisource_info
@@ -151,6 +151,8 @@ if "%VFR%"=="true" (
     )
     echo _premium_bitrate = String^(Floor^(Float^(%DEFAULT_SIZE_PREMIUM%^) * 1024 * 1024 * 8 / %TOTAL_TIME%^)^)
     echo _normal_bitrate = String^(Floor^(Float^(%DEFAULT_SIZE_NORMAL%^) * 1024 * 1024 * 8 / %TOTAL_TIME%^)^)
+    echo _youtube_partner_bitrate = String^(Floor^(Float^(%DEFAULT_SIZE_YOUTUBE_PARTNER%^) * 1024 * 1024 * 8 / %TOTAL_TIME%^)^)
+    echo _youtube_normal_bitrate = String^(Floor^(Float^(%DEFAULT_SIZE_YOUTUBE_NORMAL%^) * 1024 * 1024 * 8 / %TOTAL_TIME%^)^)
     echo _in_width = String^(Floor^(Float^(%IN_WIDTH%^) * %P_ASPECT%^)^)
     echo;
     echo WriteFileStart^("yv12.txt","_isyv12",append = false^)
@@ -160,6 +162,8 @@ if "%VFR%"=="true" (
     echo WriteFileStart^("premium_bitrate.txt","_premium_bitrate",append = false^)
     echo WriteFileStart^("normal_bitrate.txt","_normal_bitrate",append = false^)
     echo WriteFileStart^("in_width.txt","_in_width",append = false^)
+    echo WriteFileStart^("youtube_partner_bitrate.txt","_youtube_partner_bitrate",append = false^)
+    echo WriteFileStart^("youtube_normal_bitrate.txt","_youtube_normal_bitrate",append = false^)
     echo;
     echo Trim^(0,-1^)
     echo;
@@ -168,14 +172,20 @@ if "%VFR%"=="true" (
 
 .\avs2pipe_gcc.exe info %INFO_AVS% 1>nul 2>&1
 
-for /f "delims=" %%i in (%TEMP_DIR%\yv12.txt) do set YV12=%%i>nul
-for /f "delims=" %%i in (%TEMP_DIR%\rgb.txt) do set RGB=%%i>nul
-for /f "delims=" %%i in (%TEMP_DIR%\keyint.txt) do set /a KEYINT=%%i*10>nul
-for /f "delims=" %%i in (%TEMP_DIR%\premium_bitrate.txt) do set /a P_TEMP_BITRATE=%%i>nul
-for /f "delims=" %%i in (%TEMP_DIR%\normal_bitrate.txt) do set /a I_TEMP_BITRATE=%%i>nul
-for /f "delims=" %%i in (%TEMP_DIR%\in_width.txt) do set IN_WIDTH_MOD=%%i>nul
+if exist %TEMP_DIR%\yv12.txt (
+    for /f "delims=" %%i in (%TEMP_DIR%\yv12.txt) do set YV12=%%i>nul
+    for /f "delims=" %%i in (%TEMP_DIR%\rgb.txt) do set RGB=%%i>nul
+    for /f "delims=" %%i in (%TEMP_DIR%\keyint.txt) do set /a KEYINT=%%i*10>nul
+    for /f "delims=" %%i in (%TEMP_DIR%\premium_bitrate.txt) do set /a P_TEMP_BITRATE=%%i>nul
+    for /f "delims=" %%i in (%TEMP_DIR%\normal_bitrate.txt) do set /a I_TEMP_BITRATE=%%i>nul
+    for /f "delims=" %%i in (%TEMP_DIR%\youtube_partner_bitrate.txt) do set /a Y_P_TEMP_BITRATE=%%i>nul
+    for /f "delims=" %%i in (%TEMP_DIR%\youtube_normal_bitrate.txt) do set /a Y_I_TEMP_BITRATE=%%i>nul
+    for /f "delims=" %%i in (%TEMP_DIR%\in_width.txt) do set IN_WIDTH_MOD=%%i>nul
 
-for /f "delims=" %%i in (%TEMP_DIR%\fps.txt) do set AVS_FPS=%%i>nul 2>&1
+    for /f "delims=" %%i in (%TEMP_DIR%\fps.txt) do set AVS_FPS=%%i>nul 2>&1
+) else (
+    goto info_check
+)
 if "%FPS%"=="" set FPS=%AVS_FPS%
 
 rem 出力解像度の設定
@@ -198,11 +208,19 @@ if "%TOTAL_TIME%"=="" (
 )
 if "%KEYINT%"=="" (
     echo;
-    echo ^>^>%DECODE_ERROR3%
-    echo ^>^>%DECODE_ERROR4%
-    echo ^>^>%DECODE_ERROR5%
-    echo ^>^>%DECODE_ERROR6%
-    call quit.bat
+    if /i "%DECODER%"=="avi" (
+        set DECODER=ffmpeg
+        goto ffmpegsource_info
+    ) else if /i "%DECODER%"=="ffmpeg" (
+        set DECODER=directshow
+        goto directshowsource_info
+    ) else (
+        echo ^>^>%DECODE_ERROR3%
+        echo ^>^>%DECODE_ERROR4%
+        echo ^>^>%DECODE_ERROR5%
+        echo ^>^>%DECODE_ERROR6%
+        call quit.bat
+    )
 )
 goto movie_mode_question
 

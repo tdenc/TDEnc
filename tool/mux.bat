@@ -11,7 +11,7 @@ if "%ERRORLEVEL%"=="1" goto movie_mux_mode
 
 rem 画像と音声のMUX
 .\MediaInfo.exe --Inform=Audio;%%PlayTime%% --LogFile=%TEMP_INFO% %INPUT_AUDIO%>nul
-for /f "delims.=" %%i in (%TEMP_INFO%) do set TOTAL_TIME=%%i
+for /f "delims=." %%i in (%TEMP_INFO%) do set TOTAL_TIME=%%i
 if "%TOTAL_TIME%"=="" (
     echo ^>^>%ANALYZE_ERROR%
     echo;
@@ -19,13 +19,18 @@ if "%TOTAL_TIME%"=="" (
 )
 echo PlayTime     : %TOTAL_TIME%ms
 
+set FPS=10
+
 (
-    echo ImageSource^(%INPUT_VIDEO%,end=1,fps=1^)
+    echo ImageSource^(%INPUT_VIDEO%,end=1,fps=%FPS%^)
     echo _premium_bitrate = String^(Floor^(Float^(%DEFAULT_SIZE_PREMIUM%^) * 1024 * 1024 * 8 / %TOTAL_TIME%^)^)
     echo _normal_bitrate = String^(Floor^(Float^(%DEFAULT_SIZE_NORMAL%^) * 1024 * 1024 * 8 / %TOTAL_TIME%^)^)
-    echo;
+    echo _youtube_partner_bitrate = String^(Floor^(Float^(%DEFAULT_SIZE_YOUTUBE_PARTNER%^) * 1024 * 1024 * 8 / %TOTAL_TIME%^)^)
+    echo _youtube_normal_bitrate = String^(Floor^(Float^(%DEFAULT_SIZE_YOUTUBE_NORMAL%^) * 1024 * 1024 * 8 / %TOTAL_TIME%^)^)
     echo WriteFileStart^("premium_bitrate.txt","_premium_bitrate",append = false^)
     echo WriteFileStart^("normal_bitrate.txt","_normal_bitrate",append = false^)
+    echo WriteFileStart^("youtube_partner_bitrate.txt","_youtube_partner_bitrate",append = false^)
+    echo WriteFileStart^("youtube_normal_bitrate.txt","_youtube_normal_bitrate",append = false^)
     echo;
     echo return last
 )> %INFO_AVS%
@@ -34,10 +39,10 @@ echo PlayTime     : %TOTAL_TIME%ms
 
 for /f "delims=" %%i in (%TEMP_DIR%\premium_bitrate.txt) do set /a P_TEMP_BITRATE=%%i>nul
 for /f "delims=" %%i in (%TEMP_DIR%\normal_bitrate.txt) do set /a I_TEMP_BITRATE=%%i>nul
+for /f "delims=" %%i in (%TEMP_DIR%\youtube_partner_bitrate.txt) do set /a Y_P_TEMP_BITRATE=%%i>nul
+for /f "delims=" %%i in (%TEMP_DIR%\youtube_normal_bitrate.txt) do set /a Y_I_TEMP_BITRATE=%%i>nul
 
-set /a TOTAL_TIME_SECOND=%TOTAL_TIME%/1000
-
-set FPS=1
+set /a TOTAL_TIME_SECOND=%TOTAL_TIME%/100
 
 .\MediaInfo.exe --Inform=Image;%%Width%% --LogFile=%TEMP_INFO% %INPUT_VIDEO%>nul
 for /f "delims=" %%i in (%TEMP_INFO%) do set IN_WIDTH=%%i
@@ -113,13 +118,13 @@ if "%FULL_RANGE%"=="off" (
     set RANGE=auto
 )
 
-.\x264.exe --range %RANGE% -I 10 -i 10 --no-scenecut -b 0 -r 1 -f -1:-1 -B %V_BITRATE% --ipratio 1.0 --aq-mode 2 --aq-strength 0.70 -p 1 --stats %TEMP_DIR%\x264_2pass.log --qcomp 0.8 --direct auto --weightp 0 --me dia -m 1 -t 1 --no-fast-pskip --no-dct-decimate --threads 0 --thread-input --colormatrix smpte170m --quiet -o "nul" %VIDEO_AVS%
+.\x264.exe --range %RANGE% -I 100 -i 100 --no-scenecut -b 0 -r 1 -f -1:-1 -B %V_BITRATE% --ipratio 1.0 --aq-mode 2 --aq-strength 0.70 -p 1 --stats %TEMP_DIR%\x264_2pass.log --qcomp 0.8 --direct auto --weightp 0 --me dia -m 1 -t 1 --no-fast-pskip --no-dct-decimate --threads 0 --thread-input --colormatrix smpte170m --quiet -o "nul" %VIDEO_AVS%
 echo;
 
 rem ２pass処理
 echo ^>^>２pass目～♪
 echo;
-.\x264.exe --range %RANGE% -I 10 -i 10 --no-scenecut -b 0 -r 1 -f -1:-1 -B %V_BITRATE% --ipratio 1.0 --aq-mode 2 --aq-strength 0.70 -p 2 --stats %TEMP_DIR%\x264_2pass.log --qcomp 0.8 --direct auto --weightp 0 --me dia -m 1 -t 1 --no-fast-pskip --no-dct-decimate --threads 0 --thread-input --colormatrix smpte170m --quiet -o %TEMP_264% %VIDEO_AVS%
+.\x264.exe --range %RANGE% -I 100 -i 100 --no-scenecut -b 0 -r 1 -f -1:-1 -B %V_BITRATE% --ipratio 1.0 --aq-mode 2 --aq-strength 0.70 -p 2 --stats %TEMP_DIR%\x264_2pass.log --qcomp 0.8 --direct auto --weightp 0 --me dia -m 1 -t 1 --no-fast-pskip --no-dct-decimate --threads 0 --thread-input --colormatrix smpte170m --quiet -o %TEMP_264% %VIDEO_AVS%
 echo;
 
 echo ^>^>%VIDEO_ENC_END%
@@ -160,20 +165,18 @@ rem 動画と音声のMUX
 :movie_mux_mode
 
 rem 動画のフォーマット書き出し
-.\MediaInfo.exe --Inform=Video;%%Format%% --LogFile=%TEMP_INFO% %INPUT_VIDEO%>nul
-for /f "delims=" %%i in (%TEMP_INFO%) do echo Video Format : %%i
-.\MediaInfo.exe --Inform=Video;%%CodecID%% --LogFile=%TEMP_INFO% %INPUT_VIDEO%>nul
-for /f "delims=" %%i in (%TEMP_INFO%) do echo Video Codec  : %%i
-.\MediaInfo.exe --Inform=Video;%%BitRate_Mode%% --LogFile=%TEMP_INFO% %INPUT_VIDEO%>nul
-for /f "delims=" %%i in (%TEMP_INFO%) do set VBITRATE_MODE=%%i
-if not "%VBITRATE_MODE%"== "" echo VideoBR Mode : %VBITRATE_MODE%
+.\MediaInfo.exe --Inform=General;%%Format/String%% --LogFile=%TEMP_INFO% %INPUT_VIDEO%>nul
+for /f "delims=" %%i in (%TEMP_INFO%) do echo File Format    : %%i
+.\MediaInfo.exe --Inform=Video;%%Codec%% --LogFile=%TEMP_INFO% %INPUT_VIDEO%>nul
+for /f "delims=" %%i in (%TEMP_INFO%) do echo Video Codec    : %%i
 .\MediaInfo.exe --Inform=Video;%%BitRate%% --LogFile=%TEMP_INFO% %INPUT_VIDEO%>nul
 for /f "delims=" %%i in (%TEMP_INFO%) do set /a S_V_BITRATE=%%i/1000
-echo VideoBitrate : %S_V_BITRATE%
-.\MediaInfo.exe --Inform=Audio;%%Format%% --LogFile=%TEMP_INFO% %INPUT_AUDIO%>nul
-for /f "delims=" %%i in (%TEMP_INFO%) do echo Audio Format : %%i
-.\MediaInfo.exe --Inform=Audio;%%CodecID%% --LogFile=%TEMP_INFO% %INPUT_AUDIO%>nul
-for /f "delims=" %%i in (%TEMP_INFO%) do echo Audio Codec  : %%i
+echo Video Bitrate  : %S_V_BITRATE%
+.\MediaInfo.exe --Inform=Audio;%%Codec%% --LogFile=%TEMP_INFO% %INPUT_AUDIO%>nul
+for /f "delims=" %%i in (%TEMP_INFO%) do echo Audio Codec    : %%i
+.\MediaInfo.exe --Inform=Audio;%%Channels%% --LogFile=%TEMP_INFO% %INPUT_AUDIO%>nul
+for /f "delims=" %%i in (%TEMP_INFO%) do set AUDIO_CHANNELS=%%i
+if not "%AUDIO_CHANNELS%"=="" echo Audio Channels : %AUDIO_CHANNELS%
 .\MediaInfo.exe --Inform=Audio;%%BitRate_Mode%% --LogFile=%TEMP_INFO% %INPUT_AUDIO%>nul
 for /f "delims=" %%i in (%TEMP_INFO%) do set ABITRATE_MODE=%%i
 if not "%ABITRATE_MODE%"== "" echo AudioBR Mode : %ABITRATE_MODE%
@@ -306,6 +309,8 @@ if "%VFR%"=="true" (
     )
     echo _premium_bitrate = String^(Floor^(Float^(%DEFAULT_SIZE_PREMIUM%^) * 1024 * 1024 * 8 / %TOTAL_TIME%^)^)
     echo _normal_bitrate = String^(Floor^(Float^(%DEFAULT_SIZE_NORMAL%^) * 1024 * 1024 * 8 / %TOTAL_TIME%^)^)
+    echo _youtube_partner_bitrate = String^(Floor^(Float^(%DEFAULT_SIZE_YOUTUBE_PARTNER%^) * 1024 * 1024 * 8 / %TOTAL_TIME%^)^)
+    echo _youtube_normal_bitrate = String^(Floor^(Float^(%DEFAULT_SIZE_YOUTUBE_NORMAL%^) * 1024 * 1024 * 8 / %TOTAL_TIME%^)^)
     echo _in_width = String^(Floor^(Float^(%IN_WIDTH%^) * %P_ASPECT%^)^)
     echo;
     echo WriteFileStart^("yv12.txt","_isyv12",append = false^)
@@ -315,6 +320,8 @@ if "%VFR%"=="true" (
     echo WriteFileStart^("premium_bitrate.txt","_premium_bitrate",append = false^)
     echo WriteFileStart^("normal_bitrate.txt","_normal_bitrate",append = false^)
     echo WriteFileStart^("in_width.txt","_in_width",append = false^)
+    echo WriteFileStart^("youtube_partner_bitrate.txt","_youtube_partner_bitrate",append = false^)
+    echo WriteFileStart^("youtube_normal_bitrate.txt","_youtube_normal_bitrate",append = false^)
     echo;
     echo Trim^(0,-1^)
     echo;
@@ -323,14 +330,20 @@ if "%VFR%"=="true" (
 
 .\avs2pipe_gcc.exe info %INFO_AVS% 1>nul 2>&1
 
-for /f "delims=" %%i in (%TEMP_DIR%\yv12.txt) do set YV12=%%i>nul
-for /f "delims=" %%i in (%TEMP_DIR%\rgb.txt) do set RGB=%%i>nul
-for /f "delims=" %%i in (%TEMP_DIR%\keyint.txt) do set /a KEYINT=%%i*10>nul
-for /f "delims=" %%i in (%TEMP_DIR%\premium_bitrate.txt) do set /a P_TEMP_BITRATE=%%i>nul
-for /f "delims=" %%i in (%TEMP_DIR%\normal_bitrate.txt) do set /a I_TEMP_BITRATE=%%i>nul
-for /f "delims=" %%i in (%TEMP_DIR%\in_width.txt) do set IN_WIDTH_MOD=%%i>nul
+if exist %TEMP_DIR%\yv12.txt (
+    for /f "delims=" %%i in (%TEMP_DIR%\yv12.txt) do set YV12=%%i>nul
+    for /f "delims=" %%i in (%TEMP_DIR%\rgb.txt) do set RGB=%%i>nul
+    for /f "delims=" %%i in (%TEMP_DIR%\keyint.txt) do set /a KEYINT=%%i*10>nul
+    for /f "delims=" %%i in (%TEMP_DIR%\premium_bitrate.txt) do set /a P_TEMP_BITRATE=%%i>nul
+    for /f "delims=" %%i in (%TEMP_DIR%\normal_bitrate.txt) do set /a I_TEMP_BITRATE=%%i>nul
+    for /f "delims=" %%i in (%TEMP_DIR%\youtube_partner_bitrate.txt) do set /a Y_P_TEMP_BITRATE=%%i>nul
+    for /f "delims=" %%i in (%TEMP_DIR%\youtube_normal_bitrate.txt) do set /a Y_I_TEMP_BITRATE=%%i>nul
+    for /f "delims=" %%i in (%TEMP_DIR%\in_width.txt) do set IN_WIDTH_MOD=%%i>nul
 
-for /f "delims=" %%i in (%TEMP_DIR%\fps.txt) do set AVS_FPS=%%i>nul 2>&1
+    for /f "delims=" %%i in (%TEMP_DIR%\fps.txt) do set AVS_FPS=%%i>nul 2>&1
+) else (
+    goto info_check
+)
 if "%FPS%"=="" set FPS=%AVS_FPS%
 
 rem 出力解像度の設定
@@ -352,11 +365,19 @@ if "%TOTAL_TIME%"=="" (
 )
 if "%KEYINT%"=="" (
     echo;
-    echo ^>^>%DECODE_ERROR3%
-    echo ^>^>%DECODE_ERROR4%
-    echo ^>^>%DECODE_ERROR5%
-    echo ^>^>%DECODE_ERROR6%
-    call quit.bat
+    if /i "%DECODER%"=="avi" (
+        set DECODER=ffmpeg
+        goto ffmpegsource_info
+    ) else if /i "%DECODER%"=="ffmpeg" (
+        set DECODER=directshow
+        goto directshowsource_info
+    ) else (
+        echo ^>^>%DECODE_ERROR3%
+        echo ^>^>%DECODE_ERROR4%
+        echo ^>^>%DECODE_ERROR5%
+        echo ^>^>%DECODE_ERROR6%
+        call quit.bat
+    )
 )
 goto mux_mode_question
 

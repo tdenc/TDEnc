@@ -12,20 +12,25 @@ if not exist %TEMP_WAV% goto wav_not_exist
 
 rem 音声エンコード
 if /i "%AAC_PROFILE%"=="auto" (
-    goto auto_profile
-) else if /i "%AAC_PROFILE%"=="lc" (
-    set AAC=-lc
+    if %A_BITRATE% LEQ 32 (
+        if "%AUDIO_CHANNELS%"=="2" (
+            set AAC=-hev2
+        ) else (
+            set AAC=-he
+        )
+    ) else if %A_BITRATE% LEQ 96 (
+        set AAC=-he
+    ) else (
+        set AAC=-lc
+    )
 ) else if /i "%AAC_PROFILE%"=="he" (
     set AAC=-he
-)　else if /i "%AAC_PROFILE%"=="hev2" (
-    set AAC=-hev2
-)
-
-:auto_profile
-if %A_BITRATE% LEQ 32 (
-    set AAC=-hev2
-) else if %A_BITRATE% LEQ 96 (
-    set AAC=-he
+) else if /i "%AAC_PROFILE%"=="hev2" (
+    if "%AUDIO_CHANNELS%"=="2" (
+        set AAC=-hev2
+    ) else (
+        set AAC=-he
+    )
 ) else (
     set AAC=-lc
 )

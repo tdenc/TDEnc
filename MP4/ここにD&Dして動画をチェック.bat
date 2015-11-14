@@ -30,7 +30,7 @@ for /f %%i in (%TEMP_FILE%) do set /a A_BITRATE=(%%i+500)/1000
 .\MediaInfo.exe --Inform=General;%%FileSize%% --LogFile=%TEMP_FILE% "%MOVIE_FILE%">nul
 for /f %%i in (%TEMP_FILE%) do set SIZE=%%i
 
-set /a PLAYER_HEIGHT=384
+set /a PLAYER_HEIGHT=384+24
 set /a PLAYER_WIDTH=640
 
 (
@@ -128,4 +128,4 @@ set /a PLAYER_WIDTH=640
 )> %HTML_FILE%
 echo;
 
-start "ie" "%HTML_FILE%"
+start rundll32 url.dll,FileProtocolHandler "%HTML_FILE%"

@@ -27,6 +27,7 @@ echo   n:%PRESET_LIST3%
 echo   o:%PRESET_LIST4%
 echo   p:%PRESET_LIST5%
 echo   q:%PRESET_LIST6%
+echo   y:%PRESET_LIST9%
 if "%MUX_MODE%"=="y" echo   s:%PRESET_LIST7%
 echo   x:%PRESET_LIST8%
 echo %HORIZON%
@@ -57,6 +58,12 @@ if "%PRETYPE%"=="" (
     set /a TEMP_BITRATE=128
     set a_SYNC=y
     goto account
+) else if /i "%PRETYPE%"=="y" (
+    set ENCTYPE=n
+    set DECTYPE=n
+    set RESIZE=n
+    set /a TEMP_BITRATE=320
+    goto account
 ) else if /i "%PRETYPE%"=="x" (
     set ENCTYPE=n
     set DECTYPE=n
@@ -75,15 +82,40 @@ rem アカウント分岐
 if not "%ACTYPE%"=="" goto account_main
 :account_question
 echo;
-echo ^>^>%PREMIUM_START1%
-echo ^>^>%PREMIUM_START2%
-set /p ACTYPE=^>^>
+if /i not "%PRETYPE%"=="y" (
+    echo ^>^>%PREMIUM_START1%
+    echo ^>^>%PREMIUM_START2%
+    set YTTYPE=
+    set /p ACTYPE=^>^>
+) else if "%YTTYPE%"=="" (
+    echo ^>^>%PREMIUM_START3%
+    echo ^>^>%PREMIUM_START4%
+    set /p YTTYPE=^>^>
+)
 :account_main
+set /a TOTAL_TIME_SEC=%TOTAL_TIME% / 1000
+set /a TOTAL_TIME_LIM=15 * 60
+if /i "%YTTYPE%"=="n" (
+    if %TOTAL_TIME_SEC% GEQ %TOTAL_TIME_LIM% (
+        echo ^>^>%YOUTUBE_ERROR1%
+        echo ^>^>%YOUTUBE_ERROR2%
+        set YTTYPE=
+        goto account_question
+    )
+)
+if not "%YTTYPE%"=="" set ACTYPE=%YTTYPE%
 if /i "%ACTYPE%"=="y" goto premium
-if /i "%ACTYPE%"=="n" goto normal
+if /i "%ACTYPE%"=="n" (
+    if /i "%PRETYPE%"=="y" (
+        goto premium
+    ) else (
+        goto normal
+    )
+)
 echo;
 echo ^>^>%RETURN_MESSAGE1%
 echo;
+set YTTYPE=
 goto account_question
 :premium
 call :economy
@@ -98,6 +130,7 @@ exit /b
 call :normal_bitrate
 call :economy
 call :resize
+call :resize_check
 call :audio_bitrate
 call :audio_sync
 call :confirm
@@ -145,6 +178,15 @@ exit /b
 
 rem プレアカビットレート質問
 :premium_bitrate
+if /i "%PRETYPE%"=="y" (
+    if /i "%ACTYPE%"=="y" (
+        set /a T_BITRATE=%Y_P_TEMP_BITRATE%
+        set /a P_TEMP_BITRATE=%Y_P_TEMP_BITRATE%
+    ) else (
+        set /a T_BITRATE=%Y_I_TEMP_BITRATE%
+        set /a P_TEMP_BITRATE=%Y_I_TEMP_BITRATE%
+    )
+)
 if not "%T_BITRATE%"=="" goto premium_bitrate_main
 :premium_bitrate_question
 echo;
@@ -162,7 +204,7 @@ if "%ERRORLEVEL%"=="0" (
 )
 if %P_TEMP_BITRATE% LSS %T_BITRATE% (
     if "%BEGINNER%"=="true" (
-        set T_BITRATE=%P_TEMP_BITRATE%
+        set /a T_BITRATE=%P_TEMP_BITRATE%
     ) else (
         echo;
         echo ^>^>%RETURN_MESSAGE3%
@@ -227,7 +269,7 @@ set /p RESIZE=^>^>
 :resize_main
 if /i "%RESIZE%"=="y" goto autoconvert
 if /i "%RESIZE%"=="n" goto noconvert
-echo %RESIZE% | findstr ":">nul
+echo %RESIZE% | findstr ": x">nul
 if "%ERRORLEVEL%"=="0" goto convert
 
 echo;
@@ -238,12 +280,10 @@ goto resize_question2
 :convert
 echo %RESIZE%> %TEMP_INFO%
 set RESIZE=y
-for /f "delims=: tokens=1" %%i in (%TEMP_INFO%) do set DEFAULT_WIDTH=%%i
-set /a OUT_WIDTH=%DEFAULT_WIDTH%
+for /f "delims=:x tokens=1" %%i in (%TEMP_INFO%) do set DEFAULT_WIDTH=%%i
 set /a WIDTH=%DEFAULT_WIDTH% - %DEFAULT_WIDTH% %% 2
-for /f "delims=: tokens=2" %%i in (%TEMP_INFO%) do set DEFAULT_HEIGHT=%%i
-set /a OUT_HEIGHT=%DEFAULT_HEIGHT%
-set /a HEIGHT=%OUT_HEIGHT% - %OUT_HEIGHT% %% 2
+for /f "delims=:x tokens=2" %%i in (%TEMP_INFO%) do set DEFAULT_HEIGHT=%%i
+set /a HEIGHT=%DEFAULT_HEIGHT% - %DEFAULT_HEIGHT% %% 2
 if %IN_WIDTH% LSS %WIDTH% (
     set SETTING2=up_convert
     set RESIZER=BlackmanResize
@@ -281,6 +321,32 @@ exit /b
 set SETTING2=noresize
 set /a WIDTH=%IN_WIDTH% - %IN_WIDTH% %% 2
 set /a HEIGHT=%IN_HEIGHT% - %IN_HEIGHT% %% 2
+exit /b
+:resize_check
+if %WIDTH% LEQ %I_MAX_WIDTH% (
+    if %HEIGHT% LEQ %I_MAX_HEIGHT% (
+        exit /b
+    )
+)
+echo;
+if /i "%PRETYPE%"=="s" (
+    echo ^>^>%RETURN_MESSAGE8%
+    echo ^>^>%RETURN_MESSAGE9%
+    echo;
+    echo ^>^>%PAUSE_MESSAGE2%
+    pause>nul
+    call ..\setting\default_setting.bat
+    call ..\setting\user_setting.bat
+    set PRETYPE=
+) else (
+    echo ^>^>%RETURN_MESSAGE10%
+    echo ^>^>%RETURN_MESSAGE11%
+    echo;
+    echo ^>^>%PAUSE_MESSAGE2%
+    pause>nul
+    set RESIZE=
+)
+goto preset
 exit /b
 
 rem 音声ビットレート決定
@@ -381,27 +447,37 @@ if /i "%PRETYPE%"=="p" echo %CONFIRM_PRETYPE%:%PRESET_LIST5%
 if /i "%PRETYPE%"=="q" echo %CONFIRM_PRETYPE%:%PRESET_LIST6%
 if /i "%PRETYPE%"=="s" echo %CONFIRM_PRETYPE%:%PRESET_LIST7%
 if /i "%PRETYPE%"=="x" echo %CONFIRM_PRETYPE%:%PRESET_LIST8%
-if /i "%ACTYPE%"=="y" (
+if /i "%PRETYPE%"=="y" (
+    echo %CONFIRM_PRETYPE%:%PRESET_LIST9%
+    if /i "%ACTYPE%"=="y" (
+        echo %CONFIRM_ACCOUNT1%:%CONFIRM_ACCOUNT4%
+    ) else (
+        echo %CONFIRM_ACCOUNT1%:%CONFIRM_ACCOUNT3%
+    )
+) else if /i "%ACTYPE%"=="y" (
     echo %CONFIRM_ACCOUNT1%:%CONFIRM_ACCOUNT2%
 ) else (
     echo %CONFIRM_ACCOUNT1%:%CONFIRM_ACCOUNT3%
 )
-if /i "%ENCTYPE%"=="y" (
-    echo %CONFIRM_ENCTYPE%:%CONFIRM_ON%
-) else (
-    echo %CONFIRM_ENCTYPE%:%CONFIRM_OFF%
-)
-if /i "%DECTYPE%"=="y" (
-    echo %CONFIRM_DECTYPE%:%CONFIRM_ON%
-) else (
-    echo %CONFIRM_DECTYPE%:%CONFIRM_OFF%
-)
-if "%SETTING2%"=="up_convert" (
-    echo %CONFIRM_RESIZE1%:%CONFIRM_RESIZE2%^(%WIDTH%x%HEIGHT%^)
-) else if "%SETTING2%"=="down_convert" (
-    echo %CONFIRM_RESIZE1%:%CONFIRM_RESIZE3%^(%WIDTH%x%HEIGHT%^)
-) else (
-    echo %CONFIRM_RESIZE1%:%CONFIRM_OFF%^(%WIDTH%x%HEIGHT%^)
+
+if /i not "%PRETYPE%"=="y" (
+    if /i "%ENCTYPE%"=="y" (
+        echo %CONFIRM_ENCTYPE%:%CONFIRM_ON%
+    ) else (
+        echo %CONFIRM_ENCTYPE%:%CONFIRM_OFF%
+    )
+    if /i "%DECTYPE%"=="y" (
+        echo %CONFIRM_DECTYPE%:%CONFIRM_ON%
+    ) else (
+        echo %CONFIRM_DECTYPE%:%CONFIRM_OFF%
+    )
+    if "%SETTING2%"=="up_convert" (
+        echo %CONFIRM_RESIZE1%:%CONFIRM_RESIZE2%^(%WIDTH%x%HEIGHT%^)
+    ) else if "%SETTING2%"=="down_convert" (
+        echo %CONFIRM_RESIZE1%:%CONFIRM_RESIZE3%^(%WIDTH%x%HEIGHT%^)
+    ) else (
+        echo %CONFIRM_RESIZE1%:%CONFIRM_OFF%^(%WIDTH%x%HEIGHT%^)
+    )
 )
 if /i "%A_SYNC%"=="y" (
     echo %CONFIRM_SYNC1%:%CONFIRM_SYNC2%
@@ -421,14 +497,8 @@ if /i "%CONFIRM%"=="y" (
 if /i "%CONFIRM%"=="n" (
     echo;
     echo ^>^>%CONFIRM_LAST2%
-    set PRETYPE=
-    set ACTYPE=
-    set T_BITRATE=
-    set ENCTYPE=
-    set DECTYPE=
-    set RESIZE=
-    set TEMP_BITRATE=
-    set A_SYNC=
+    call ..\setting\default_setting.bat
+    call ..\setting\user_setting.bat
     set SKIP_MODE=
     echo;
     goto preset

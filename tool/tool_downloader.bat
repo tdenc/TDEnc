@@ -100,7 +100,7 @@ echo;
 echo ^>^>%PAUSE_MESSAGE2%
 pause>nul
 echo;
-start "ie" "http://www.nero.com/jpn/downloads-nerodigital-nero-aac-codec.php"
+start rundll32 url.dll,FileProtocolHandler "http://www.nero.com/jpn/downloads-nerodigital-nero-aac-codec.php"
 
 :agree
 echo ^>^>%NERO_QUESTION%
@@ -214,5 +214,5 @@ for %%i in (%NERO_PATH%) do if %%~zi EQU %NERO_SIZE% set NERO=t
 if not exist %X264_PATH% exit /b
 %X264_PATH% --version>"%TEMP_DIR%\x264_version.txt" 2>nul
 findstr /i "%X264_VERSION%" "%TEMP_DIR%\x264_version.txt">nul 2>&1
-if ERRORLEVEL 0 set X264=t
+if "%ERRORLEVEL%"=="0" set X264=t
 exit /b
