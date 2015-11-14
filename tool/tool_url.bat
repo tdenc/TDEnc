@@ -51,7 +51,7 @@ set NERO_URL="http://ftp6.nero.com/tools/NeroAACCodec-1.5.1.zip"
 set NERO_PATH="..\Archives\NeroAACCodec-1.5.1.zip"
 set NERO_SIZE=2050564
 
-set X264_VERSION=2145
+set X264_VERSION=2146
 set X264_URL="http://x264.nl/x264/32bit/8bit_depth/revision%X264_VERSION%/x264.exe"
 set X264_S_URL="http://mirror03.x264.nl/x264/32bit/8bit_depth/revision%X264_VERSION%/x264.exe"
 set X264_PATH="..\Archives\x264.exe"
