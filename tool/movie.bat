@@ -13,7 +13,7 @@ rem 動画のフォーマット書き出し
 for /f "delims=" %%i in (%TEMP_INFO%) do echo Video Codec  : %%i
 .\MediaInfo.exe --Inform=Video;%%BitRate_Mode%% --LogFile=%TEMP_INFO% %INPUT_FILE_PATH%>nul
 for /f "delims=" %%i in (%TEMP_INFO%) do set VBITRATE_MODE=%%i
-if not "%VBITRATE_MODE%"== "" echo AudioBR Mode : %VBITRATE_MODE%
+if not "%VBITRATE_MODE%"== "" echo VideoBR Mode : %VBITRATE_MODE%
 .\MediaInfo.exe --Inform=Audio;%%Format%% --LogFile=%TEMP_INFO% %INPUT_FILE_PATH%>nul
 for /f "delims=" %%i in (%TEMP_INFO%) do echo Audio Format : %%i
 .\MediaInfo.exe --Inform=Audio;%%CodecID%% --LogFile=%TEMP_INFO% %INPUT_FILE_PATH%>nul
@@ -159,7 +159,8 @@ for /f "delims=" %%i in (%TEMP_DIR%\normal_bitrate.txt) do set /a I_TEMP_BITRATE
 for /f "delims=" %%i in (%TEMP_DIR%\in_width.txt) do set IN_WIDTH=%%i>nul
 
 rem 出力解像度の設定
-set /a OUT_WIDTH_ODD=%IN_WIDTH% %% 2
+set /a IN_WIDTH_ODD=%IN_WIDTH% %% 2
+set /a IN_HEIGHT_ODD=%IN_HEIGHT% %% 2
 set /a OUT_WIDTH=%IN_WIDTH%
 if not "%DEFAULT_HEIGHT%"=="" (
     set /a OUT_HEIGHT=%DEFAULT_HEIGHT%
@@ -268,8 +269,8 @@ if "%SCAN_TYPE%"=="MBAFF" goto interlace
 rem プログレッシブ
 if /i "%YV12%"=="true" goto fps_avs
 
-if "%OUT_WIDTH_ODD%"=="1" echo Crop^(0,0,-1,0^)>> %VIDEO_AVS%
-if "%OUT_HEIGHT_ODD%"=="1" echo Crop^(0,0,0,-1^)>> %VIDEO_AVS%
+if "%IN_WIDTH_ODD%"=="1" echo Crop^(0,0,-1,0^)>> %VIDEO_AVS%
+if "%IN_HEIGHT_ODD%"=="1" echo Crop^(0,0,0,-1^)>> %VIDEO_AVS%
 
 echo ConvertToYV12^(%AVS_SCALE%interlaced=false^)>> %VIDEO_AVS%
 echo;>> %VIDEO_AVS%

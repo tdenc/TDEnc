@@ -81,7 +81,8 @@ rem ビットレート情報の取得
 for /f "delims=" %%i in (%TEMP_DIR%\premium_bitrate.txt) do set /a P_TEMP_BITRATE=%%i>nul
 for /f "delims=" %%i in (%TEMP_DIR%\normal_bitrate.txt) do set /a I_TEMP_BITRATE=%%i>nul
 
-set /a OUT_WIDTH_ODD=%IN_WIDTH% %% 2
+set /a IN_WIDTH_ODD=%IN_WIDTH% %% 2
+set /a IN_HEIGHT_ODD=%IN_HEIGHT% %% 2
 set /a OUT_WIDTH=%IN_WIDTH%
 if not "%DEFAULT_HEIGHT%"=="" (
     set /a OUT_HEIGHT=%DEFAULT_HEIGHT%
@@ -148,8 +149,8 @@ if /i "%RGB%"=="true" (
     echo;
 
     if /i not "%YV12%"=="true" (
-        if "%OUT_WIDTH_ODD%"=="1" echo Crop^(0,0,-1,0^)
-        if "%OUT_HEIGHT_ODD%"=="1" echo Crop^(0,0,0,-1^)
+        if "%IN_WIDTH_ODD%"=="1" echo Crop^(0,0,-1,0^)
+        if "%IN_HEIGHT_ODD%"=="1" echo Crop^(0,0,0,-1^)
         echo ConvertToYV12^(%AVS_SCALE%interlaced=false^)
     )
     echo;

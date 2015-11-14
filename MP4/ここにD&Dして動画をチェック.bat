@@ -57,8 +57,9 @@ set /a PLAYER_HEIGHT=%IN_HEIGHT% + 20
   echo ^<body bgcolor="#ffeaea" text="#000000" link="#0000ff" vlink="#800080" alink="#ff0000"^>
   echo ^<center^>
   echo ^<h3^>%~nx1^</h3^>
-  echo ^<p^>動画のチェックは他のプレイヤーではなく必ずこのプレイヤーでチェックしてください^<br^>
-  echo プレイヤーで見え方が変わります（このプレイヤーはニコニコ動画とほぼ同じ見え方です）^</p^>
+  echo ^<p^>動画のチェックは他のプレイヤーじゃなくこのプレイヤーでチェックしてよね！^<br^>
+  echo このプレイヤーはニコニコ動画と「ほぼ」同じ見え方よ！^<br^>
+  echo （一番いい確認方法はニコニコへの仮アップロードなんだけどね）^</p^>
   echo ^<script type='text/javascript' src='swfobject.js'^>^</script^>
   echo ^<div id='mediaspace'^>プレイヤーが表示されない場合は情報バーをクリックしてプログラムを許可してね^</div^>
   echo;

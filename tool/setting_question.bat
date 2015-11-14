@@ -20,12 +20,30 @@ echo   n:%PRESET_LIST3%
 echo   o:%PRESET_LIST4%
 echo   p:%PRESET_LIST5%
 echo   q:%PRESET_LIST6%
-echo   x:%PRESET_LIST7%
+if not "%INPUT_AUDIO%"=="" (
+    if /i "%INPUT_FILE_TYPE%"==".mp4" (
+        echo   s:%PRESET_LIST7%
+    )
+)
+echo   x:%PRESET_LIST8%
 echo %HORIZON%
 set /p PRETYPE=^>^>
 :preset_main
 if "%PRETYPE%"=="" (
     goto preset_question
+) else if /i "%PRETYPE%"=="s" (
+    if /i not "%INPUT_FILE_TYPE%"==".mp4" (
+        echo ^>^>%PRESET_MESSAGE%
+        echo ^>^>%PAUSE_MESSAGE2%
+        pause>nul
+        goto preset_question
+    )
+    set DECTYPE=n
+    set RESIZE=n
+    set T_BITRATE=%P_TEMP_BITRATE%
+    set X264_VFR_ENC=true
+    set TEMP_264=%INPUT_VIDEO%
+    goto account
 ) else if /i "%PRETYPE%"=="x" (
     set ENCTYPE=n
     set DECTYPE=n
@@ -240,13 +258,33 @@ exit /b
 
 rem 音声ビットレート決定
 :audio_bitrate
+if /i "%PRETYPE%"=="s" (
+    set /a M_BITRATE=%T_BITRATE% - %S_V_BITRATE%
+) else (
+    set /a M_BITRATE=%T_BITRATE%
+)
+if %M_BITRATE% LSS 0 (
+    echo ^>^>%RETURN_MESSAGE5%
+    echo ^>^>%RETURN_MESSAGE6%
+    echo ^>^>%PAUSE_MESSAGE2%
+    pause>nul
+    set PRETYPE=
+    set ACTYPE=
+    set T_BITRATE=
+    set ENCTYPE=
+    goto preset_question
+)
 if not "%TEMP_BITRATE%"=="" goto audio_bitrate_main
 :audio_bitrate_question
 echo;
 echo ^>^>%AUDIO_START1%
-echo ^>^>%BITRATE_START2% %T_BITRATE%kbps
 echo ^>^>%AUDIO_START2%
 echo ^>^>%AUDIO_START3%
+if /i "%PRETYPE%"=="s" (
+    echo ^>^>%AUDIO_START4% %M_BITRATE%kbps
+) else (
+    echo ^>^>%BITRATE_START2% %M_BITRATE%kbps
+)
 set /p TEMP_BITRATE=^>^>
 :audio_bitrate_main
 echo %TEMP_BITRATE% | findstr /i [a-z()\-\[\]]>nul
@@ -258,11 +296,20 @@ if "%ERRORLEVEL%"=="1" (
     echo;
     goto audio_bitrate_question
 )
+if /i "%PRETYPE%"=="s" (
+    if %M_BITRATE% LSS %A_BITRATE% (
+        echo;
+        echo ^>^>%RETURN_MESSAGE3%
+        echo ^>^>%RETURN_MESSAGE4%
+        echo;
+        goto audio_bitrate_question
+    )
+)
 set /a V_BITRATE=%T_BITRATE% - %A_BITRATE%
 if %V_BITRATE% LSS 0 (
     echo;
-    echo ^>^>%RETURN_MESSAGE5%
-    echo ^>^>%RETURN_MESSAGE%
+    echo ^>^>%RETURN_MESSAGE3%
+    echo ^>^>%RETURN_MESSAGE4%
     echo;
     goto audio_bitrate_question
 )
@@ -300,7 +347,8 @@ if /i "%PRETYPE%"=="n" echo %CONFIRM_PRETYPE%:%PRESET_LIST3%
 if /i "%PRETYPE%"=="o" echo %CONFIRM_PRETYPE%:%PRESET_LIST4%
 if /i "%PRETYPE%"=="p" echo %CONFIRM_PRETYPE%:%PRESET_LIST5%
 if /i "%PRETYPE%"=="q" echo %CONFIRM_PRETYPE%:%PRESET_LIST6%
-if /i "%PRETYPE%"=="x" echo %CONFIRM_PRETYPE%:%PRESET_LIST7%
+if /i "%PRETYPE%"=="s" echo %CONFIRM_PRETYPE%:%PRESET_LIST7%
+if /i "%PRETYPE%"=="x" echo %CONFIRM_PRETYPE%:%PRESET_LIST8%
 if /i "%ACTYPE%"=="y" (
     echo %CONFIRM_ACCOUNT1%:%CONFIRM_ACCOUNT2%
 ) else (
