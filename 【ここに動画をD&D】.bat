@@ -364,16 +364,15 @@ if not exist "warpsharp.dll" (
 exit /b
 
 :mux_filetype_check
+if /i "%DECODER%"=="auto" call :codec_check %INPUT_VIDEO%
 if /i "%INPUT_FILE_TYPE%"==".nvv" (
     echo ^>^>%MUX_ALERT1%
     echo ^>^>%MUX_ALERT2%
     echo;
     call quit.bat
 )
-if /i "%DECODER%"=="ffmpeg" (
-    call :movie_cache %INPUT_VIDEO%
-    exit /b
-)
+if /i "%DECODER%"=="ffmpeg" call :movie_cache %INPUT_VIDEO%
+if /i not "%DECODER%"=="auto" exit /b
 echo %INPUT_FILE_TYPE% | findstr /i "mkv wmv asf flv mp4 mov dv">nul
 if "%ERRORLEVEL%"=="0" (
     set DECODER=ffmpeg
