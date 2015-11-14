@@ -24,6 +24,10 @@ set FSS_URL="http://ffmpegsource.googlecode.com/files/ffms-2.16.7z"
 set FSS_PATH="..\Archives\ffms-2.16.7z"
 set FSS_SIZE=2384639
 
+set QTS_URL="http://bit.ly/oho3NX"
+set QTS_PATH="..\Archives\QTSource.zip"
+set QTS_SIZE=71577
+
 set MIF_URL="http://voxel.dl.sourceforge.net/project/mediainfo/binary/mediainfo/0.7.32/MediaInfo_CLI_0.7.32_Windows_i386.zip"
 set MIF_PATH="..\Archives\MediaInfo_CLI_0.7.32_Windows_i386.zip"
 set MIF_SIZE=1144205

@@ -11,7 +11,7 @@ rem ################初期処理################
 if not exist ..\Archives mkdir ..\Archives
 call :file_check_sub
 
-if "%AVS%%DSS%%DIL%%FSS%%MIF%%YDF%%A2P%%WVI%%NERO%%X264%"=="tttttttttt" exit
+if "%AVS%%DSS%%DIL%%FSS%%QTS%%MIF%%YDF%%A2P%%WVI%%NERO%%X264%"=="ttttttttttt" exit
 
 
 rem ################モード選択################
@@ -55,6 +55,11 @@ if not "%DIL%"=="t" (
 if not "%FSS%"=="t" (
     echo ^>^>FFMpegSource
     .\curl.exe -o %FSS_PATH% -L %FSS_URL%
+    echo;
+)
+if not "%QTS%"=="t" (
+    echo ^>^>QTSource
+    .\curl.exe -o %QTS_PATH% -L %QTS_URL%
     echo;
 )
 if not "%MIF%"=="t" (
@@ -127,6 +132,8 @@ if not "%DIL%"=="t" echo DevIL→%DIL_URL%
 echo;
 if not "%FSS%"=="t" echo FFmpegSource→%FSS_URL%
 echo;
+if not "%QTS%"=="t" echo QTSource→%QTS_URL%
+echo;
 if not "%MIF%"=="t" echo MediaInfo→%MIF_URL%
 echo;
 if not "%YDF%"=="t" echo yadif→%YDF_URL%
@@ -150,7 +157,7 @@ rem ################落とせたかどうかをチェック################
 :check
 call :file_check_sub
 
-if not "%AVS%%DSS%%DIL%%FSS%%MIF%%YDF%%A2P%%WVI%%NERO%%X264%"=="tttttttttt" goto dl_fail
+if not "%AVS%%DSS%%DIL%%FSS%%QTS%%MIF%%YDF%%A2P%%WVI%%NERO%%X264%"=="ttttttttttt" goto dl_fail
 
 
 rem ################成功################
@@ -173,6 +180,7 @@ if "%AVS%"=="" echo Avisynth
 if "%DSS%"=="" echo DirectShowSource
 if "%DIL%"=="" echo DevIL
 if "%FSS%"=="" echo FFmpegSource
+if "%QTS%"=="" echo QTSource
 if "%MIF%"=="" echo MediaInfo
 if "%YDF%"=="" echo yadif
 if "%A2P%"=="" echo avs2pipe
@@ -195,6 +203,7 @@ for %%i in (%AVS_PATH%) do if %%~zi EQU %AVS_SIZE% set AVS=t
 for %%i in (%DSS_PATH%) do if %%~zi EQU %DSS_SIZE% set DSS=t
 for %%i in (%DIL_PATH%) do if %%~zi EQU %DIL_SIZE% set DIL=t
 for %%i in (%FSS_PATH%) do if %%~zi EQU %FSS_SIZE% set FSS=t
+for %%i in (%QTS_PATH%) do if %%~zi EQU %QTS_SIZE% set QTS=t
 for %%i in (%MIF_PATH%) do if %%~zi EQU %MIF_SIZE% set MIF=t
 for %%i in (%YDF_PATH%) do if %%~zi EQU %YDF_SIZE% set YDF=t
 for %%i in (%A2P_PATH%) do if %%~zi EQU %A2P_SIZE% set A2P=t

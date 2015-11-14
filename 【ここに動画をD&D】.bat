@@ -114,6 +114,11 @@ if /i "%DECODER%"=="directshow" (
     call :normal_main
     call shut.bat
 )
+if /i "%DECODER%"=="qt" (
+    set INPUT_FILE_PATH="%~1"
+    call :normal_main
+    call shut.bat
+)
 if /i "%DECODER%"=="ffmpeg" (
     call :movie_cache "%~1"
     call :normal_main
@@ -154,6 +159,10 @@ if /i "%DECODER%"=="avi" (
     goto ext_check
 )
 if /i "%DECODER%"=="directshow" (
+    set INPUT_FILE_PATH="%~1"
+    goto ext_check
+)
+if /i "%DECODER%"=="qt" (
     set INPUT_FILE_PATH="%~1"
     goto ext_check
 )
@@ -250,6 +259,7 @@ if not exist DirectShowSource.dll start /wait call initialize.bat
 if not exist DevIL.dll start /wait call initialize.bat
 if not exist ffms2.dll start /wait call initialize.bat
 if not exist ffmsindex.exe start /wait call initialize.bat
+if not exist QTSource.dll start /wait call initialize.bat
 if not exist MediaInfo.exe start /wait call initialize.bat
 if not exist MediaInfo.dll start /wait call initialize.bat
 if not exist yadif.dll start /wait call initialize.bat

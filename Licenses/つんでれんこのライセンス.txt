@@ -13,6 +13,7 @@
 　DirectShowSource.dll（AviSynth developers、http://sourceforge.net/projects/avisynth2/ ）
 　DevIL.dll（Denton Woods & Nicolas Weber & Meloni Dario、http://openil.sourceforge.net/ ）
 　FFMS2.dll(Myrsloik、http://code.google.com/p/ffmpegsource/ )
+　QTSource.dll(Josh Harris、http://www.tateu.net/software/ )
 　MediaInfo.dll、MediaInfo.exe(MediaArea.net SARL.、http://mediainfo.sourceforge.net/ )
 　yadif.dll(Fizick、http://avisynth.org.ru/yadif/yadif.html )
 　avs2pipe_gcc.exe(Chris Beswick、http://doobrymedia.com/avs2pipe-0.0.3.zip )

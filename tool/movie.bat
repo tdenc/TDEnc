@@ -96,12 +96,21 @@ rem IDRフレーム間の最大間隔・容量上限の設定
 if /i "%DECODER%"=="avi" goto avisource_info
 if /i "%DECODER%"=="ffmpeg" goto ffmpegsource_info
 if /i "%DECODER%"=="directshow" goto directshowsource_info
+if /i "%DECODER%"=="qt" goto qtsource_info
 
 :directshowsource_info
 (
     echo LoadPlugin^("DirectShowSource.dll"^)
     echo;
     echo DirectShowSource^(%INPUT_FILE_PATH%, audio = false^) 
+)> %INFO_AVS%
+goto infoavs
+
+:qtsource_info
+(
+    echo LoadPlugin^("QTSource.dll"^)
+    echo;
+    echo QTInput^(%INPUT_FILE_PATH%, quality = 100, audio = 0^)
 )> %INFO_AVS%
 goto infoavs
 
@@ -239,6 +248,7 @@ if /i "%RGB%"=="true" (
 if /i "%DECODER%"=="avi" goto avisource_video
 if /i "%DECODER%"=="ffmpeg" goto ffmpegsource_video
 if /i "%DECODER%"=="directshow" goto directshowsource_video
+if /i "%DECODER%"=="qt" goto qtsource_video
 
 :directshowsource_video
 (
@@ -249,6 +259,14 @@ if /i "%DECODER%"=="directshow" goto directshowsource_video
     ) else (
         echo DirectShowSource^(%INPUT_FILE_PATH%, audio = false, fps=%INPUT_FPS%, convertfps=false^)
     )
+)> %VIDEO_AVS%
+goto vbr_avs
+
+:qtsource_video
+(
+    echo LoadPlugin^("QTSource.dll"^)
+    echo;
+    echo QTInput^(%INPUT_FILE_PATH%, quality = 100, audio = 0^)
 )> %VIDEO_AVS%
 goto vbr_avs
 
@@ -344,6 +362,7 @@ echo;
 if /i "%DECODER%"=="avi" goto avisource_audio
 if /i "%DECODER%"=="ffmpeg" goto ffmpegsource_audio
 if /i "%DECODER%"=="directshow" goto directshowsource_audio
+if /i "%DECODER%"=="qt" goto qtsource_audio
 
 :directshowsource_audio
 if /i "%DECODER%"=="ffmpeg" set INPUT_FILE_PATH="input%INPUT_FILE_TYPE%"
@@ -351,6 +370,16 @@ if /i "%DECODER%"=="ffmpeg" set INPUT_FILE_PATH="input%INPUT_FILE_TYPE%"
     echo LoadPlugin^("DirectShowSource.dll"^)
     echo;
     echo DirectShowSource^(%INPUT_FILE_PATH%, video = false^)
+    echo;
+    echo return last
+)> %AUDIO_AVS%
+goto temp_wav
+
+:qtsource_audio
+(
+    echo LoadPlugin^("QTSource.dll"^)
+    echo;
+    echo QTInput^(%INPUT_FILE_PATH%, quality = 100, audio = 1^)
     echo;
     echo return last
 )> %AUDIO_AVS%

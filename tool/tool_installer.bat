@@ -22,6 +22,7 @@ echo;
 .\7z.exe e -bd -y %FSS_PATH% -oTEMP
 move /y "TEMP\ffms2.dll" ".\ffms2.dll"
 move /y "TEMP\ffmsindex.exe" ".\ffmsindex.exe"
+.\7z.exe e -bd -y %QTS_PATH% "QTSource.dll"
 .\7z.exe e -bd -y %MIF_PATH% "MediaInfo.exe" "MediaInfo.dll"
 .\7z.exe e -bd -y %YDF_PATH% "yadif.dll"
 .\7z.exe e -bd -y %A2P_PATH% "avs2pipe_gcc.exe"

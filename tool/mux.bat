@@ -240,12 +240,21 @@ rem IDRフレーム間の最大間隔・容量上限の設定
 if /i "%DECODER%"=="avi" goto avisource_info
 if /i "%DECODER%"=="ffmpeg" goto ffmpegsource_info
 if /i "%DECODER%"=="directshow" goto directshowsource_info
+if /i "%DECODER%"=="qt" goto qtsource_info
 
 :directshowsource_info
 (
     echo LoadPlugin^("DirectShowSource.dll"^)
     echo;
     echo DirectShowSource^(%INPUT_VIDEO%, audio = false^)
+)> %INFO_AVS%
+goto infoavs
+
+:qtsource_info
+(
+    echo LoadPlugin^("QTSource.dll"^)
+    echo;
+    echo QTInput^(%INPUT_VIDEO%, quality = 100, audio = 0^)
 )> %INFO_AVS%
 goto infoavs
 
@@ -386,6 +395,7 @@ if /i "%RGB%"=="true" (
 if /i "%DECODER%"=="avi" goto avisource_video
 if /i "%DECODER%"=="ffmpeg" goto ffmpegsource_video
 if /i "%DECODER%"=="directshow" goto directshowsource_video
+if /i "%DECODER%"=="qt" goto qtsource_video
 
 :directshowsource_video
 (
@@ -396,6 +406,14 @@ if /i "%DECODER%"=="directshow" goto directshowsource_video
     ) else (
         echo DirectShowSource^(%INPUT_VIDEO%, audio = false, fps=%INPUT_FPS%, convertfps=false^)
     )
+)> %VIDEO_AVS%
+goto vbr_avs
+
+:qtsource_video
+(
+    echo LoadPlugin^("QTSource.dll"^)
+    echo;
+    echo QTInput^(%INPUT_VIDEO%, quality = 100, audio = 0^)
 )> %VIDEO_AVS%
 goto vbr_avs
 

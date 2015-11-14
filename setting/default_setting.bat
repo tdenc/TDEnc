@@ -34,9 +34,12 @@ rem auto、lc、he、hev2から選択(デフォルトのautoを推奨)
 set AAC_PROFILE=auto
 
 rem デコーダの選択
-rem auto、avi、ffmpeg、directshow、から選択(デフォルトのautoを推奨)
+rem auto、avi、ffmpeg、directshow、qtから選択(デフォルトのautoを推奨)
 rem autoは自動選択、aviはAVISource、ffmpegはFFMpegSource、directshowはDirectShowSource
-rem エンコードが上手くいかない場合、directshowやffmpegを指定するとうまく行く場合も
+rem qtはQuickTime(QuickTime7以降が必要です、一部コーデックでは非常に遅いです)
+rem qtはファイル名・フォルダ名などに日本語等が含まれていると失敗するので
+rem アルファベットのみにする、Cドライブ直下に置く等して対処してから使用してください
+rem デコードが上手くいかない場合、directshowやffmpegを指定するとうまく行く場合も
 set DECODER=auto
 
 rem カラーマトリクス
