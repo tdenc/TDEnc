@@ -244,19 +244,19 @@ set /a WIDTH=%DEFAULT_WIDTH% - %DEFAULT_WIDTH% %% 2
 for /f "delims=: tokens=2" %%i in (%TEMP_INFO%) do set DEFAULT_HEIGHT=%%i
 set /a OUT_HEIGHT=%DEFAULT_HEIGHT%
 set /a HEIGHT=%OUT_HEIGHT% - %OUT_HEIGHT% %% 2
-if %IN_WIDTH% LSS %DEFAULT_WIDTH% (
+if %IN_WIDTH% LSS %WIDTH% (
     set SETTING2=up_convert
     set RESIZER=BlackmanResize
     exit /b
-) else if %IN_WIDTH% GTR %DEFAULT_WIDTH% (
+) else if %IN_WIDTH% GTR %WIDTH% (
     set SETTING2=down_convert
     set RESIZER=Spline16Resize
     exit /b
-) else if %IN_HEIGHT% LSS %DEFAULT_HEIGHT% (
+) else if %IN_HEIGHT% LSS %HEIGHT% (
     set SETTING2=up_convert
     set RESIZER=BlackmanResize
     exit /b
-) else if %IN_HEIGHT% GTR %DEFAULT_HEIGHT% (
+) else if %IN_HEIGHT% GTR %HEIGHT% (
     set SETTING2=down_convert
     set RESIZER=Spline16Resize
     exit /b
@@ -266,11 +266,11 @@ exit /b
 :autoconvert
 set /a WIDTH=%DEFAULT_WIDTH% - %DEFAULT_WIDTH% %% 2
 set /a HEIGHT=%OUT_HEIGHT% - %OUT_HEIGHT% %% 2
-if %IN_WIDTH% LSS %DEFAULT_WIDTH% (
+if %IN_WIDTH% LSS %WIDTH% (
     call :noconvert
     exit /b
 )
-if %IN_WIDTH% GTR %DEFAULT_WIDTH% (
+if %IN_WIDTH% GTR %WIDTH% (
     set SETTING2=down_convert
     set RESIZER=Spline16Resize
     exit /b

@@ -70,7 +70,7 @@ set /a PLAYER_WIDTH=%PLAYER_HEIGHT% * %IN_WIDTH% / %IN_HEIGHT%
   echo   so.addParam^('wmode','opaque'^);
   echo   so.addVariable^('file',"file:///%MOVIE_FILE:\=/%"^);
   echo   so.addVariable^('volume','50'^);
-  echo   so.addVariable^('stretching','none'^);
+  echo   so.addVariable^('stretching','fill'^);
   echo   so.write^('mediaspace'^);
   echo ^</script^>
   echo;
