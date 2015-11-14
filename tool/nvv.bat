@@ -117,8 +117,9 @@ if /i "%FULL_RANGE%"=="on" set AVS_SCALE=matrix^=^"PC.601^"^,
     if "%CHANGE_FPS%"=="true" echo ChangeFPS^(%FPS%^)
     echo;
 
-    if not "%IN_WIDTH%"=="%WIDTH%" echo BlackmanResize^(%WIDTH%,last.height^(^)^)
-    if not "%IN_HEIGHT%"=="%HEIGHT%" echo BlackmanResize^(last.width^(^),%HEIGHT%^)
+    if "%RESIZER%"=="" set RESIZER=Spline16Resize
+    if not "%IN_WIDTH%"=="%WIDTH%" echo %RESIZER%^(%WIDTH%,last.height^(^)^)
+    if not "%IN_HEIGHT%"=="%HEIGHT%" echo %RESIZER%^(last.width^(^),%HEIGHT%^)
     echo;
     echo return last
 )> %VIDEO_AVS%

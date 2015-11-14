@@ -10,7 +10,7 @@ echo;
 
 rem Ä¶ŽžŠÔŽæ“¾
 (
-    echo AVISource^(%INPUT_FILE_PATH%^) 
+    echo AVISource^(%INPUT_FILE_PATH%^)
     echo;
     echo _time = String^(Ceil^(framecount^(^) / framerate^(^)^)^)
     echo _fps = String^(framerate^(^)^)
@@ -141,9 +141,8 @@ if /i "%RGB%"=="true" (
         )
     )
 ) else (
-    set AVS_SCALE= 
+    set AVS_SCALE=
 )
-
 (
     echo AVISource^(%INPUT_FILE_PATH%^)
     echo;
@@ -158,8 +157,9 @@ if /i "%RGB%"=="true" (
     if "%CHANGE_FPS%"=="true" echo ChangeFPS^(%FPS%^)
     echo;
 
-    if not "%IN_WIDTH%"=="%WIDTH%" echo BlackmanResize^(%WIDTH%,last.height^(^)^)
-    if not "%IN_HEIGHT%"=="%HEIGHT%" echo BlackmanResize^(last.width^(^),%HEIGHT%^)
+    if "%RESIZER%"=="" set RESIZER=Spline16Resize
+    if not "%IN_WIDTH%"=="%WIDTH%" echo %RESIZER%^(%WIDTH%,last.height^(^)^)
+    if not "%IN_HEIGHT%"=="%HEIGHT%" echo %RESIZER%^(last.width^(^),%HEIGHT%^)
     echo;
     echo return last
 )> %VIDEO_AVS%

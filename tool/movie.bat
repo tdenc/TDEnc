@@ -102,7 +102,7 @@ if /i "%DECODER%"=="qt" goto qtsource_info
 (
     echo LoadPlugin^("DirectShowSource.dll"^)
     echo;
-    echo DirectShowSource^(%INPUT_FILE_PATH%, audio = false^) 
+    echo DirectShowSource^(%INPUT_FILE_PATH%, audio = false^)
 )> %INFO_AVS%
 goto infoavs
 
@@ -241,7 +241,7 @@ if /i "%RGB%"=="true" (
         )
     )
 ) else (
-    set AVS_SCALE= 
+    set AVS_SCALE=
 )
 
 
@@ -334,8 +334,9 @@ echo Yadif^(order=-1^)>> %VIDEO_AVS%
     if "%CHANGE_FPS%"=="true" echo ChangeFPS^(%FPS%^)
     echo;
 
-    if not "%IN_WIDTH%"=="%WIDTH%" echo BlackmanResize^(%WIDTH%,last.height^(^)^)
-    if not "%IN_HEIGHT%"=="%HEIGHT%" echo BlackmanResize^(last.width^(^),%HEIGHT%^)
+    if "%RESIZER%"=="" set RESIZER=Spline16Resize
+    if not "%IN_WIDTH%"=="%WIDTH%" echo %RESIZER%^(%WIDTH%,last.height^(^)^)
+    if not "%IN_HEIGHT%"=="%HEIGHT%" echo %RESIZER%^(last.width^(^),%HEIGHT%^)
     echo;
     echo return last
 )>> %VIDEO_AVS%

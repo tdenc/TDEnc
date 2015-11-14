@@ -46,7 +46,7 @@ set DECODE_ERROR1=動画のデコードに失敗したわ・・・
 set DECODE_ERROR2=インデックス処理をしてもう一度チャレンジするからそこで待っていなさい！
 set DECODE_ERROR3=正常にデコードできなかったわ・・・
 set DECODE_ERROR4=ArchivesフォルダのAvisynth_258.exeで手動インストールしてから使ってみてね
-set DECODE_ERROR5=それでダメならdefault_setting.batを編集してDECODERを手動で変えてみてね
+set DECODE_ERROR5=それでダメならuser_setting.batを編集してDECODERを手動で変えてみてね
 set DECODE_ERROR6=それでもだめだったら・・・ごめんなさい・・・
 set VIDEO_ENC_ANNOUNCE=動画のエンコ作業に突入～♪
 set AVS_END=映像AVS作成完了～♪
@@ -181,7 +181,7 @@ set UPDATE_QUESTION3=（今後もこのバージョンをスキップし続けたいならsを選択よ）
 set UPDATE_ERROR=アップデート失敗（回線切断orダウンローダ起動失敗orサーバダウン）
 set UPDATE_ANNOUNCE1=アップデート開始～♪
 set UPDATE_ANNOUNCE2=アップデート完了～♪
-set UPDATE_ANNOUNCE3=次に関連ツールのアップデートをするわよ！
+set UPDATE_ANNOUNCE3=次に関連ツールのアップデートをしてから終了するわよ！
 
 rem x264_enc.batのメッセージ
 set OPTION_SUCCESS=x264オプション設定完了～♪

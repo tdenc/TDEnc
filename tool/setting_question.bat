@@ -114,7 +114,7 @@ echo;
 echo ^>^>%RETURN_MESSAGE1%
 echo;
 goto economy_question
-:low 
+:low
 set /a L_BITRATE=%E_MAX_BITRATE%
 if /i "%ACTYPE%"=="n"  goto normal_bitrate_setting
 
@@ -231,10 +231,19 @@ set /a OUT_HEIGHT=%DEFAULT_HEIGHT%
 set /a HEIGHT=%OUT_HEIGHT% - %OUT_HEIGHT% %% 2
 if %IN_WIDTH% LSS %DEFAULT_WIDTH% (
     set SETTING2=up_convert
+    set RESIZER=BlackmanResize
     exit /b
-)
-if %IN_WIDTH% GTR %DEFAULT_WIDTH% (
+) else if %IN_WIDTH% GTR %DEFAULT_WIDTH% (
     set SETTING2=down_convert
+    set RESIZER=Spline16Resize
+    exit /b
+) else if %IN_HEIGHT% LSS %DEFAULT_HEIGHT% (
+    set SETTING2=up_convert
+    set RESIZER=BlackmanResize
+    exit /b
+) else if %IN_HEIGHT% GTR %DEFAULT_HEIGHT% (
+    set SETTING2=down_convert
+    set RESIZER=Spline16Resize
     exit /b
 )
 set SETTING2=noresize
@@ -248,6 +257,7 @@ if %IN_WIDTH% LSS %DEFAULT_WIDTH% (
 )
 if %IN_WIDTH% GTR %DEFAULT_WIDTH% (
     set SETTING2=down_convert
+    set RESIZER=Spline16Resize
     exit /b
 )
 set SETTING2=noresize
