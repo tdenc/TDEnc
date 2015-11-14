@@ -110,16 +110,14 @@ if "%A_BITRATE%"=="0" (
 echo ^>^>%AUDIO_ENC_ANNOUNCE%
 echo;
 echo ^>^>%WAV_ANNOUNCE%
-set PROMPT=$S$H
 if exist %PROCESS_E_FILE% del %PROCESS_E_FILE%
 echo s>%PROCESS_S_FILE%
-start process.bat 2>nul
-.\avs2pipe_gcc.exe audio %INPUT_FILE_PATH% > %TEMP_WAV%
+start /b process.bat 2>nul
+.\avs2pipe_gcc.exe audio %INPUT_FILE_PATH% > %TEMP_WAV% 2>nul
 del %PROCESS_S_FILE% 2>nul
-:wav_start
+:wav_process
 ping localhost -n 1 >nul
-if not exist %PROCESS_E_FILE% goto wav_start 1>nul 2>&1
+if not exist %PROCESS_E_FILE% goto wav_process 1>nul 2>&1
 del %PROCESS_E_FILE%
-prompt
 
 call m4a_enc.bat

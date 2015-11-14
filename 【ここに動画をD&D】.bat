@@ -211,10 +211,10 @@ call shut.bat
 
 rem 音声とのMUXエンコード
 :mux_mode
-echo ^>^>%MUX_ANNOUNCE%
 echo;
 echo %~x2 | findstr /i "wav">nul
 if "%ERRORLEVEL%"=="0" (
+    echo ^>^>%MUX_ANNOUNCE%
     set INPUT_AUDIO="%~2"
     set INPUT_VIDEO="%~1"
     set INPUT_FILE_TYPE=%~x1
@@ -228,6 +228,7 @@ if "%ERRORLEVEL%"=="0" (
 
 echo %~x1 | findstr /i "wav">nul
 if "%ERRORLEVEL%"=="0" (
+    echo ^>^>%MUX_ANNOUNCE%
     set INPUT_AUDIO="%~1"
     set INPUT_VIDEO="%~2"
     set INPUT_FILE_TYPE=%~x2
@@ -278,10 +279,9 @@ exit /b
 
 :movie_cache
 echo ^>^>%CACHE_ANNOUNCE%
-set PROMPT=$S$H
 if exist %PROCESS_E_FILE% del %PROCESS_E_FILE%
 echo s>%PROCESS_S_FILE%
-start process.bat 2>nul
+start /b process.bat 2>nul
 copy /y "%~1" %TEMP_DIR%\input%INPUT_FILE_TYPE% 1>nul 2>&1
 set INPUT_FILE_PATH="%TEMP_DIR%\input%INPUT_FILE_TYPE%"
 del %PROCESS_S_FILE% 2>nul
@@ -289,7 +289,6 @@ del %PROCESS_S_FILE% 2>nul
 ping localhost -n 1 >nul
 if not exist %PROCESS_E_FILE% goto cache_sleep_start 1>nul 2>&1
 del %PROCESS_E_FILE%
-prompt
 echo ^>^>%CACHE_END%
 exit /b
 

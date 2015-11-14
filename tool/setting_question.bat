@@ -20,7 +20,8 @@ echo   n:%PRESET_LIST3%
 echo   o:%PRESET_LIST4%
 echo   p:%PRESET_LIST5%
 echo   q:%PRESET_LIST6%
-if not "%INPUT_AUDIO%"=="" (
+echo %INPUT_AUDIO% | findstr /r "\.wav\>">nul  
+if "%ERRORLEVEL%"=="0" (  
     if /i "%INPUT_FILE_TYPE%"==".mp4" (
         echo   s:%PRESET_LIST7%
     )
@@ -252,8 +253,8 @@ set SETTING2=noresize
 exit /b
 :noconvert
 set SETTING2=noresize
-set /a WIDTH=%IN_WIDTH%
-set /a HEIGHT=%IN_HEIGHT%
+set /a WIDTH=%IN_WIDTH% - %IN_WIDTH% %% 2
+set /a HEIGHT=%IN_HEIGHT% - %IN_HEIGHT% %% 2
 exit /b
 
 rem 音声ビットレート決定
@@ -305,7 +306,12 @@ if /i "%PRETYPE%"=="s" (
         goto audio_bitrate_question
     )
 )
-set /a V_BITRATE=%T_BITRATE% - %A_BITRATE%
+if /i "%PRETYPE%"=="s" (
+    set /a V_BITRATE=%S_V_BITRATE%
+    set /a T_BITRATE=%S_V_BITRATE% + %A_BITRATE%
+) else (
+    set /a V_BITRATE=%T_BITRATE% - %A_BITRATE%
+)
 if %V_BITRATE% LSS 0 (
     echo;
     echo ^>^>%RETURN_MESSAGE3%

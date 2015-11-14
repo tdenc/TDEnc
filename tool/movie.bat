@@ -327,6 +327,7 @@ if "%A_BITRATE%"=="0" (
 )
 
 echo ^>^>%AUDIO_ENC_ANNOUNCE%
+echo ^>^>%WAV_ANNOUNCE%
 echo;
 
 if /i "%DECODER%"=="avi" goto avisource_audio
@@ -364,21 +365,25 @@ echo;
 )> %AUDIO_AVS%
 
 :temp_wav
-echo ^>^>%WAV_ANNOUNCE%
-set PROMPT=$S$H
 if exist %PROCESS_E_FILE% del %PROCESS_E_FILE%
-echo s>%PROCESS_S_FILE%
-start process.bat 2>nul
+if not "%WAV_FAIL%"=="y" (
+    echo s>%PROCESS_S_FILE%
+    start /b process.bat 2>nul
+)
 .\avs2pipe_gcc.exe audio %AUDIO_AVS% > %TEMP_WAV% 2>nul
-del %PROCESS_S_FILE% 2>nul
-if "%WAV_FAIL%"=="y" goto wav_start
+if "%WAV_FAIL%"=="y" (
+    del %PROCESS_S_FILE% 2>nul
+    set WAV_FAIL=
+    goto wav_process
+)
 for %%i in (%TEMP_WAV%) do if %%~zi EQU 0 set WAV_FAIL=y
 if "%WAV_FAIL%"=="y" goto directshowsource_audio
-:wav_start
+del %PROCESS_S_FILE% 2>nul
+
+:wav_process
 ping localhost -n 1 >nul
-if not exist %PROCESS_E_FILE% goto wav_start 1>nul 2>&1
+if not exist %PROCESS_E_FILE% goto wav_process 1>nul 2>&1
 del %PROCESS_E_FILE%
-prompt
 
 call m4a_enc.bat
 

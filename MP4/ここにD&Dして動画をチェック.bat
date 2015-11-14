@@ -58,8 +58,8 @@ set /a PLAYER_HEIGHT=%IN_HEIGHT% + 20
   echo ^<center^>
   echo ^<h3^>%~nx1^</h3^>
   echo ^<p^>動画のチェックは他のプレイヤーじゃなくこのプレイヤーでチェックしてよね！^<br^>
-  echo このプレイヤーはニコニコ動画と「ほぼ」同じ見え方よ！^<br^>
-  echo （一番いい確認方法はニコニコへの仮アップロードなんだけどね）^</p^>
+  echo このプレイヤーは若干カクカクするけどニコニコと「ほぼ」同じ見え方よ！^<br^>
+  echo （一番いい確認方法はやっぱりニコニコへの仮アップロードなんだけどね）^</p^>
   echo ^<script type='text/javascript' src='swfobject.js'^>^</script^>
   echo ^<div id='mediaspace'^>プレイヤーが表示されない場合は情報バーをクリックしてプログラムを許可してね^</div^>
   echo;

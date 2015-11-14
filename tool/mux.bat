@@ -45,15 +45,17 @@ echo Width        : %IN_WIDTH%pixels
 .\MediaInfo.exe --Inform=Image;%%Height%% --LogFile=%TEMP_INFO% %INPUT_VIDEO%>nul
 for /f "delims=" %%i in (%TEMP_INFO%) do set IN_HEIGHT=%%i
 echo Height       : %IN_HEIGHT%pixels
-set /a OUT_WIDTH=%DEFAULT_WIDTH%
-if not "%DEFAULT_HEIGHT%"=="" set /a OUT_HEIGHT=%DEFAULT_HEIGHT%
 
+set /a IN_WIDTH_ODD=%IN_WIDTH% %% 2
+set /a IN_HEIGHT_ODD=%IN_HEIGHT% %% 2
+set /a OUT_WIDTH=%IN_WIDTH%
 if not "%DEFAULT_HEIGHT%"=="" (
     set /a OUT_HEIGHT=%DEFAULT_HEIGHT%
     goto image_info_end
 )
 set /a OUT_HEIGHT_TEMP=%DEFAULT_WIDTH% * %IN_HEIGHT% / %IN_WIDTH%
-set /a OUT_HEIGHT=%OUT_HEIGHT_TEMP% - %OUT_HEIGHT_TEMP% %% 4
+set /a OUT_HEIGHT_ODD=%OUT_HEIGHT_TEMP% %% 2
+set /a OUT_HEIGHT=%OUT_HEIGHT_TEMP% - %OUT_HEIGHT_ODD%
 
 :image_info_end
 echo;
@@ -76,11 +78,12 @@ echo;
 echo ^>^>%VIDEO_ENC_ANNOUNCE%
 echo;
 
-
 rem ################映像エンコード################
 rem AVSファイル作成
 (
     echo ImageSource^(%INPUT_VIDEO%,end=%TOTAL_TIME_SECOND%,fps=%FPS%^)
+    if "%IN_WIDTH_ODD%"=="1" echo Crop^(0,0,-1,0^)
+    if "%IN_HEIGHT_ODD%"=="1" echo Crop^(0,0,0,-1^)
     if "%SETTING2%"=="noresize" (
         echo # no resize
     ) else (
@@ -480,16 +483,14 @@ echo;
 )> %AUDIO_AVS%
 
 echo ^>^>%WAV_ANNOUNCE%
-set PROMPT=$S$H
 if exist %PROCESS_E_FILE% del %PROCESS_E_FILE%
 echo s>%PROCESS_S_FILE%
-start process.bat 2>nul
-.\avs2pipe_gcc.exe audio %AUDIO_AVS% > %TEMP_WAV%
+start /b process.bat 2>nul
+.\avs2pipe_gcc.exe audio %AUDIO_AVS% > %TEMP_WAV% 2>nul
 del %PROCESS_S_FILE% 2>nul
-:wav_sleep_start
+:wav_process
 ping localhost -n 1 >nul
-if not exist %PROCESS_E_FILE% goto wav_sleep_start 1>nul 2>&1
+if not exist %PROCESS_E_FILE% goto wav_process 1>nul 2>&1
 del %PROCESS_E_FILE%
-prompt
 
 call m4a_enc.bat
