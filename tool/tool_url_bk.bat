@@ -8,7 +8,7 @@ set VER_PATH=".\latest_version"
 set UPD_URL="http://bit.ly/s6ylX2"
 set UPD_PATH="..\Archives\update.zip"
 
-set LOG_URL="http://bit.ly/kZmCh7"
+set LOG_URL="http://bit.ly/u0zUeJ"
 set LOG_PATH=".\ChangeLog"
 
 set AVS_URL="http://voxel.dl.sourceforge.net/project/avisynth2/AviSynth%%202.5/AviSynth%%202.5.8/Avisynth_258.exe"

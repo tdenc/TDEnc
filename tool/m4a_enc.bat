@@ -3,8 +3,10 @@ if not exist %TEMP_WAV% goto wav_not_exist
 (
     echo WAVSource^("%TEMP_WAV%"^)
     echo;
-    echo ResampleAudio^(%SAMPLERATE%^)
-    echo;
+    if not "%SAMPLERATE%"=="0" (
+        echo ResampleAudio^(%SAMPLERATE%^)
+        echo;
+    )
     echo return last
 )> %AUDIO_AVS%
 
@@ -66,8 +68,10 @@ del %PROCESS_E_FILE%
 (
     echo WAVSource^("%TEMP_WAV%"^)
     echo;
-    echo ResampleAudio^(%SAMPLERATE%^)
-    echo;
+    if not "%SAMPLERATE%"=="0" (
+        echo ResampleAudio^(%SAMPLERATE%^)
+        echo;
+    )
     echo _lag = Float^(%M4A_LAG%^) / 1000
     echo DelayAudio^(_lag^)
     echo;

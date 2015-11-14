@@ -17,6 +17,7 @@ if not exist %UPD_PATH% (
 
 echo;
 move ..\Archives\tde* ..\Archives\update
+del ..\Archives\update\setting\user_setting.bat
 
 echo;
 xcopy /y /s ..\Archives\update\* ..\

@@ -20,6 +20,7 @@ if not "%VER_PATH%"=="" (
 call %URL_PATH%
 
 call ..\setting\default_setting.bat
+call ..\setting\user_setting.bat
 
 if not "%THIS_VERSION%"=="%PRESET_VERSION%" (
     echo ^>^>%PRESET_ALERT%

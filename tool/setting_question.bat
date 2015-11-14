@@ -313,7 +313,7 @@ if /i "%PRETYPE%"=="s" (
 ) else (
     set /a V_BITRATE=%T_BITRATE% - %A_BITRATE%
 )
-if %V_BITRATE% LSS 0 (
+if %V_BITRATE% LEQ 0 (
     echo;
     echo ^>^>%RETURN_MESSAGE3%
     echo ^>^>%RETURN_MESSAGE4%
