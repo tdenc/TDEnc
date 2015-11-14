@@ -17,12 +17,14 @@ rem 再生時間取得
     echo _keyint = String^(Round^(framerate^(^)^)^)
     echo _in_width = String^(Ceil(width^(^)^)^)
     echo _in_height = String^(Ceil(height^(^)^)^)
+    echo _channels = String^(audiochannels^(^)^)
     echo;
     echo WriteFileStart^("time.txt","_time",append = false^)
     echo WriteFileStart^("keyint.txt","_keyint",append = false^)
     echo WriteFileStart^("fps.txt","_fps",append = false^)
     echo WriteFileStart^("in_width.txt","_in_width",append = false^)
     echo WriteFileStart^("in_height.txt","_in_height",append = false^)
+    echo WriteFileStart^("channels.txt","_channels",append = false^)
     echo Trim^(0,-1^)
     echo;
     echo return last
@@ -31,11 +33,16 @@ rem 再生時間取得
 .\avs2pipe_gcc.exe info %INFO_AVS1% 1>nul 2>&1
 
 for /f "delims=" %%i in (%TEMP_DIR%\time.txt) do set /a TOTAL_TIME=%%i * 1000
-echo PlayTime     : %TOTAL_TIME%ms
+echo PlayTime       : %TOTAL_TIME%ms
 
-echo Format       : AVS^(Avisynth Script^)
+echo Format         : AVS^(Avisynth Script^)
 
-if "%DEFAULT_FPS%"=="" (
+for /f "delims=" %%i in (%TEMP_DIR%\keyint.txt) do set /a KEYINT=10*%%i
+
+for /f "delims=" %%i in (%TEMP_DIR%\fps.txt) do set INPUT_FPS=%%i
+echo FPS            : %INPUT_FPS%fps^(CFR^)
+
+if not defined DEFAULT_FPS (
     set CHANGE_FPS=false
     set FPS=%INPUT_FPS%
 ) else (
@@ -43,17 +50,15 @@ if "%DEFAULT_FPS%"=="" (
     set FPS=%DEFAULT_FPS%
 )
 
-for /f "delims=" %%i in (%TEMP_DIR%\keyint.txt) do set /a KEYINT=10*%%i
-
-for /f "delims=" %%i in (%TEMP_DIR%\fps.txt) do set FPS=%%i
-echo FPS          : %FPS%fps^(CFR^)
-
 for /f "delims=" %%i in (%TEMP_DIR%\in_width.txt) do set /a IN_WIDTH=%%i
-echo Width        : %IN_WIDTH%pixels
+echo Width          : %IN_WIDTH%pixels
 
 for /f "delims=" %%i in (%TEMP_DIR%\in_height.txt) do set /a IN_HEIGHT=%%i
-echo Height       : %IN_HEIGHT%pixels
+echo Height         : %IN_HEIGHT%pixels
 
+for /f "delims=" %%i in (%TEMP_DIR%\channels.txt) do set /a AUDIO_CHANNELS=%%i
+if not defined AUDIO_CHANNELS set AUDIO_CHANNELS=0
+echo Audio Channels : %AUDIO_CHANNELS%
 
 rem ビットレート情報の取得
 (

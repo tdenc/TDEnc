@@ -2,13 +2,13 @@
 
 call "version.bat"
 
-set VER_URL="http://bit.ly/ycdGkQ"
+set VER_URL="http://tdenc.com/files/latest_version"
 set VER_PATH=".\latest_version"
 
-set UPD_URL="http://bit.ly/x9dMBS"
+set UPD_URL="http://tdenc.com/files/update.zip"
 set UPD_PATH="..\Archives\update.zip"
 
-set LOG_URL="http://bit.ly/yREWjj"
+set LOG_URL="http://tdenc.com/files/ChangeLog"
 set LOG_PATH=".\ChangeLog"
 
 set AVS_URL="http://voxel.dl.sourceforge.net/project/avisynth2/AviSynth%%202.5/AviSynth%%202.5.8/Avisynth_258.exe"
@@ -23,17 +23,17 @@ set DIL_URL="http://voxel.dl.sourceforge.net/project/openil/DevIL%%20Win32/1.7.8
 set DIL_PATH="..\Archives\DevIL-EndUser-x86-1.7.8.zip"
 set DIL_SIZE=676737
 
-set FSS_URL="http://ffmpegsource.googlecode.com/files/ffms-2.17.7z"
-set FSS_PATH="..\Archives\ffms-2.17.7z"
-set FSS_SIZE=2291315
+set FSS_URL="http://ffmpegsource.googlecode.com/files/ffms2-r722.7z"
+set FSS_PATH="..\Archives\ffms2-r722.7z"
+set FSS_SIZE=3927578
 
 set QTS_URL="http://bit.ly/oho3NX"
 set QTS_PATH="..\Archives\QTSource.zip"
 set QTS_SIZE=71577
 
-set MIF_URL="http://voxel.dl.sourceforge.net/project/mediainfo/binary/mediainfo/0.7.53/MediaInfo_CLI_0.7.53_Windows_i386.zip"
-set MIF_PATH="..\Archives\MediaInfo_CLI_0.7.53_Windows_i386.zip"
-set MIF_SIZE=1405805
+set MIF_URL="http://voxel.dl.sourceforge.net/project/mediainfo/binary/mediainfo/0.7.61/MediaInfo_CLI_0.7.61_Windows_i386.zip"
+set MIF_PATH="..\Archives\MediaInfo_CLI_0.7.61_Windows_i386.zip"
+set MIF_SIZE=1437806
 
 set YDF_URL="http://bit.ly/xRGzAq"
 set YDF_PATH="..\Archives\yadif17.zip"
@@ -51,7 +51,7 @@ set NERO_URL="http://ftp6.nero.com/tools/NeroAACCodec-1.5.1.zip"
 set NERO_PATH="..\Archives\NeroAACCodec-1.5.1.zip"
 set NERO_SIZE=2050564
 
-set X264_VERSION=2197
+set X264_VERSION=2216
 set X264_URL="http://mirror03.x264.nl/x264/32bit/8bit_depth/revision%X264_VERSION%/x264.exe"
 set X264_S_URL="http://x264.nl/x264/32bit/8bit_depth/revision%X264_VERSION%/x264.exe"
 set X264_PATH="..\Archives\x264.exe"

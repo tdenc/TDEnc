@@ -7,9 +7,9 @@ title %TDENC_TITLE%
 
 rem ################ユーザー設定読み込み################
 call version.bat
-
-.\curl.exe --connect-timeout 5 -f -o tool_url.zip -L "http://bit.ly/sdELss" 2>nul
-if ERRORLEVEL 22 (
+date /t>nul
+.\curl.exe --connect-timeout 5 -f -o tool_url.zip -L "http://tdenc.com/files/tool_url.zip" 2>nul
+if "%ERRORLEVEL%"=="22" (
     set URL_PATH=".\tool_url_bk.bat"
 ) else (
     set URL_PATH=".\tool_url.bat"
@@ -24,7 +24,7 @@ call ..\setting\user_setting.bat
 if not "%THIS_VERSION%"=="%PRESET_VERSION%" (
     echo ^>^>%PRESET_ALERT%
     echo;
-    call quit.bat
+    call error.bat
 )
 
 rem ################フォルダ作成################
@@ -49,11 +49,11 @@ set TEMP_MP4=%TEMP_DIR%\movie.mp4
 
 
 rem ################バージョン＆プリセット表示################
-echo %HORIZON%
-echo 　%TDENC_NAME%  version %C_VERSION%
-echo %HORIZON%
-echo 　　preset : version %THIS_VERSION%
-echo %HORIZON%
+echo %HORIZON_B%
+echo 　　　　　　　　　　　　%TDENC_NAME%  version %C_VERSION%
+echo 　　　　　　　　　　　　　preset : version %THIS_VERSION%
+echo %HORIZON_B%
+echo;
 
 
 rem ################バージョンチェック################
@@ -80,10 +80,6 @@ if /i "%USER_UPDATE%"=="y" (
     echo ^>^>%RETURN_MESSAGE1%
     goto user_setting_update
 )
-if "%E_TARGET_BITRATE_NEW%"=="" (
-    echo ^>^>%USER_SETTING1%
-    echo ^>^>%PRESET_ALERT3%
-)
 echo;
 :user_setting_update_end
 
@@ -92,8 +88,8 @@ rem ################ツール類の設定################
 call :file_exist_check
 
 
-rem ################レジストリチェック################
-call :registry_check
+rem ################Avisynthチェック################
+call :avisynth_check
 
 
 rem ################エンコードモード分岐################
@@ -102,7 +98,7 @@ if "%~1"=="" (
     echo ^>^>%DOUBLECLICK_ALERT1%
     echo ^>^>%DOUBLECLICK_ALERT2%
     echo;
-    call quit.bat
+    call error.bat
 )
 
 set ALL_ARGUMENTS=%*
@@ -118,7 +114,7 @@ if not "%ALL_ARGUMENTS_CMD%"=="%ALL_ARGUMENTS_TXT%" (
     echo ^>^>%FILENAME_ERROR1%
     echo ^>^>%FILENAME_ERROR2%
     echo;
-    call quit.bat
+    call error.bat
 )
 
 if not "%~3"=="" goto sequence_mode
@@ -126,7 +122,7 @@ if not "%~2"=="" goto mux_mode
 
 
 rem 1ファイルのエンコード
-
+date /t>nul
 dir "%~1" | findstr \^<\.$>nul
 if "%ERRORLEVEL%"=="0" (
     echo ^>^>%UNITE_AVI_ANNOUNCE1%
@@ -144,28 +140,14 @@ echo;
 set INPUT_FILE_TYPE=%~x1
 set FINAL_MP4=%~n1.mp4
 if /i "%DECODER%"=="auto" call :codec_check "%~1"
-if /i "%DECODER%"=="avi" (
+date /t>nul
+echo %DECODER% | findstr /i "avi directshow qt ffmpeg">nul
+if "%ERRORLEVEL%"=="0" (
     set INPUT_FILE_PATH="%~1"
     call :normal_main
     call shut.bat
 )
-if /i "%DECODER%"=="directshow" (
-    set INPUT_FILE_PATH="%~1"
-    call :normal_main
-    call shut.bat
-)
-if /i "%DECODER%"=="qt" (
-    set INPUT_FILE_PATH="%~1"
-    call :normal_main
-    call shut.bat
-)
-if /i "%DECODER%"=="ffmpeg" (
-    set INPUT_FILE_PATH="%~1"
-    call :normal_main
-    call shut.bat
-)
-echo %INPUT_FILE_TYPE% | findstr /i "mkv wmv asf flv mp4 mov dv">nul
-rem echo %INPUT_FILE_TYPE% | findstr /i "mkv wmv asf flv mp4 mov dv mts m2ts">nul
+echo %INPUT_FILE_TYPE% | findstr /i "mkv mp4 m4v mov flv wmv asf ogm ogv vob m2v mpeg mpg m2ts mts ts dv">nul
 if "%ERRORLEVEL%"=="0" (
     set DECODER=ffmpeg
     set INPUT_FILE_PATH="%~1"
@@ -184,8 +166,8 @@ call shut.bat
 
 rem 複数ファイルの連続エンコード
 :sequence_mode
-echo ^>^>%SEQUENCE_ANNOUNCE%
 echo;
+echo ^>^>%SEQUENCE_ANNOUNCE%
 :sequence_start
 if "%~1"=="" goto sequence_end
 
@@ -195,24 +177,13 @@ echo;
 set INPUT_FILE_TYPE=%~x1
 set FINAL_MP4=%~n1.mp4
 if /i "%DECODER%"=="auto" call :codec_check "%~1"
-if /i "%DECODER%"=="avi" (
+date /t>nul
+echo %DECODER% | findstr /i "avi directshow qt ffmpeg">nul
+if "%ERRORLEVEL%"=="0" (
     set INPUT_FILE_PATH="%~1"
     goto ext_check
 )
-if /i "%DECODER%"=="directshow" (
-    set INPUT_FILE_PATH="%~1"
-    goto ext_check
-)
-if /i "%DECODER%"=="qt" (
-    set INPUT_FILE_PATH="%~1"
-    goto ext_check
-)
-if /i "%DECODER%"=="ffmpeg" (
-    set INPUT_FILE_PATH="%~1"
-    goto ext_check
-)
-echo %INPUT_FILE_TYPE% | findstr /i "mkv wmv asf flv mp4 mov dv">nul
-rem echo %INPUT_FILE_TYPE% | findstr /i "mkv wmv asf flv mp4 mov dv mts m2ts">nul
+echo %INPUT_FILE_TYPE% | findstr /i "mkv mp4 m4v mov flv wmv asf ogm ogv vob m2v mpeg mpg m2ts mts ts dv">nul
 if "%ERRORLEVEL%"=="0" (
     set DECODER=ffmpeg
     set INPUT_FILE_PATH="%~1"
@@ -234,9 +205,7 @@ if "%INPUT_FILE_TYPE%"=="" (
     echo %MOVIE_INFO_ERROR3%
     echo %MOVIE_INFO_ERROR4%
     echo;
-    echo ^>^>%PAUSE_MESSAGE1%
-    pause>nul
-    call quit.bat
+    call error.bat
 )
 
 call :normal_main
@@ -262,41 +231,38 @@ call shut.bat
 
 rem 音声とのMUXエンコード
 :mux_mode
-echo;
+date /t>nul
 echo %~x2 | findstr /i "wav">nul
 if "%ERRORLEVEL%"=="0" (
-    echo ^>^>%MUX_ANNOUNCE%
     set INPUT_AUDIO="%~2"
     set INPUT_VIDEO="%~1"
     set INPUT_FILE_TYPE=%~x1
-    call :mux_filetype_check
     set FINAL_MP4=%~n1.mp4
-    call mux.bat
-    call :temp_264_check
-    call create_mp4.bat
-    call shut.bat
+    goto mux_mode_main
 )
-
 echo %~x1 | findstr /i "wav">nul
 if "%ERRORLEVEL%"=="0" (
-    echo ^>^>%MUX_ANNOUNCE%
     set INPUT_AUDIO="%~1"
     set INPUT_VIDEO="%~2"
     set INPUT_FILE_TYPE=%~x2
-    call :mux_filetype_check
     set FINAL_MP4=%~n2.mp4
-    call mux.bat
-    call :temp_264_check
-    call create_mp4.bat
-    call shut.bat
+    goto mux_mode_main
 )
 
 goto sequence_mode
 
+:mux_mode_main
+echo;
+echo ^>^>%MUX_ANNOUNCE%
+call :mux_filetype_check
+call mux.bat
+call :temp_264_check
+call create_mp4.bat
+call shut.bat
+
 
 rem ################関数っぽいもの################
 :file_exist_check
-if not exist Avisynth.dll start /wait call initialize.bat
 if not exist DirectShowSource.dll start /wait call initialize.bat
 if not exist DevIL.dll start /wait call initialize.bat
 if not exist ffms2.dll start /wait call initialize.bat
@@ -310,12 +276,14 @@ if not exist silence.exe start /wait call initialize.bat
 if not exist neroAacEnc.exe start /wait call initialize.bat
 if not exist x264.exe start /wait call initialize.bat
 .\x264.exe --version>"%TEMP_DIR%\x264_version.txt" 2>nul
+date /t>nul
 findstr /i "%X264_VERSION%" "%TEMP_DIR%\x264_version.txt">nul 2>&1
 if "%ERRORLEVEL%"=="1" start /wait call initialize.bat
 exit /b
 
 :codec_check
 .\MediaInfo.exe --Inform=Video;%%Codec%% --LogFile=%TEMP_INFO% %1>nul
+date /t>nul
 findstr /i "dv mpeg" "%TEMP_INFO%">nul 2>&1
 if "%ERRORLEVEL%"=="0" (
     set DECODER=ffmpeg
@@ -371,11 +339,11 @@ if /i "%INPUT_FILE_TYPE%"==".avs" (
 )
 if /i "%INPUT_FILE_TYPE%"==".nvv" (
     echo ^>^>%NVV_ALERT%
-    call quit.bat
+    call error.bat
 )
 if /i "%INPUT_FILE_TYPE%"==".swf" (
     echo ^>^>%SWF_ALERT%
-    call quit.bat
+    call error.bat
 )
 call movie.bat
 call :temp_264_check
@@ -388,11 +356,11 @@ if /i "%INPUT_FILE_TYPE%"==".nvv" (
     echo ^>^>%MUX_ALERT1%
     echo ^>^>%MUX_ALERT2%
     echo;
-    call quit.bat
+    call error.bat
 )
 if /i not "%DECODER%"=="auto" exit /b
-echo %INPUT_FILE_TYPE% | findstr /i "mkv wmv asf flv mp4 mov dv">nul
-rem echo %INPUT_FILE_TYPE% | findstr /i "mkv wmv asf flv mp4 mov dv mts m2ts">nul
+date /t>nul
+echo %INPUT_FILE_TYPE% | findstr /i "mkv wmv asf flv mp4 mov dv ts mts m2ts">nul
 if "%ERRORLEVEL%"=="0" (
     set DECODER=ffmpeg
     exit /b
@@ -414,30 +382,16 @@ if not exist %TEMP_264% (
 )
 exit /b
 
-:registry_check
+:avisynth_check
 if exist %WINDIR%\system32\avisynth.dll exit /b
 if exist %WINDIR%\SysWow64\avisynth.dll exit /b
-reg query "HKEY_LOCAL_MACHINE\SOFTWARE\Classes\CLSID\{E6D6B700-124D-11D4-86F3-DB80AFD98778}"> %TEMP_DIR%\registory.txt 2>nul
-findstr /i "Avisynth" "%TEMP_DIR%\registory.txt">nul
-if "%ERRORLEVEL%"=="0" exit /b
 echo ^>^>%AVS_MESSAGE1%
 echo ^>^>%AVS_MESSAGE2%
 echo ^>^>%AVS_MESSAGE3%
 echo;
 echo ^>^>%PAUSE_MESSAGE1%
 pause>nul
-install.reg
-
-reg query "HKEY_LOCAL_MACHINE\SOFTWARE\Classes\CLSID\{E6D6B700-124D-11D4-86F3-DB80AFD98778}"> %TEMP_DIR%\registory.txt 2>nul
-findstr /i "Avisynth" "%TEMP_DIR%\registory.txt">nul
-if "%ERRORLEVEL%"=="0" exit /b
-echo ^>^>%AVS_ERROR1%
-echo ^>^>%AVS_ERROR2%
-echo ^>^>%AVS_ERROR3%
-echo;
-echo ^>^>%PAUSE_MESSAGE1%
-pause>nul
-call quit.bat
+..\Archives\avisynth_258.exe
 exit /b
 
 rem ################つんでれんこ終了..._φ(ﾟ∀ﾟ )ｱﾋｬ################

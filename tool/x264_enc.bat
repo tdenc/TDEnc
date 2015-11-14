@@ -1,5 +1,6 @@
 rem x264オプション読み込み
 
+date /t>nul
 echo %PRETYPE% | findstr /i "l o">nul
 if "%ERRORLEVEL%"=="0" (
     set DEFAULT_PASS=%DEFAULT_PASS_SPEED%
@@ -17,7 +18,7 @@ if "%ERRORLEVEL%"=="0" (
 )
 echo %PRETYPE% | findstr /i "y">nul
 if "%ERRORLEVEL%"=="0" (
-    set DEFAULT_PASS=1
+    set DEFAULT_PASS=0
     goto x264_option_setting
 )
 
@@ -39,7 +40,12 @@ if "%FULL_RANGE%"=="off" (
 )
 if "%X264_VFR_ENC%"=="true" set X264_TIMECODE=--tcfile-in %X264_TC_FILE%
 
-set X264_COMMON=--range %RANGE% -I %KEYINT% -i %MIN_KEYINT% --scenecut %SCENECUT% -b %BFRAMES% --b-adapt %B_ADAPT% --b-pyramid %B_PYRAMID% -r %REF% -B %V_BITRATE% --rc-lookahead %RC_LOOKAHEAD% --qpstep %QPSTEP% --aq-mode %AQ_MODE% --aq-strength %AQ_STRENGTH% --qcomp %QCOMP% --weightp %WEIGHTP% --me %ME% -m %SUBME% --psy-rd %PSY_RD% -t %TRELLIS% --threads %THREADS% --colormatrix %X264_COLORMATRIX% %X264_TIMECODE% %COMMON_MISC% %MISC% %VIDEO_AVS%
+if %FLASH% GEQ 2 set MISC=%MISC% --no-deblock
+if %FLASH% EQU 3 set MISC=%MISC% --weightp 0
+
+set /a X264_BITRATE=%V_BITRATE% - %BITRATE_MARGIN%
+
+set X264_COMMON=--range %RANGE% -I %KEYINT% -i %MIN_KEYINT% --scenecut %SCENECUT% -b %BFRAMES% --b-adapt %B_ADAPT% --b-pyramid %B_PYRAMID% -r %REF% -B %X264_BITRATE% --rc-lookahead %RC_LOOKAHEAD% --qpstep %QPSTEP% --aq-mode %AQ_MODE% --aq-strength %AQ_STRENGTH% --qcomp %QCOMP% --weightp %WEIGHTP% --me %ME% -m %SUBME% --psy-rd %PSY_RD% -t %TRELLIS% --threads %THREADS% --colormatrix %X264_COLORMATRIX% %X264_TIMECODE% %COMMON_MISC% %QUIET% %MISC% %VIDEO_AVS%
 
 echo ^>^>%OPTION_SUCCESS%
 echo;
@@ -65,6 +71,16 @@ rem パス数自動設定モード
 :auto_pass_mode
 echo ^>^>%PASS_ANNOUNCE1%
 echo;
+rem crfエンコード
+if /i "%CRF_ENC%"=="n" goto crf_encode_end
+echo ^>^>%PASS_ANNOUNCE10%
+echo;
+call :crf_encode
+if /i "%PRETYPE%"=="y" goto :eof
+.\MediaInfo.exe --Inform=General;%%FileSize%% --LogFile=%TEMP_INFO% %TEMP_264%>nul
+for /f "delims=" %%i in (%TEMP_INFO%) do set /a TEMP_264_BITRATE=%%i/(%TOTAL_TIME%/8)
+if %TEMP_264_BITRATE% LEQ %V_BITRATE% goto :eof
+:crf_encode_end
 rem １pass処理
 echo ^>^>%PASS_ANNOUNCE2%
 echo;
@@ -88,27 +104,12 @@ goto :eof
 
 rem 強制1passモード
 :1_pass_mode
-if /i "%PRETYPE%"=="y" (
-    set YOUTUBE=--crf %CRF%
-    echo ^>^>%PASS_ANNOUNCE10%
-    echo;
-) else (
-    echo ^>^>%PASS_ANNOUNCE7%
-    echo;
-    echo ^>^>%PASS_ANNOUNCE2%
-    echo;
-)
+echo ^>^>%PASS_ANNOUNCE7%
+echo;
+echo ^>^>%PASS_ANNOUNCE2%
+echo;
 call :abr_encode
-if /i not "%PRETYPE%"=="y" goto :eof
-.\MediaInfo.exe --Inform=General;%%FileSize%% --LogFile=%TEMP_INFO% %TEMP_264%>nul
-for /f "delims=" %%i in (%TEMP_INFO%) do set /a TEMP_264_BITRATE=%%i/(%TOTAL_TIME%/8)
-if %TEMP_264_BITRATE% LEQ %V_BITRATE% (
-    goto :eof
-) else (
-    set YOUTUBE=
-    set DEFAULT_PASS=0
-    goto auto_pass_mode
-)
+goto :eof
 
 rem 強制2passモード
 :2_pass_mode
@@ -142,8 +143,12 @@ echo;
 call :final_encode
 goto :eof
 
+:crf_encode
+.\x264.exe -o %TEMP_264% %X264_COMMON% %CRF%
+echo;
+exit /b
 :abr_encode
-.\x264.exe -o %TEMP_264% %X264_COMMON% %YOUTUBE%
+.\x264.exe -o %TEMP_264% %X264_COMMON%
 echo;
 exit /b
 :first_encode

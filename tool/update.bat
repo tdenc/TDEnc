@@ -4,9 +4,10 @@ echo;
 echo ^>^>%UPDATE_ANNOUNCE1%
 echo;
 
+date /t>nul
 if exist "..\Archives\update" rmdir /s /q "..\Archives\update"
 .\curl.exe --connect-timeout 5 -f -o %UPD_PATH% -L %UPD_URL%
-if ERRORLEVEL 22 (
+if "%ERRORLEVEL%"=="22" (
     echo;
     echo ^>^>%UPDATE_ERROR%
     echo;

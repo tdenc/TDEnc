@@ -16,9 +16,7 @@ if not exist "%MP4_DIR%\%FINAL_MP4%" (
     echo ^>^>%MP4_ERROR1%
     echo ^>^>%MP4_ERROR2%
     echo;
-    echo ^>^>%PAUSE_MESSAGE1%
-    pause>nul
-    call quit.bat
+    call error.bat
 )
 
 echo;

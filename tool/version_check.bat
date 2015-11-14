@@ -7,8 +7,9 @@ rem ----------------------------------------------------------------------------
 
 rem ################‰Šúˆ—################
 if not exist current_version echo %C_VERSION%> current_version
+date /t>nul
 .\curl.exe --connect-timeout 5 -f -o %VER_PATH% -L %VER_URL% 2>nul
-if ERRORLEVEL 22 (
+if "%ERRORLEVEL%"=="22" (
     echo;
     echo ^>^>%VER_CHECK_ERROR%
     echo;

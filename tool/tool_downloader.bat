@@ -9,9 +9,20 @@ echo;
 
 rem ################初期処理################
 if not exist ..\Archives mkdir ..\Archives
-if exist %X264_PATH% del %X264_PATH%
+set AVS=f
+set DSS=f
+set DIL=f
+set FSS=f
+set QTS=f
+set MIF=f
+set YDF=f
+set A2P=f
+set WVI=f
+set NERO=f
+set X264=f
 call :file_check_sub
-
+echo %AVS%%DSS%%DIL%%FSS%%QTS%%MIF%%YDF%%A2P%%WVI%%NERO%%X264% | findstr "f">nul
+if "%ERRORLEVEL%"=="1" exit
 
 rem ################モード選択################
 :download_mode
@@ -35,58 +46,55 @@ goto auto_mode
 
 rem ################自動モード################
 :auto_mode_on
-if not "%AVS%"=="t" (
+if "%AVS%"=="f" (
     echo ^>^>Avisynth
     .\curl.exe --connect-timeout 5 -f -o %AVS_PATH% -L %AVS_URL%
     echo;
 )
-if not "%DSS%"=="t" (
+if "%DSS%"=="f" (
     echo ^>^>DirectShowSource
     .\curl.exe --connect-timeout 5 -f -o %DSS_PATH% -L %DSS_URL%
     echo;
 )
-if not "%DIL%"=="t" (
+if "%DIL%"=="f" (
     echo ^>^>DevIL
     .\curl.exe --connect-timeout 5 -f -o %DIL_PATH% -L %DIL_URL%
     echo;
 )
 
-if not "%FSS%"=="t" (
+if "%FSS%"=="f" (
     echo ^>^>FFMpegSource
     .\curl.exe --connect-timeout 5 -f -o %FSS_PATH% -L %FSS_URL%
     echo;
 )
-if not "%QTS%"=="t" (
+if "%QTS%"=="f" (
     echo ^>^>QTSource
     .\curl.exe --connect-timeout 5 -f -o %QTS_PATH% -L %QTS_URL%
     echo;
 )
-if not "%MIF%"=="t" (
+if "%MIF%"=="f" (
     echo ^>^>MediaInfo
     .\curl.exe --connect-timeout 5 -f -o %MIF_PATH% -L %MIF_URL%
     echo;
 )
-if not "%YDF%"=="t" (
+if "%YDF%"=="f" (
     echo ^>^>Yadif
     .\curl.exe --connect-timeout 5 -f -o %YDF_PATH% -L %YDF_URL%
     echo;
 )
-if not "%A2P%"=="t" (
+if "%A2P%"=="f" (
     echo ^>^>avs2pipe
     .\curl.exe --connect-timeout 5 -f -o %A2P_PATH% -L %A2P_URL%
     echo;
 )
-if not "%WVI%"=="t" (
+if "%WVI%"=="f" (
     echo ^>^>wavi
     .\curl.exe --connect-timeout 5 -f -o %WVI_PATH% -L %WVI_URL%
     echo;
 )
-if not "%X264%"=="t" (
+if "%X264%"=="f" (
     echo ^>^>x264
     .\curl.exe --connect-timeout 5 -f -o %X264_PATH% -L %X264_URL%
-    if ERRORLEVEL 22 (
-        .\curl.exe --connect-timeout 5 -f -o %X264_PATH% -L %X264_S_URL%
-    )
     echo;
 )
 if "%NERO%"=="t" goto check
@@ -126,27 +134,17 @@ rem ################手動モード################
 :auto_mode_off
 echo ^>^>%DOWNLOADER_MANUAL%
 echo;
-if not "%AVS%"=="t" echo Avisynth→%AVS_URL%
-echo;
-if not "%DSS%"=="t" echo DirectShowSource→%DSS_URL%
-echo;
-if not "%DIL%"=="t" echo DevIL→%DIL_URL%
-echo;
-if not "%FSS%"=="t" echo FFmpegSource→%FSS_URL%
-echo;
-if not "%QTS%"=="t" echo QTSource→%QTS_URL%
-echo;
-if not "%MIF%"=="t" echo MediaInfo→%MIF_URL%
-echo;
-if not "%YDF%"=="t" echo yadif→%YDF_URL%
-echo;
-if not "%A2P%"=="t" echo avs2pipe→%A2P_URL%
-echo;
-if not "%WVI%"=="t" echo wavi→%WVI_URL%
-echo;
-if not "%NERO%"=="t" echo NeroDigitalAudio→%NERO_URL%
-echo;
-if not "%X264%"=="t" echo x264→%X264_URL%
+if "%AVS%"=="f" echo Avisynth→%AVS_URL%
+if "%DSS%"=="f" echo DirectShowSource→%DSS_URL%
+if "%DIL%"=="f" echo DevIL→%DIL_URL%
+if "%FSS%"=="f" echo FFmpegSource→%FSS_URL%
+if "%QTS%"=="f" echo QTSource→%QTS_URL%
+if "%MIF%"=="f" echo MediaInfo→%MIF_URL%
+if "%YDF%"=="f" echo yadif→%YDF_URL%
+if "%A2P%"=="f" echo avs2pipe→%A2P_URL%
+if "%WVI%"=="f" echo wavi→%WVI_URL%
+if "%NERO%"=="f" echo NeroDigitalAudio→%NERO_URL%
+if "%X264%"=="f" echo x264→%X264_URL%
 echo;
 
 
@@ -158,8 +156,9 @@ exit
 rem ################落とせたかどうかをチェック################
 :check
 call :file_check_sub
-
-if not "%AVS%%DSS%%DIL%%FSS%%QTS%%MIF%%YDF%%A2P%%WVI%%NERO%%X264%"=="ttttttttttt" goto dl_fail
+date /t>nul
+echo %AVS%%DSS%%DIL%%FSS%%QTS%%MIF%%YDF%%A2P%%WVI%%NERO%%X264% | findstr "f">nul
+if "%ERRORLEVEL%"=="0" goto dl_fail
 
 
 rem ################成功################
@@ -178,17 +177,17 @@ echo;
 echo ^>^>%DOWNLOADER_ERROR1%
 echo ^>^>%DOWNLOADER_ERROR2%
 echo;
-if "%AVS%"=="" echo Avisynth
-if "%DSS%"=="" echo DirectShowSource
-if "%DIL%"=="" echo DevIL
-if "%FSS%"=="" echo FFmpegSource
-if "%QTS%"=="" echo QTSource
-if "%MIF%"=="" echo MediaInfo
-if "%YDF%"=="" echo yadif
-if "%A2P%"=="" echo avs2pipe
-if "%WVI%"=="" echo wavi
-if "%NERO%"=="" echo NeroDigitalAudio
-if "%X264%"=="" echo x264
+if "%AVS%"=="f" echo Avisynth
+if "%DSS%"=="f" echo DirectShowSource
+if "%DIL%"=="f" echo DevIL
+if "%FSS%"=="f" echo FFmpegSource
+if "%QTS%"=="f" echo QTSource
+if "%MIF%"=="f" echo MediaInfo
+if "%YDF%"=="f" echo yadif
+if "%A2P%"=="f" echo avs2pipe
+if "%WVI%"=="f" echo wavi
+if "%NERO%"=="f" echo NeroDigitalAudio
+if "%X264%"=="f" echo x264
 echo;
 echo;
 echo ^>^>%DOWNLOADER_ERROR3%
@@ -213,6 +212,7 @@ for %%i in (%WVI_PATH%) do if %%~zi EQU %WVI_SIZE% set WVI=t
 for %%i in (%NERO_PATH%) do if %%~zi EQU %NERO_SIZE% set NERO=t
 if not exist %X264_PATH% exit /b
 %X264_PATH% --version>"%TEMP_DIR%\x264_version.txt" 2>nul
+date /t>nul
 findstr /i "%X264_VERSION%" "%TEMP_DIR%\x264_version.txt">nul 2>&1
 if "%ERRORLEVEL%"=="0" set X264=t
 exit /b

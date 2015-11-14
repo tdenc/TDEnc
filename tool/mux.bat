@@ -6,16 +6,17 @@ set X264_TC_FILE=%TEMP_DIR%\x264.tc
 rem ################動画情報取得################
 echo ^>^>%ANALYZE_ANNOUNCE%
 echo;
+date /t>nul
 echo %INPUT_FILE_TYPE% | findstr /i "jpg jpeg png bmp">nul
 if "%ERRORLEVEL%"=="1" goto movie_mux_mode
 
 rem 画像と音声のMUX
 .\MediaInfo.exe --Inform=Audio;%%PlayTime%% --LogFile=%TEMP_INFO% %INPUT_AUDIO%>nul
 for /f "delims=." %%i in (%TEMP_INFO%) do set TOTAL_TIME=%%i
-if "%TOTAL_TIME%"=="" (
+if not defined TOTAL_TIME (
     echo ^>^>%ANALYZE_ERROR%
     echo;
-    call quit.bat
+    call error.bat
 )
 echo PlayTime     : %TOTAL_TIME%ms
 
@@ -51,16 +52,17 @@ echo Width        : %IN_WIDTH%pixels
 for /f "delims=" %%i in (%TEMP_INFO%) do set IN_HEIGHT=%%i
 echo Height       : %IN_HEIGHT%pixels
 
+
+rem 出力解像度の設定
 set /a IN_WIDTH_ODD=%IN_WIDTH% %% 2
 set /a IN_HEIGHT_ODD=%IN_HEIGHT% %% 2
-set /a OUT_WIDTH=%IN_WIDTH%
-if not "%DEFAULT_HEIGHT%"=="" (
-    set /a OUT_HEIGHT=%DEFAULT_HEIGHT%
+set /a OUT_HEIGHT=%DEFAULT_HEIGHT% + %DEFAULT_HEIGHT% %% 2
+if defined DEFAULT_WIDTH (
+    set /a OUT_WIDTH=%DEFAULT_WIDTH%
     goto image_info_end
 )
-set /a OUT_HEIGHT_TEMP=%DEFAULT_WIDTH% * %IN_HEIGHT% / %IN_WIDTH%
-set /a OUT_HEIGHT_ODD=%OUT_HEIGHT_TEMP% %% 2
-set /a OUT_HEIGHT=%OUT_HEIGHT_TEMP% - %OUT_HEIGHT_ODD%
+set /a OUT_WIDTH_TEMP=%DEFAULT_HEIGHT% * %IN_WIDTH% / %IN_HEIGHT%
+set /a OUT_WIDTH=%OUT_WIDTH_TEMP% + %OUT_WIDTH_TEMP% %% 2
 
 :image_info_end
 echo;
@@ -85,14 +87,19 @@ echo;
 
 rem ################映像エンコード################
 rem AVSファイル作成
+if not defined RESIZER set RESIZER=Spline16Resize
 (
     echo ImageSource^(%INPUT_VIDEO%,end=%TOTAL_TIME_SECOND%,fps=%FPS%^)
-    if "%IN_WIDTH_ODD%"=="1" echo Crop^(0,0,-1,0^)
-    if "%IN_HEIGHT_ODD%"=="1" echo Crop^(0,0,0,-1^)
+    if "%IN_WIDTH_ODD%"=="1" (
+        if "%IN_HEIGHT_ODD%"=="1" (
+            echo Crop^(0,0,-1,-1^)
+	) else (
+            echo Crop^(0,0,-1,0^)
+	)
+    ) else if "%IN_HEIGHT_ODD%"=="1" echo Crop^(0,0,0,-1^)
     if "%SETTING2%"=="noresize" (
         echo # no resize
     ) else (
-        if "%RESIZER%"=="" set RESIZER=Spline16Resize
         echo %RESIZER%^(%WIDTH%,%HEIGHT%^)
         echo;
     )
@@ -176,10 +183,11 @@ echo Video Bitrate  : %S_V_BITRATE%
 for /f "delims=" %%i in (%TEMP_INFO%) do echo Audio Codec    : %%i
 .\MediaInfo.exe --Inform=Audio;%%Channels%% --LogFile=%TEMP_INFO% %INPUT_AUDIO%>nul
 for /f "delims=" %%i in (%TEMP_INFO%) do set AUDIO_CHANNELS=%%i
-if not "%AUDIO_CHANNELS%"=="" echo Audio Channels : %AUDIO_CHANNELS%
+if not defined AUDIO_CHANNELS set AUDIO_CHANNELS=0
+echo Audio Channels : %AUDIO_CHANNELS%
 .\MediaInfo.exe --Inform=Audio;%%BitRate_Mode%% --LogFile=%TEMP_INFO% %INPUT_AUDIO%>nul
 for /f "delims=" %%i in (%TEMP_INFO%) do set ABITRATE_MODE=%%i
-if not "%ABITRATE_MODE%"== "" echo AudioBR Mode : %ABITRATE_MODE%
+if defined ABITRATE_MODE echo AudioBR Mode : %ABITRATE_MODE%
 
 rem 動画の容量書き出し
 .\MediaInfo.exe --Inform=General;%%FileSize%% --LogFile=%TEMP_INFO% %INPUT_VIDEO%>nul
@@ -202,7 +210,7 @@ rem CFRの設定
 set VFR=false
 .\MediaInfo.exe --Inform=Video;%%FrameRate%% --LogFile=%TEMP_INFO% %INPUT_VIDEO%>nul
 for /f "delims=" %%i in (%TEMP_INFO%) do set INPUT_FPS=%%i
-if not "%INPUT_FPS%"=="" echo FPS          : %INPUT_FPS%fps^(CFR^)
+if defined INPUT_FPS echo FPS          : %INPUT_FPS%fps^(CFR^)
 goto fps_main
 
 rem VFRの設定
@@ -217,7 +225,7 @@ for /f "delims=" %%i in (%TEMP_INFO%) do echo Minimum FPS  : %%i
 for /f "delims=" %%i in (%TEMP_INFO%) do echo Maximum FPS  : %%i
 
 :fps_main
-if "%DEFAULT_FPS%"=="" (
+if not defined DEFAULT_FPS (
     set CHANGE_FPS=false
     set FPS=%INPUT_FPS%
 ) else (
@@ -244,10 +252,10 @@ rem インターレース関連の設定
 :interlace
 .\MediaInfo.exe --Inform=Video;%%ScanType%% --LogFile=%TEMP_INFO% %INPUT_VIDEO%>nul
 for /f "delims=" %%i in (%TEMP_INFO%) do set SCAN_TYPE=%%i
-if not "%SCAN_TYPE%"=="" echo Scan type    : %SCAN_TYPE%
+if defined SCAN_TYPE echo Scan type    : %SCAN_TYPE%
 .\MediaInfo.exe --Inform=Video;%%ScanOrder%% --LogFile=%TEMP_INFO% %INPUT_VIDEO%>nul
 for /f  %%i in (%TEMP_INFO%) do set SCAN_ORDER=%%i
-if not "%SCAN_ORDER%"=="" echo Scan order   : %SCAN_ORDER%
+if defined SCAN_ORDER echo Scan order   : %SCAN_ORDER%
 
 rem IDRフレーム間の最大間隔・容量上限の設定
 if /i "%DECODER%"=="avi" goto avisource_info
@@ -278,7 +286,7 @@ goto infoavs
 :ffmpegsource_info
 if "%VFR%"=="true" (
     echo;
-    echo exporting timecode...
+    echo exporting timecode... it may takes a few minutes...
     if exist %X264_TC_FILE% del %X264_TC_FILE%
     .\x264 --preset ultrafast -q 51 -o nul --no-progress --quiet --tcfile-out %X264_TC_FILE% %INPUT_VIDEO% 2>nul
     if exist %X264_TC_FILE% (
@@ -302,7 +310,7 @@ if "%VFR%"=="true" (
     echo _isyv12 = IsYV12^(^)
     echo _isrgb = IsRGB^(^)
     echo _fps = Framerate^(^)
-    if not "%FPS%"=="" (
+    if defined FPS (
         echo _keyint = String^(Round^(%FPS%^)^)
     ) else (
         echo _keyint = String^(Round^(_fps^)^)
@@ -344,26 +352,26 @@ if exist %TEMP_DIR%\yv12.txt (
 ) else (
     goto info_check
 )
-if "%FPS%"=="" set FPS=%AVS_FPS%
+if not defined FPS set FPS=%AVS_FPS%
 
 rem 出力解像度の設定
-set /a IN_WIDTH_ODD=%IN_WIDTH_MOD% %% 2
+set /a IN_WIDTH_ODD=%IN_WIDTH% %% 2
 set /a IN_HEIGHT_ODD=%IN_HEIGHT% %% 2
-set /a OUT_WIDTH=%IN_WIDTH_MOD%
-if not "%DEFAULT_HEIGHT%"=="" (
-    set /a OUT_HEIGHT=%DEFAULT_HEIGHT%
+set /a OUT_HEIGHT=%DEFAULT_HEIGHT% + %DEFAULT_HEIGHT% %% 2
+if defined DEFAULT_WIDTH (
+    set /a OUT_WIDTH=%DEFAULT_WIDTH%
     goto info_check
 )
-set /a OUT_HEIGHT_TEMP=%DEFAULT_WIDTH% * %IN_HEIGHT% / %IN_WIDTH_MOD%
-set /a OUT_HEIGHT_ODD=%OUT_HEIGHT_TEMP% %% 2
-set /a OUT_HEIGHT=%OUT_HEIGHT_TEMP% - %OUT_HEIGHT_ODD%
+set /a OUT_WIDTH_TEMP=%DEFAULT_HEIGHT% * %IN_WIDTH_MOD% / %IN_HEIGHT%
+set /a OUT_WIDTH=%OUT_WIDTH_TEMP% + %OUT_WIDTH_TEMP% %% 2
 
 :info_check
-if "%TOTAL_TIME%"=="" (
+echo;
+if not defined TOTAL_TIME (
     echo ^>^>%ANALYZE_ERROR%
-    call quit.bat
+    call error.bat
 )
-if "%KEYINT%"=="" (
+if not defined KEYINT (
     echo;
     if /i "%DECODER%"=="avi" (
         set DECODER=ffmpeg
@@ -373,10 +381,7 @@ if "%KEYINT%"=="" (
         goto directshowsource_info
     ) else (
         echo ^>^>%DECODE_ERROR3%
-        echo ^>^>%DECODE_ERROR4%
-        echo ^>^>%DECODE_ERROR5%
-        echo ^>^>%DECODE_ERROR6%
-        call quit.bat
+        call error.bat
     )
 )
 goto mux_mode_question
@@ -451,18 +456,23 @@ goto vbr_avs
 goto vbr_avs
 
 :avisource_video
-echo AVISource^(%INPUT_VIDEO%, audio = false^)> %VIDEO_AVS%
+if "%RGB%"=="true" (
+    echo AVISource^(%INPUT_VIDEO%, audio = false^)> %VIDEO_AVS%
+) else (
+    echo AVISource^(%INPUT_VIDEO%, audio = false, pixel_type="YUY2"^)> %VIDEO_AVS%
+)
 goto vbr_avs
 
 :ffmpegsource_video
-rem echo %INPUT_FILE_TYPE% | findstr /i "mts m2ts">nul
-rem if "%ERRORLEVEL%"=="0" (
-rem     set SEEKMODE=0
-rem     ffmsindex.exe -m lavf -f %INPUT_VIDEO% %TEMP_DIR%\input.ffindex
-rem ) else (
+date /t>nul
+echo %INPUT_FILE_TYPE% | findstr /i "avi mkv mp4 flv">nul
+if "%ERRORLEVEL%"=="0" (
     set SEEKMODE=1
     ffmsindex.exe -m default -f %INPUT_VIDEO% %TEMP_DIR%\input.ffindex
-rem )
+) else (
+    set SEEKMODE=-1
+    ffmsindex.exe -m lavf -f %INPUT_VIDEO% %TEMP_DIR%\input.ffindex
+)
 echo;
 (
     echo LoadPlugin^("ffms2.dll"^)
@@ -483,26 +493,29 @@ if "%ABITRATE_MODE%"=="VBR" (
     )
 )
 echo;>> %VIDEO_AVS%
-if "%SCAN_TYPE%"=="Interlaced" goto interlace
-if "%SCAN_TYPE%"=="MBAFF" goto interlace
+if /i "%DEINT%"=="a" (
+    if "%SCAN_TYPE%"=="Interlaced" goto yadif
+    if "%SCAN_TYPE%"=="MBAFF" goto yadif
+) else if /i "%DEINT%"=="y" goto yadif
 
 rem プログレッシブ
-if /i "%YV12%"=="true" goto fps_avs
-
-if "%IN_WIDTH_ODD%"=="1" echo Crop^(0,0,-1,0^)>> %VIDEO_AVS%
-if "%IN_HEIGHT_ODD%"=="1" echo Crop^(0,0,0,-1^)>> %VIDEO_AVS%
+if "%IN_WIDTH_ODD%"=="1" (
+    if "%IN_HEIGHT_ODD%"=="1" (
+        echo Crop^(0,0,-1,-1^)>> %VIDEO_AVS%
+    ) else (
+        echo Crop^(0,0,-1,0^)>> %VIDEO_AVS%
+    )
+) else if "%IN_HEIGHT_ODD%"=="1" echo Crop^(0,0,0,-1^)>> %VIDEO_AVS%
 
 echo ConvertToYV12^(%AVS_SCALE%interlaced=false^)>> %VIDEO_AVS%
 echo;>> %VIDEO_AVS%
 goto fps_avs
 
 rem インターレース
-:interlace
+:yadif
 echo Load_Stdcall_Plugin^("yadif.dll"^)>> %VIDEO_AVS%
-if /i "%YV12%"=="true" goto yadif
 echo ConvertToYV12^(%AVS_SCALE%interlaced=true^)>> %VIDEO_AVS%
 echo;>> %VIDEO_AVS%
-:yadif
 if "%SCAN_TYPE%"=="MBAFF" (
     echo Yadif^(order=1^)>> %VIDEO_AVS%
     goto fps_avs
@@ -518,12 +531,12 @@ if "%SCAN_ORDER%"=="Bottom" (
 echo Yadif^(order=-1^)>> %VIDEO_AVS%
 
 :fps_avs
+if not defined RESIZER set RESIZER=Spline16Resize
 (
     echo;
     if "%CHANGE_FPS%"=="true" echo ChangeFPS^(%FPS%^)
     echo;
 
-    if "%RESIZER%"=="" set RESIZER=Spline16Resize
     if not "%IN_WIDTH%"=="%WIDTH%" echo %RESIZER%^(%WIDTH%,last.height^(^)^)
     if not "%IN_HEIGHT%"=="%HEIGHT%" echo %RESIZER%^(last.width^(^),%HEIGHT%^)
     echo;

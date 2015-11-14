@@ -30,8 +30,8 @@ for /f %%i in (%TEMP_FILE%) do set /a A_BITRATE=(%%i+500)/1000
 .\MediaInfo.exe --Inform=General;%%FileSize%% --LogFile=%TEMP_FILE% "%MOVIE_FILE%">nul
 for /f %%i in (%TEMP_FILE%) do set SIZE=%%i
 
-set /a PLAYER_HEIGHT=486+24
-set /a PLAYER_WIDTH=864
+set /a PLAYER_HEIGHT=480+24
+set /a PLAYER_WIDTH=854
 
 (
   echo var n = %SIZE%/1024.0/1024.0;
@@ -119,7 +119,7 @@ set /a PLAYER_WIDTH=864
   echo;
   echo ^<hr^>
   echo;
-  echo ^<p^>^<a href="http://www.smilevideo.jp/upload" target="_blank"^>SMILEVIDEO^</a^>^</p^>
+  echo ^<p^>^<a href="http://www.upload.nicovideo.jp/upload" target="_blank"^>SMILEVIDEO^</a^>^</p^>
   echo;
   echo ^</center^>
   echo;

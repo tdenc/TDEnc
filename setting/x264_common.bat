@@ -7,4 +7,4 @@ set WEIGHTP=1
 set THREADS=0
 
 rem その他手動指定で追加したいオプションがある場合はスペースで区切りながら追加
-set COMMON_MISC=--qpmin 10 --direct auto --thread-input --quiet --no-interlaced --stats %TEMP_DIR%\x264.log
+set COMMON_MISC=--qpmin 10 --direct auto --thread-input --no-interlaced --stats %TEMP_DIR%\x264.log

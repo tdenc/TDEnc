@@ -19,8 +19,8 @@ rem 再生時間取得
     echo _keyint = String^(Round^(framerate^(^)^)^)
     echo _in_width = String^(Ceil(width^(^)^)^)
     echo _in_height = String^(Ceil(height^(^)^)^)
-    echo _out_width = %DEFAULT_WIDTH%
-    echo _out_height = String^(Round^(%DEFAULT_WIDTH%*height^(^)/width^(^)^)^)
+    echo _out_width = String^(Round^(%DEFAULT_HEIGHT%*width^(^)/height^(^)^)^)
+    echo _channels = String^(audiochannels^(^)^)
     echo;
     echo WriteFileStart^("time.txt","_time",append = false^)
     echo WriteFileStart^("yv12.txt","_isyv12",append = false^)
@@ -30,7 +30,7 @@ rem 再生時間取得
     echo WriteFileStart^("in_width.txt","_in_width",append = false^)
     echo WriteFileStart^("in_height.txt","_in_height",append = false^)
     echo WriteFileStart^("out_width.txt","_out_width",append = false^)
-    echo WriteFileStart^("out_height.txt","_out_height",append = false^)
+    echo WriteFileStart^("channels.txt","_channels",append = false^)
     echo Trim^(0,-1^)
     echo;
     echo return last
@@ -45,7 +45,12 @@ echo PlayTime     : %TOTAL_TIME%ms
 
 echo Format       : AVS^(Avisynth Script^)
 
-if "%DEFAULT_FPS%"=="" (
+for /f "delims=" %%i in (%TEMP_DIR%\keyint.txt) do set /a KEYINT=10*%%i
+
+for /f "delims=" %%i in (%TEMP_DIR%\fps.txt) do set INPUT_FPS=%%i
+echo FPS          : %INPUT_FPS%fps^(CFR^)
+
+if not defined DEFAULT_FPS (
     set CHANGE_FPS=false
     set FPS=%INPUT_FPS%
 ) else (
@@ -53,17 +58,15 @@ if "%DEFAULT_FPS%"=="" (
     set FPS=%DEFAULT_FPS%
 )
 
-for /f "delims=" %%i in (%TEMP_DIR%\keyint.txt) do set /a KEYINT=10*%%i
-
-for /f "delims=" %%i in (%TEMP_DIR%\fps.txt) do set FPS=%%i
-echo FPS          : %FPS%fps^(CFR^)
-
 for /f "delims=" %%i in (%TEMP_DIR%\in_width.txt) do set /a IN_WIDTH=%%i
 echo Width        : %IN_WIDTH%pixels
 
 for /f "delims=" %%i in (%TEMP_DIR%\in_height.txt) do set /a IN_HEIGHT=%%i
 echo Height       : %IN_HEIGHT%pixels
 
+for /f "delims=" %%i in (%TEMP_DIR%\channels.txt) do set /a AUDIO_CHANNELS=%%i
+if not defined AUDIO_CHANNELS set AUDIO_CHANNELS=0
+echo Audio Channels : %AUDIO_CHANNELS%
 
 rem ビットレート情報の取得
 (
@@ -87,29 +90,27 @@ for /f "delims=" %%i in (%TEMP_DIR%\normal_bitrate.txt) do set /a I_TEMP_BITRATE
 for /f "delims=" %%i in (%TEMP_DIR%\youtube_partner_bitrate.txt) do set /a Y_P_TEMP_BITRATE=%%i>nul
 for /f "delims=" %%i in (%TEMP_DIR%\youtube_normal_bitrate.txt) do set /a Y_I_TEMP_BITRATE=%%i>nul
 
+rem 出力解像度の設定
 set /a IN_WIDTH_ODD=%IN_WIDTH% %% 2
 set /a IN_HEIGHT_ODD=%IN_HEIGHT% %% 2
-set /a OUT_WIDTH=%IN_WIDTH%
-if not "%DEFAULT_HEIGHT%"=="" (
-    set /a OUT_HEIGHT=%DEFAULT_HEIGHT%
+set /a OUT_HEIGHT=%DEFAULT_HEIGHT% + %DEFAULT_HEIGHT% %% 2
+if defined DEFAULT_WIDTH (
+    set /a OUT_WIDTH=%DEFAULT_WIDTH%
     goto info_check
 )
-
-for /f "delims=" %%i in (%TEMP_DIR%\out_width.txt) do set /a OUT_WIDTH=%%i
-for /f "delims=" %%i in (%TEMP_DIR%\out_height.txt) do set /a OUT_HEIGHT=%%i
-set /a OUT_HEIGHT_ODD=%OUT_HEIGHT% %% 2
-set /a OUT_HEIGHT-=%OUT_HEIGHT_ODD%
+for /f "delims=" %%i in (%TEMP_DIR%\out_width.txt) do set /a OUT_WIDTH_TEMP=%%i
+set /a OUT_WIDTH=%OUT_WIDTH_TEMP% + %OUT_WIDTH_TEMP% %% 2
 
 :info_check
-if "%TOTAL_TIME%"=="" (
+echo;
+if not defined TOTAL_TIME (
     echo ^>^>%ANALYZE_ERROR%
-    call quit.bat
+    call error.bat
     echo;
 )
-
-if "%KEYINT%"=="" (
+if not defined KEYINT (
     echo ^>^>%ANALYZE_ERROR%
-    call quit.bat
+    call error.bat
     echo;
 )
 
@@ -149,21 +150,29 @@ if /i "%RGB%"=="true" (
 ) else (
     set AVS_SCALE=
 )
+if not defined RESIZER set RESIZER=Spline16Resize
 (
-    echo AVISource^(%INPUT_FILE_PATH%^)
+    if "%RGB%"=="true" (
+        echo AVISource^(%INPUT_FILE_PATH%^)
+    ) else (
+        echo AVISource^(%INPUT_FILE_PATH%,pixel_type="YUY2"^)
+    )
     echo;
 
-    if /i not "%YV12%"=="true" (
-        if "%IN_WIDTH_ODD%"=="1" echo Crop^(0,0,-1,0^)
-        if "%IN_HEIGHT_ODD%"=="1" echo Crop^(0,0,0,-1^)
-        echo ConvertToYV12^(%AVS_SCALE%interlaced=false^)
-    )
+    if "%IN_WIDTH_ODD%"=="1" (
+        if "%IN_HEIGHT_ODD%"=="1" (
+            echo Crop^(0,0,-1,-1^)
+	) else (
+            echo Crop^(0,0,-1,0^)
+	)
+    ) else if "%IN_HEIGHT_ODD%"=="1" echo Crop^(0,0,0,-1^)
+
+    echo ConvertToYV12^(%AVS_SCALE%interlaced=false^)
     echo;
 
     if "%CHANGE_FPS%"=="true" echo ChangeFPS^(%FPS%^)
     echo;
 
-    if "%RESIZER%"=="" set RESIZER=Spline16Resize
     if not "%IN_WIDTH%"=="%WIDTH%" echo %RESIZER%^(%WIDTH%,last.height^(^)^)
     if not "%IN_HEIGHT%"=="%HEIGHT%" echo %RESIZER%^(last.width^(^),%HEIGHT%^)
     echo;
