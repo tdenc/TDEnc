@@ -68,7 +68,7 @@ set DERE_MESSAGE2=ま、また使ってくれると・・・う、うれしいな・・・（/ω＼）
 
 rem initialize.batのメッセージ
 set INIT_TITLE=は、初めてなんだからやさ（ｒｙ
-set INIT_ANNOUNCE=起動時の設定
+set INIT_ANNOUNCE=初回起動時の設定
 
 rem m4a_enc.batのメッセージ
 set SYNC_ANNOUNCE=音ズレ修正中～♪
@@ -175,9 +175,13 @@ set VER_CHECK_ERROR=バージョンチェック失敗（回線切断orダウンローダ起動失敗orサー
 set VER_CHECK_NEW1=新しいバージョンが出てるわよ！
 set VER_CHECK_NEW2=（アップデートの方法はサイトの「つかいかた」をきちんと読むこと！）
 set VER_CHECK_LOG=更新内容
-set UPDATE_QUESTION1=ウィンドウを閉じてつんでれんこの部屋に行く？（y/n/s）
+set UPDATE_QUESTION1=自動アップデートする？（y/n/s）
 set UPDATE_QUESTION2=（このままエンコードを続けるならnを選択よ）
 set UPDATE_QUESTION3=（今後もこのバージョンをスキップし続けたいならsを選択よ）
+set UPDATE_ERROR=アップデート失敗（回線切断orダウンローダ起動失敗orサーバダウン）
+set UPDATE_ANNOUNCE1=アップデート開始～♪
+set UPDATE_ANNOUNCE2=アップデート完了～♪
+set UPDATE_ANNOUNCE3=次に関連ツールのアップデートをするわよ！
 
 rem x264_enc.batのメッセージ
 set OPTION_SUCCESS=x264オプション設定完了～♪

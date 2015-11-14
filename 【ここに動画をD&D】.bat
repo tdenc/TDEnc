@@ -8,7 +8,7 @@ title %TDENC_TITLE%
 rem ################ƒ†[ƒU[Ý’è“Ç‚Ýž‚Ý################
 call version.bat
 
-.\curl.exe -o tool_url.zip -L "http://bit.ly/lHnPjd" 2>nul
+.\curl.exe -o tool_url.zip -L "http://bit.ly/sdELss" 2>nul
 .\7z.exe e -bd -y ".\tool_url.zip" "tool_url.bat" 1>nul 2>&1
 call tool_url.bat 1>nul 2>&1
 if not "%VER_PATH%"=="" (

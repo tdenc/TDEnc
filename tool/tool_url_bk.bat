@@ -2,8 +2,11 @@
 
 call "version.bat"
 
-set VER_URL="http://bit.ly/lWGhYA"
+set VER_URL="http://bit.ly/rxhZTA"
 set VER_PATH=".\latest_version"
+
+set UPD_URL="http://bit.ly/s6ylX2"
+set UPD_PATH="..\Archives\update.zip"
 
 set LOG_URL="http://bit.ly/kZmCh7"
 set LOG_PATH=".\ChangeLog"
@@ -48,6 +51,6 @@ set NERO_URL="http://ftp6.nero.com/tools/NeroAACCodec-1.5.1.zip"
 set NERO_PATH="..\Archives\NeroAACCodec-1.5.1.zip"
 set NERO_SIZE=2050564
 
-set X264_URL="http://mirror04.x264.nl/x264/32bit/8bit_depth/revision%X264_VERSION%/x264.exe"
+set X264_URL="http://mirror03.x264.nl/x264/32bit/8bit_depth/revision%X264_VERSION%/x264.exe"
 set X264_PATH="..\Archives\x264.exe"
 
