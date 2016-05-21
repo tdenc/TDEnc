@@ -2,13 +2,13 @@
 
 call "version.bat"
 
-set VER_URL="http://tdenc.com/files/latest_version"
+set VER_URL="https://raw.githubusercontent.com/tdenc/TDEnc/master/tool/current_version"
 set VER_PATH=".\latest_version"
 
-set UPD_URL="http://tdenc.com/files/update.zip"
+set UPD_URL="https://github.com/tdenc/TDEnc/archive/master.zip"
 set UPD_PATH="..\Archives\update.zip"
 
-set LOG_URL="http://tdenc.com/files/ChangeLog"
+set LOG_URL="https://raw.githubusercontent.com/tdenc/TDEnc/master/tool/ChangeLog"
 set LOG_PATH=".\ChangeLog"
 
 set AVS_URL="http://jaist.dl.sourceforge.net/project/avisynth2/AviSynth%%202.5/AviSynth%%202.5.8/Avisynth_258.exe"
@@ -51,6 +51,6 @@ set NERO_URL="http://ftp6.nero.com/tools/NeroAACCodec-1.5.1.zip"
 set NERO_PATH="..\Archives\NeroAACCodec-1.5.1.zip"
 set NERO_SIZE=2050564
 
-set X264_VERSION=2377
-set X264_URL="http://tdenc.com/files/tools/x264.exe"
+set X264_VERSION=2692
+set X264_URL="http://komisar.gin.by/old/2692/x264.2692.x86.exe"
 set X264_PATH="..\Archives\x264.exe"

@@ -14,11 +14,12 @@ if "%ERRORLEVEL%"=="22" (
     exit /b
 )
 
-.\7z.exe x -bd -y "..\Archives\update.zip" -o"..\Archives\"
+.\7z.exe x -bd -y %UPD_PATH% -o"..\Archives\"
 
 echo;
-move ..\Archives\tde* ..\Archives\update
+move ..\Archives\TDEnc-master ..\Archives\update
 move /y ..\Archives\update\setting\user_setting.bat ..\Archives\update\setting\user_setting_new.bat
+copy /y ..\setting\user_message.bat ..\setting\user_message_old.bat 1>nul 2>&1
 
 echo;
 xcopy /y /s ..\Archives\update\* ..\ 2>nul

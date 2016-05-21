@@ -1,19 +1,19 @@
 @echo off
 cd /d "%~d0" 1>nul 2>&1
 cd "%~p0tool\" 1>nul 2>&1
-call ..\setting\message.bat
+call ..\setting\default_message.bat
+call ..\setting\user_message.bat
 title %TDENC_TITLE%
 
 
 rem ################ƒ†[ƒU[Ý’è“Ç‚Ýž‚Ý################
 call version.bat
 date /t>nul
-.\curl.exe --connect-timeout 5 -f -o tool_url.zip -L "http://tdenc.com/files/tool_url.zip" 2>nul
+.\curl.exe --connect-timeout 5 -f -o tool_url.bat -L "https://raw.githubusercontent.com/tdenc/TDEnc/master/tool/tool_url.bat" 2>nul
 if "%ERRORLEVEL%"=="22" (
     set URL_PATH=".\tool_url_bk.bat"
 ) else (
     set URL_PATH=".\tool_url.bat"
-    .\7z.exe e -bd -y ".\tool_url.zip" "tool_url.bat" 1>nul 2>&1
     copy /y tool_url.bat tool_url_bk.bat 1>nul 2>&1
 )
 call %URL_PATH%
