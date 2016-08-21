@@ -40,6 +40,7 @@ if %Q_LEVEL% EQU 3 (
     set DECTYPE0=n
     set CRF_ENC0=y
     set DEINT0=a
+    set DENOISE0=a
     set SAMPLERATE0=1
     set QUIET=--quiet
     if %Q_LEVEL% EQU 1 (
@@ -72,7 +73,17 @@ if /i "%UP_SITE%"=="y" (
     set RESIZE=n
     set FLASH=1
     goto account
-) else if /i "%UP_SITE%"=="n" (
+) else if "%UP_SITE%"=="N" (
+    set PRETYPE=y
+    set ACTYPE=y
+    set SAMPLERATE=1
+    set ENCTYPE=h
+    set DECTYPE=n
+    set RESIZE=n
+    set FLASH=1
+    set /a T_BITRATE0=0
+    goto account
+) else if "%UP_SITE%"=="n" (
     goto preset
 ) else (
     echo;
@@ -112,6 +123,7 @@ echo %HORIZON_B%
 if defined PRETYPE (
     if /i "%PRETYPE%"=="l" (
         set CRF_ENC=n
+        set DENOISE=n
         goto account
     ) else if /i "%PRETYPE%"=="m" (
         goto account
@@ -119,6 +131,7 @@ if defined PRETYPE (
         goto account
     ) else if /i "%PRETYPE%"=="o" (
         set CRF_ENC=n
+        set DENOISE=n
         goto account
     ) else if /i "%PRETYPE%"=="p" (
         goto account
@@ -128,12 +141,13 @@ if defined PRETYPE (
         if "%MUX_MODE%"=="y" (
             set CRF_ENC=n
             set DEINT=n
+            set DENOISE=n
             set FLASH=1
             set DECTYPE=n
             set RESIZE=n
             set T_BITRATE=%P_TEMP_BITRATE%
             goto account
-	)
+        )
         echo ^>^>%PRESET_MESSAGE%
         echo ^>^>%PAUSE_MESSAGE2%
         pause>nul
@@ -208,6 +222,8 @@ call :decode
 call :flash
 call :interlace
 call :resize
+call :colormatrix
+call :denoise
 call :audio_bitrate
 call :audio_samplerate
 call :audio_sync
@@ -221,6 +237,8 @@ call :br_mode
 call :flash
 call :interlace
 call :resize
+call :colormatrix
+call :denoise
 call :resize_check
 call :audio_bitrate
 call :audio_samplerate
@@ -281,6 +299,8 @@ if /i "%UP_SITE%"=="y" (
         set /a T_BITRATE=%Y_I_TEMP_BITRATE%
         set /a TP_TEMP_BITRATE=%Y_I_TEMP_BITRATE%
     )
+) else if "%UP_SITE%"=="N" (
+    set /a TP_TEMP_BITRATE=%P_TEMP_BITRATE_NEW%
 ) else (
     set /a TP_TEMP_BITRATE=%P_TEMP_BITRATE%
 )
@@ -348,6 +368,8 @@ if /i "%CRF_ENC%"=="n" (
     exit /b
 ) else if /i "%CRF_ENC%"=="y" (
     if /i "%UP_SITE%"=="y" (
+        set CRF=--crf %CRF_YOU%
+    ) else if "%UP_SITE%"=="N" (
         set CRF=--crf %CRF_YOU%
     ) else if /i "%ACTYPE%"=="n" (
         set CRF=--crf %CRF_LOW%
@@ -546,6 +568,43 @@ if /i "%PRETYPE%"=="s" (
 goto preset
 exit /b
 
+rem カラーマトリックス
+:colormatrix
+if %HEIGHT% LSS 720 (
+    set COLORMATRIX=%COLORMATRIX_SD%
+) else (
+    set COLORMATRIX=%COLORMATRIX_HD%
+)
+exit /b
+
+rem デノイズ
+:denoise
+if not defined DENOISE set DENOISE=%DENOISE0%
+if defined DENOISE goto denoise_main
+:denoise_question
+echo;
+echo %HORIZON_B%
+echo ^>^>%DENOISE_START1%
+echo ^>^>%DENOISE_START2%
+echo ^>^>%DENOISE_START3%
+echo %HORIZON%
+set /p DENOISE=^>^>
+echo %HORIZON_B%
+:denoise_main
+if /i "%DENOISE%"=="a" (
+    if "%UP_SITE%"=="n" (
+        set DENOISE=n
+    ) else (
+        set DENOISE=y
+    )
+    exit /b
+)
+if /i "%DENOISE%"=="y" exit /b
+if /i "%DENOISE%"=="n" exit /b
+echo ^>^>%RETURN_MESSAGE1%
+goto denoise_question
+exit /b
+
 rem 音声ビットレート決定
 :audio_bitrate
 if /i "%PRETYPE%"=="s" (
@@ -554,6 +613,8 @@ if /i "%PRETYPE%"=="s" (
     set /a M_BITRATE=%T_BITRATE%
     if /i "%UP_SITE%"=="y" (
         set /a TEMP_BITRATE=320
+    ) else if "%UP_SITE%"=="N" (
+        set /a TEMP_BITRATE=256
     ) else if %Q_LEVEL% LSS 2 (
         if /i "%ACTYPE%"=="y" (
             set /a TEMP_BITRATE=192
@@ -702,6 +763,8 @@ if /i "%UP_SITE%"=="y" (
         echo %CONFIRM_ACCOUNT1% : %CONFIRM_ACCOUNT4%
     )
     echo %CONFIRM_PRETYPE% : %PRESET_LIST9%
+) else if "%UP_SITE%"=="N" (
+    echo %CONFIRM_ACCOUNT1% : %CONFIRM_ACCOUNT6%
 ) else if /i "%ACTYPE%"=="y" (
     echo %CONFIRM_ACCOUNT1% : %CONFIRM_ACCOUNT2%
 ) else (
@@ -747,6 +810,13 @@ if /i "%DEINT%"=="a" (
     echo %CONFIRM_DEINT1% : %CONFIRM_DEINT3%
 ) else (
     echo %CONFIRM_DEINT1% : %CONFIRM_DEINT4%
+)
+if /i "%DENOISE%"=="a" (
+    echo %CONFIRM_DENOISE1% : %CONFIRM_DENOISE2%
+) else if /i "%DENOISE%"=="y" (
+    echo %CONFIRM_DENOISE1% : %CONFIRM_DENOISE3%
+) else (
+    echo %CONFIRM_DENOISE1% : %CONFIRM_DENOISE4%
 )
 :audio_list
 if "%A_BITRATE%"=="0" (

@@ -72,8 +72,10 @@ rem ‚»‚Ì‘¼‚Ìî•ñ‚ÌŽæ“¾
     echo BlankClip^(length=1, width=32, height=32^)
     echo _premium_bitrate = String^(Floor^(Float^(%DEFAULT_SIZE_PREMIUM%^) * 1024 * 1024 * 8 / %TOTAL_TIME%^)^)
     echo _normal_bitrate = String^(Floor^(Float^(%DEFAULT_SIZE_NORMAL%^) * 1024 * 1024 * 8 / %TOTAL_TIME%^)^)
+    echo _premium_bitrate_new = String^(Floor^(Float^(%DEFAULT_SIZE_PREMIUM_NEW%^) * 1024 * 1024 * 8 / %TOTAL_TIME%^)^)
     echo WriteFileStart^("premium_bitrate.txt","_premium_bitrate",append = false^)
     echo WriteFileStart^("normal_bitrate.txt","_normal_bitrate",append = false^)
+    echo WriteFileStart^("premium_bitrate_new.txt","_premium_bitrate_new",append = false^)
     echo;
 )> %INFO_AVS2%
 echo return last>> %INFO_AVS2%
@@ -82,6 +84,7 @@ echo return last>> %INFO_AVS2%
 
 for /f %%i in (%TEMP_DIR%\premium_bitrate.txt) do set /a P_TEMP_BITRATE=%%i 2>nul
 for /f %%i in (%TEMP_DIR%\normal_bitrate.txt) do set /a I_TEMP_BITRATE=%%i 2>nul
+for /f %%i in (%TEMP_DIR%\premium_bitrate_new.txt) do set /a P_TEMP_BITRATE_NEW=%%i 2>nul
 
 echo;
 
@@ -123,6 +126,19 @@ if /i "%FULL_RANGE%"=="on" set AVS_SCALE=matrix^=^"PC.601^"^,
     echo;
     echo return last
 )> %VIDEO_AVS%
+
+:denoise_avs
+(
+    if not "%DENOISE%"=="n" (
+        echo LoadPlugin^("RemoveGrain.dll"^)
+        echo LoadPlugin^("Repair.dll"^)
+        echo src=last
+        echo blur=src.RemoveGrain^(%RG_MODE%^)
+        echo last=Repair^(blur, src^)
+    )
+    echo;
+    echo return last
+)>> %VIDEO_AVS%
 
 echo ^>^>%AVS_END%
 echo;

@@ -27,6 +27,10 @@ set FSS_URL="http://ffmpegsource.googlecode.com/files/ffms2-r722.7z"
 set FSS_PATH="..\Archives\ffms2-r722.7z"
 set FSS_SIZE=3927578
 
+set RG1_URL="http://home.arcor.de/kassandro/prerelease/RemoveGrain64.zip"
+set RG1_PATH="..\Archives\RemoveGrain64.zip"
+set RG1_SIZE=157912
+
 set QTS_URL="http://bit.ly/oho3NX"
 set QTS_PATH="..\Archives\QTSource.zip"
 set QTS_SIZE=71577
