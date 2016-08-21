@@ -1,4 +1,4 @@
-set USER_VERSION=21
+set USER_VERSION=22
 
 rem ↓ここから下を適当に弄って自分好みの設定にしてくだしあ↓
 
@@ -32,9 +32,9 @@ set BITRATE_THRESHOLD=2000
 
 rem crfエンコのときの値
 rem 数値が小さいほど高画質だが下げすぎるといろいろ問題が出る
-rem YouTube用エンコのときはCRF_YOUを使用する
+rem YouTube用エンコ、ニコニコ新基準のときはCRF_YOUを使用する
 rem ニコニプレミアムアカはCRF_HIGHの方、一般アカはCRF_LOWを使う
-set CRF_YOU=20
+set CRF_YOU=18
 set CRF_HIGH=23
 set CRF_LOW=26
 
@@ -57,6 +57,11 @@ rem リサイザの指定
 rem Avisynthのリサイザから選んでください（Spline36Resize、Lanczos4Resizeなど）
 rem よくわからない人は空欄のままにしておくこと
 set RESIZER=
+
+rem デノイズの強弱
+rem RemoveGrainのmode
+rem よくわからない人はそのままにしておくこと
+set RG_MODE=5
 
 rem FPSを指定したいときは、「DEFAULT_FPS=24」などのようにする
 rem 元の動画と同じのままなら空欄のままにしておく
@@ -88,7 +93,8 @@ set DECODER=auto
 rem カラーマトリクス
 rem よく分からない場合は弄らないのが吉
 rem BT.601かBT.709を選択する
-set COLORMATRIX=BT.601
+set COLORMATRIX_SD=BT.601
+set COLORMATRIX_HD=BT.709
 
 rem フルレンジを有効にしたい場合はonにする
 rem フルレンジにした場合のデメリット(プレイヤー互換等)を認識している人のみ使用してください
@@ -99,11 +105,12 @@ set FULL_RANGE=off
 rem MP4の容量の設定
 rem エンコード後の容量が100MB（プレアカ）や40MB（一般アカ）を超えてしまうとき
 rem 下の値を小さくしてみるといいかも
-rem DEFAULT_SIZE_PREMIUMかプレアカ用の設定、DEFAULT_SIZE_NOMALが一般アカ用の設定
-rem 初期設定は「DEFAULT_SIZE_PREMIUM=98.5」、「DEFAULT_SIZE_NOMAL=39」
+rem DEFAULT_SIZE_PREMIUMかプレアカ用の設定、DEFAULT_SIZE_NOMALが一般アカ用の設定、DEFAULT_SIZE_PREMIUM_NEWは新基準適用者向けの設定
+rem 初期設定は「DEFAULT_SIZE_PREMIUM=98.5」、「DEFAULT_SIZE_NOMAL=39」「DEFAULT_SIZE_PREMIUM_NEW=1495」
 rem 容量オーバーするときは「DEFAULT_SIZE_PREMIUM=98」、「DEFAULT_SIZE_NOMAL=38」などにしてみる
 set DEFAULT_SIZE_PREMIUM=98.5
 set DEFAULT_SIZE_NORMAL=39
+set DEFAULT_SIZE_PREMIUM_NEW=1495
 rem YouTube用の設定
 rem 上限は20480MB（YouTubeパートナー）か2024MB（YouTube一般）
 set DEFAULT_SIZE_YOUTUBE_PARTNER=20000
@@ -206,6 +213,12 @@ rem ===============================！注意！===================================
 rem 質問レベル「すこし」ではこの質問は非表示
 rem ==========================================================================
 set RESIZE=
+
+rem デノイズの選択（a/n/1/2から選択）（ニコニコ、YouTube）
+rem ===============================！注意！===================================
+rem 質問レベル「すこし」「ふつう」ではこの質問は非表示
+rem ==========================================================================
+set DENOISE=
 
 rem 音声のビットレート（ニコニコのみ）
 rem 「set TEMP_BITRATE=160」（160kbps）「set TEMP_BITRATE=0」（音声なし）

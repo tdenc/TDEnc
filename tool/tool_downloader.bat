@@ -13,6 +13,7 @@ set AVS=f
 set DSS=f
 set DIL=f
 set FSS=f
+set RG1=f
 set QTS=f
 set MIF=f
 set YDF=f
@@ -21,7 +22,7 @@ set WVI=f
 set NERO=f
 set X264=f
 call :file_check_sub
-echo %AVS%%DSS%%DIL%%FSS%%QTS%%MIF%%YDF%%A2P%%WVI%%NERO%%X264% | findstr "f">nul
+echo %AVS%%DSS%%DIL%%FSS%%RG1%%QTS%%MIF%%YDF%%A2P%%WVI%%NERO%%X264% | findstr "f">nul
 if "%ERRORLEVEL%"=="1" exit
 
 rem ################モード選択################
@@ -61,10 +62,14 @@ if "%DIL%"=="f" (
     .\curl.exe --connect-timeout 5 -f -o %DIL_PATH% -L %DIL_URL%
     echo;
 )
-
 if "%FSS%"=="f" (
     echo ^>^>FFMpegSource
     .\curl.exe --connect-timeout 5 -f -o %FSS_PATH% -L %FSS_URL%
+    echo;
+)
+if "%RG1%"=="f" (
+    echo ^>^>RemoveGrain
+    .\curl.exe --connect-timeout 5 -f -o %RG1_PATH% -L %RG1_URL%
     echo;
 )
 if "%QTS%"=="f" (
@@ -138,6 +143,7 @@ if "%AVS%"=="f" echo Avisynth→%AVS_URL%
 if "%DSS%"=="f" echo DirectShowSource→%DSS_URL%
 if "%DIL%"=="f" echo DevIL→%DIL_URL%
 if "%FSS%"=="f" echo FFmpegSource→%FSS_URL%
+if "%RG1%"=="f" echo RemoveGrain→%RG1_URL%
 if "%QTS%"=="f" echo QTSource→%QTS_URL%
 if "%MIF%"=="f" echo MediaInfo→%MIF_URL%
 if "%YDF%"=="f" echo yadif→%YDF_URL%
@@ -157,7 +163,7 @@ rem ################落とせたかどうかをチェック################
 :check
 call :file_check_sub
 date /t>nul
-echo %AVS%%DSS%%DIL%%FSS%%QTS%%MIF%%YDF%%A2P%%WVI%%NERO%%X264% | findstr "f">nul
+echo %AVS%%DSS%%DIL%%FSS%%RG1%%QTS%%MIF%%YDF%%A2P%%WVI%%NERO%%X264% | findstr "f">nul
 if "%ERRORLEVEL%"=="0" goto dl_fail
 
 
@@ -181,6 +187,7 @@ if "%AVS%"=="f" echo Avisynth
 if "%DSS%"=="f" echo DirectShowSource
 if "%DIL%"=="f" echo DevIL
 if "%FSS%"=="f" echo FFmpegSource
+if "%RG1%"=="f" echo RemoveGrain
 if "%QTS%"=="f" echo QTSource
 if "%MIF%"=="f" echo MediaInfo
 if "%YDF%"=="f" echo yadif
@@ -204,6 +211,7 @@ for %%i in (%AVS_PATH%) do if %%~zi EQU %AVS_SIZE% set AVS=t
 for %%i in (%DSS_PATH%) do if %%~zi EQU %DSS_SIZE% set DSS=t
 for %%i in (%DIL_PATH%) do if %%~zi EQU %DIL_SIZE% set DIL=t
 for %%i in (%FSS_PATH%) do if %%~zi EQU %FSS_SIZE% set FSS=t
+for %%i in (%RG1_PATH%) do if %%~zi EQU %RG1_SIZE% set RG1=t
 for %%i in (%QTS_PATH%) do if %%~zi EQU %QTS_SIZE% set QTS=t
 for %%i in (%MIF_PATH%) do if %%~zi EQU %MIF_SIZE% set MIF=t
 for %%i in (%YDF_PATH%) do if %%~zi EQU %YDF_SIZE% set YDF=t

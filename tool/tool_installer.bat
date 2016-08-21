@@ -19,6 +19,7 @@ echo;
 .\7z.exe e -bd -y %DSS_PATH% "DirectShowSource.dll"
 .\7z.exe e -bd -y %DIL_PATH% "DevIL.dll"
 .\7z.exe e -bd -y %FSS_PATH% "*\ffms2.dll" "*\ffmsindex.exe"
+.\7z.exe e -bd -y %RG1_PATH% "RemoveGrain.dll" "Repair.dll"
 .\7z.exe e -bd -y %QTS_PATH% "QTSource.dll"
 .\7z.exe e -bd -y %MIF_PATH% "MediaInfo.exe" "MediaInfo.dll"
 .\7z.exe e -bd -y %YDF_PATH% "yadif.dll"
