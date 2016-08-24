@@ -1,7 +1,7 @@
 rem このファイルはいじらないでくだしあ。
 rem いじるならuser_setting.batの方をいじってくだしあ＞＜
 
-set THIS_VERSION=22
+set THIS_VERSION=23
 set DEFAULT_VERSION_CHECK=true
 set I_TARGET_BITRATE=600
 set I_MAX_BITRATE=654
@@ -9,6 +9,7 @@ set E_TARGET_BITRATE=420
 set E_MAX_BITRATE=445
 set BITRATE_MARGIN=5
 set BITRATE_THRESHOLD=2000
+set BITRATE_NICO_NEW_THRESHOLD=2000
 set CRF_YOU=18
 set CRF_HIGH=23
 set CRF_LOW=26
