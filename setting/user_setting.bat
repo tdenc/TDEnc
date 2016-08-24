@@ -1,4 +1,4 @@
-set USER_VERSION=22
+set USER_VERSION=23
 
 rem ↓ここから下を適当に弄って自分好みの設定にしてくだしあ↓
 
@@ -29,6 +29,10 @@ rem この数値以上のビットレートが指定されたときにcrfエンコに切り替わる
 rem crfエンコの結果サイズオーバーした場合はビットレートエンコに切り替わる
 rem そのときのビットレートは自動的に最大可能ビットレートになる
 set BITRATE_THRESHOLD=2000
+
+rem ニコニコ新仕様で2passエンコに切り替わるビットレートの閾値（kbps）
+rem この数値以下のビットレートでCRFエンコされたときに2passエンコに切り替わる
+set BITRATE_NICO_NEW_THRESHOLD=2000
 
 rem crfエンコのときの値
 rem 数値が小さいほど高画質だが下げすぎるといろいろ問題が出る
