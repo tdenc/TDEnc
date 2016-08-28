@@ -383,8 +383,9 @@ if not exist %TEMP_264% (
 exit /b
 
 :avisynth_check
+if exist DirectShowSource.dll del DirectShowSource.dll
 if exist %WINDIR%\system32\avisynth.dll (
-    for %%i in (%WINDIR%\SysWow64\avisynth.dll) do if %%~zi EQU 401920 exit /b
+    for %%i in (%WINDIR%\system32\avisynth.dll) do if %%~zi EQU 401920 exit /b
 )
 if exist %WINDIR%\sysWow64\avisynth.dll (
     for %%i in (%WINDIR%\SysWow64\avisynth.dll) do if %%~zi EQU 401920 exit /b
