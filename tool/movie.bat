@@ -302,11 +302,10 @@ date /t>nul
 echo %INPUT_FILE_TYPE% | findstr /i "avi mkv mp4 flv">nul
 if "%ERRORLEVEL%"=="0" (
     set SEEKMODE=1
-    ffmsindex.exe -m default -f %INPUT_FILE_PATH% %TEMP_DIR%\input.ffindex
 ) else (
     set SEEKMODE=-1
-    ffmsindex.exe -m lavf -f %INPUT_FILE_PATH% %TEMP_DIR%\input.ffindex
 )
+ffmsindex.exe -f %INPUT_FILE_PATH% %TEMP_DIR%\input.ffindex
 echo;
 (
     echo LoadPlugin^("ffms2.dll"^)
