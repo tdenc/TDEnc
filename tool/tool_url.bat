@@ -15,10 +15,6 @@ set AVS_URL="http://jaist.dl.sourceforge.net/project/avisynth2/AviSynth%%202.6/A
 set AVS_PATH="..\Archives\Avisynth_260.exe"
 set AVS_SIZE=6514961
 
-set DSS_URL="http://jaist.dl.sourceforge.net/project/avisynth2/AviSynth%%202.5/AviSynth%%202.5.8/DirectShowSource_2587.zip"
-set DSS_PATH="..\Archives\DirectShowSource_2587.zip"
-set DSS_SIZE=40150
-
 set DIL_URL="http://jaist.dl.sourceforge.net/project/openil/DevIL%%20Win32/1.7.8/DevIL-EndUser-x86-1.7.8.zip"
 set DIL_PATH="..\Archives\DevIL-EndUser-x86-1.7.8.zip"
 set DIL_SIZE=676737

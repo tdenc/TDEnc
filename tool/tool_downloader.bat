@@ -10,7 +10,6 @@ echo;
 rem ################初期処理################
 if not exist ..\Archives mkdir ..\Archives
 set AVS=f
-set DSS=f
 set DIL=f
 set FSS=f
 set RG1=f
@@ -22,7 +21,7 @@ set WVI=f
 set NERO=f
 set X264=f
 call :file_check_sub
-echo %AVS%%DSS%%DIL%%FSS%%RG1%%QTS%%MIF%%YDF%%A2P%%WVI%%NERO%%X264% | findstr "f">nul
+echo %AVS%%DIL%%FSS%%RG1%%QTS%%MIF%%YDF%%A2P%%WVI%%NERO%%X264% | findstr "f">nul
 if "%ERRORLEVEL%"=="1" exit
 
 rem ################モード選択################
@@ -50,11 +49,6 @@ rem ################自動モード################
 if "%AVS%"=="f" (
     echo ^>^>Avisynth
     .\curl.exe --connect-timeout 5 -f -o %AVS_PATH% -L %AVS_URL%
-    echo;
-)
-if "%DSS%"=="f" (
-    echo ^>^>DirectShowSource
-    .\curl.exe --connect-timeout 5 -f -o %DSS_PATH% -L %DSS_URL%
     echo;
 )
 if "%DIL%"=="f" (
@@ -140,7 +134,6 @@ rem ################手動モード################
 echo ^>^>%DOWNLOADER_MANUAL%
 echo;
 if "%AVS%"=="f" echo Avisynth→%AVS_URL%
-if "%DSS%"=="f" echo DirectShowSource→%DSS_URL%
 if "%DIL%"=="f" echo DevIL→%DIL_URL%
 if "%FSS%"=="f" echo FFmpegSource→%FSS_URL%
 if "%RG1%"=="f" echo RemoveGrain→%RG1_URL%
@@ -163,7 +156,7 @@ rem ################落とせたかどうかをチェック################
 :check
 call :file_check_sub
 date /t>nul
-echo %AVS%%DSS%%DIL%%FSS%%RG1%%QTS%%MIF%%YDF%%A2P%%WVI%%NERO%%X264% | findstr "f">nul
+echo %AVS%%DIL%%FSS%%RG1%%QTS%%MIF%%YDF%%A2P%%WVI%%NERO%%X264% | findstr "f">nul
 if "%ERRORLEVEL%"=="0" goto dl_fail
 
 
@@ -184,7 +177,6 @@ echo ^>^>%DOWNLOADER_ERROR1%
 echo ^>^>%DOWNLOADER_ERROR2%
 echo;
 if "%AVS%"=="f" echo Avisynth
-if "%DSS%"=="f" echo DirectShowSource
 if "%DIL%"=="f" echo DevIL
 if "%FSS%"=="f" echo FFmpegSource
 if "%RG1%"=="f" echo RemoveGrain
@@ -208,7 +200,6 @@ exit
 rem ################ファイルチェックのサブルーチン################
 :file_check_sub
 for %%i in (%AVS_PATH%) do if %%~zi EQU %AVS_SIZE% set AVS=t
-for %%i in (%DSS_PATH%) do if %%~zi EQU %DSS_SIZE% set DSS=t
 for %%i in (%DIL_PATH%) do if %%~zi EQU %DIL_SIZE% set DIL=t
 for %%i in (%FSS_PATH%) do if %%~zi EQU %FSS_SIZE% set FSS=t
 for %%i in (%RG1_PATH%) do if %%~zi EQU %RG1_SIZE% set RG1=t

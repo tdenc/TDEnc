@@ -263,7 +263,6 @@ call shut.bat
 
 rem ################ä÷êîÇ¡Ç€Ç¢Ç‡ÇÃ################
 :file_exist_check
-if not exist DirectShowSource.dll start /wait call initialize.bat
 if not exist DevIL.dll start /wait call initialize.bat
 if not exist ffms2.dll start /wait call initialize.bat
 if not exist ffmsindex.exe start /wait call initialize.bat
@@ -383,8 +382,9 @@ if not exist %TEMP_264% (
 exit /b
 
 :avisynth_check
+if exist DirectShowSource.dll del DirectShowSource.dll
 if exist %WINDIR%\system32\avisynth.dll (
-    for %%i in (%WINDIR%\SysWow64\avisynth.dll) do if %%~zi EQU 401920 exit /b
+    for %%i in (%WINDIR%\system32\avisynth.dll) do if %%~zi EQU 401920 exit /b
 )
 if exist %WINDIR%\sysWow64\avisynth.dll (
     for %%i in (%WINDIR%\SysWow64\avisynth.dll) do if %%~zi EQU 401920 exit /b

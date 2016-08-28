@@ -268,8 +268,6 @@ if /i "%DECODER%"=="qt" goto qtsource_info
 
 :directshowsource_info
 (
-    echo LoadPlugin^("DirectShowSource.dll"^)
-    echo;
     echo DirectShowSource^(%INPUT_VIDEO%, audio = false^)
 )> %INFO_AVS%
 goto infoavs
@@ -443,8 +441,6 @@ if /i "%DECODER%"=="qt" goto qtsource_video
 
 :directshowsource_video
 (
-    echo LoadPlugin^("DirectShowSource.dll"^)
-    echo;
     if "%VFR%"=="true" (
         echo DirectShowSource^(%INPUT_VIDEO%, audio = false, fps=%INPUT_FPS%, convertfps=true^)
     ) else (

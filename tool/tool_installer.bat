@@ -16,7 +16,6 @@ pause>nul
 echo;
 
 
-.\7z.exe e -bd -y %DSS_PATH% "DirectShowSource.dll"
 .\7z.exe e -bd -y %DIL_PATH% "DevIL.dll"
 .\7z.exe e -bd -y %FSS_PATH% "*\x86\ffms2.dll" "*\x86\ffmsindex.exe"
 .\7z.exe e -bd -y %RG1_PATH% "RemoveGrain.dll" "Repair.dll"
