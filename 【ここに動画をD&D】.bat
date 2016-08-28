@@ -383,15 +383,19 @@ if not exist %TEMP_264% (
 exit /b
 
 :avisynth_check
-if exist %WINDIR%\system32\avisynth.dll exit /b
-if exist %WINDIR%\SysWow64\avisynth.dll exit /b
+if exist %WINDIR%\system32\avisynth.dll (
+    for %%i in (%WINDIR%\SysWow64\avisynth.dll) do if %%~zi EQU 401920 exit /b
+)
+if exist %WINDIR%\sysWow64\avisynth.dll (
+    for %%i in (%WINDIR%\SysWow64\avisynth.dll) do if %%~zi EQU 401920 exit /b
+)
 echo ^>^>%AVS_MESSAGE1%
 echo ^>^>%AVS_MESSAGE2%
 echo ^>^>%AVS_MESSAGE3%
 echo;
 echo ^>^>%PAUSE_MESSAGE1%
 pause>nul
-..\Archives\avisynth_258.exe
+..\Archives\avisynth_260.exe
 exit /b
 
 rem ################‚Â‚ñ‚Å‚ê‚ñ‚±I—¹..._ƒÓ(ßÍß )±Ë¬################

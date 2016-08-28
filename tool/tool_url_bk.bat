@@ -11,9 +11,9 @@ set UPD_PATH="..\Archives\update.zip"
 set LOG_URL="https://raw.githubusercontent.com/tdenc/TDEnc/master/tool/ChangeLog"
 set LOG_PATH=".\ChangeLog"
 
-set AVS_URL="http://jaist.dl.sourceforge.net/project/avisynth2/AviSynth%%202.5/AviSynth%%202.5.8/Avisynth_258.exe"
-set AVS_PATH="..\Archives\Avisynth_258.exe"
-set AVS_SIZE=4182178
+set AVS_URL="http://jaist.dl.sourceforge.net/project/avisynth2/AviSynth%%202.6/AviSynth%%202.6.0/AviSynth_260.exe"
+set AVS_PATH="..\Archives\Avisynth_260.exe"
+set AVS_SIZE=6514961
 
 set DSS_URL="http://jaist.dl.sourceforge.net/project/avisynth2/AviSynth%%202.5/AviSynth%%202.5.8/DirectShowSource_2587.zip"
 set DSS_PATH="..\Archives\DirectShowSource_2587.zip"
