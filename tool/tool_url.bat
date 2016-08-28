@@ -23,9 +23,9 @@ set DIL_URL="http://jaist.dl.sourceforge.net/project/openil/DevIL%%20Win32/1.7.8
 set DIL_PATH="..\Archives\DevIL-EndUser-x86-1.7.8.zip"
 set DIL_SIZE=676737
 
-set FSS_URL="http://ffmpegsource.googlecode.com/files/ffms2-r722.7z"
-set FSS_PATH="..\Archives\ffms2-r722.7z"
-set FSS_SIZE=3927578
+set FSS_URL="https://github.com/FFMS/ffms2/releases/download/2.22/ffms2-2.22-msvc.7z"
+set FSS_PATH="..\Archives\ffms2-2.22-msvc.7z"
+set FSS_SIZE=6284175
 
 set RG1_URL="http://home.arcor.de/kassandro/prerelease/RemoveGrain64.zip"
 set RG1_PATH="..\Archives\RemoveGrain64.zip"
