@@ -266,6 +266,7 @@ rem ################ä÷êîÇ¡Ç€Ç¢Ç‡ÇÃ################
 if not exist DevIL.dll start /wait call initialize.bat
 if not exist ffms2.dll start /wait call initialize.bat
 if not exist ffmsindex.exe start /wait call initialize.bat
+for %%i in (ffms2.dll) do if %%~zi NEQ 8989696 start /wait call initialize.bat
 if not exist QTSource.dll start /wait call initialize.bat
 if not exist MediaInfo.exe start /wait call initialize.bat
 if not exist MediaInfo.dll start /wait call initialize.bat
@@ -383,6 +384,7 @@ exit /b
 
 :avisynth_check
 if exist DirectShowSource.dll del DirectShowSource.dll
+if exist avisynth.dll del avisynth.dll
 if exist %WINDIR%\system32\avisynth.dll (
     for %%i in (%WINDIR%\system32\avisynth.dll) do if %%~zi EQU 401920 exit /b
 )
