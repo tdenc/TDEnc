@@ -9,9 +9,9 @@ set QPSTEP=4
 set AQ_MODE=2
 set AQ_STRENGTH=0.80
 set ME=umh
-set SUBME=7
-set PSY_RD=0.4:0
+set SUBME=6
+set PSY_RD=0:0
 set TRELLIS=1
 
 rem その他手動指定で追加したいオプションがある場合はスペースで区切りながら追加
-set MISC=
+set MISC=-f 1:1

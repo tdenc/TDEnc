@@ -43,8 +43,8 @@ if "%X264_VFR_ENC%"=="true" set X264_TIMECODE=--tcfile-in %X264_TC_FILE%
 if %FLASH% GEQ 2 set MISC=%MISC% --no-deblock
 if %FLASH% EQU 3 set MISC=%MISC% --weightp 0
 
-set X264_COMMON=--range %RANGE% -I %KEYINT% -i %MIN_KEYINT% --scenecut %SCENECUT% -b %BFRAMES% --b-adapt %B_ADAPT% --b-pyramid %B_PYRAMID% -r %REF% --rc-lookahead %RC_LOOKAHEAD% --qpstep %QPSTEP% --aq-mode %AQ_MODE% --aq-strength %AQ_STRENGTH% --qcomp %QCOMP% --weightp %WEIGHTP% --me %ME% -m %SUBME% --psy-rd %PSY_RD% -t %TRELLIS% --threads %THREADS% --colormatrix %X264_COLORMATRIX% %X264_TIMECODE% %COMMON_MISC% %QUIET% %MISC% %VIDEO_AVS%
-
+set X264_COMMON=--range %RANGE% -i %MIN_KEYINT% --scenecut %SCENECUT% -b %BFRAMES% --b-adapt %B_ADAPT% --b-pyramid %B_PYRAMID% -r %REF% --rc-lookahead %RC_LOOKAHEAD% --qpstep %QPSTEP% --aq-mode %AQ_MODE% --aq-strength %AQ_STRENGTH% --qcomp %QCOMP% --weightp %WEIGHTP% --me %ME% -m %SUBME% --psy-rd %PSY_RD% -t %TRELLIS% --threads %THREADS% --colormatrix %X264_COLORMATRIX% %X264_TIMECODE% %COMMON_MISC% %QUIET% %MISC% %VIDEO_AVS%
+set /a X264_KEYINT=%KEYINT%
 set /a X264_BITRATE=%V_BITRATE% - %BITRATE_MARGIN%
 
 echo ^>^>%OPTION_SUCCESS%
@@ -82,6 +82,8 @@ for /f "delims=" %%i in (%TEMP_INFO%) do set /a TEMP_264_BITRATE=%%i/(%TOTAL_TIM
 if "%UP_SITE%"=="N" (
    if %TEMP_264_BITRATE% LSS %BITRATE_NICO_NEW_THRESHOLD% (
        set /a X264_BITRATE=%BITRATE_NICO_NEW_THRESHOLD%
+       set /a X264_KEYINT=%KEYINT%/10
+       set X264_COMMON=%X264_COMMON% -I %KEYINT%
        goto :crf_encode_end
    )
 )
@@ -150,23 +152,23 @@ call :final_encode
 goto :eof
 
 :crf_encode
-.\x264.exe -o %TEMP_264% %X264_COMMON% %CRF%
+.\x264.exe -o %TEMP_264% %X264_COMMON% -I %X264_KEYINT% %CRF%
 echo;
 exit /b
 :abr_encode
-.\x264.exe -o %TEMP_264% %X264_COMMON% -B %X264_BITRATE%
+.\x264.exe -o %TEMP_264% %X264_COMMON% -I %X264_KEYINT% -B %X264_BITRATE%
 echo;
 exit /b
 :first_encode
-.\x264.exe -p 1 -o "nul" %X264_COMMON% -B %X264_BITRATE%
+.\x264.exe -p 1 -o "nul" %X264_COMMON% -I %X264_KEYINT% -B %X264_BITRATE%
 echo;
 exit /b
 :second_encode
-.\x264.exe -p 3 -o %TEMP_264% %X264_COMMON% -B %X264_BITRATE%
+.\x264.exe -p 3 -o %TEMP_264% %X264_COMMON% -I %X264_KEYINT% -B %X264_BITRATE%
 echo;
 exit /b
 :final_encode
-.\x264.exe -p 2 -o %TEMP_264% %X264_COMMON% -B %X264_BITRATE%
+.\x264.exe -p 2 -o %TEMP_264% %X264_COMMON% -I %X264_KEYINT% -B %X264_BITRATE%
 echo;
 exit /b
 
