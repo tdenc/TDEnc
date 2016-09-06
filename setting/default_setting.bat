@@ -1,7 +1,7 @@
 rem このファイルはいじらないでくだしあ。
 rem いじるならuser_setting.batの方をいじってくだしあ＞＜
 
-set THIS_VERSION=23
+set THIS_VERSION=24
 set DEFAULT_VERSION_CHECK=true
 set I_TARGET_BITRATE=600
 set I_MAX_BITRATE=654
@@ -17,6 +17,7 @@ set I_MAX_WIDTH=1280
 set I_MAX_HEIGHT=720
 set DEFAULT_WIDTH=
 set DEFAULT_HEIGHT=480
+set DEFAULT_HEIGHT_NEW=720
 set RESIZER=
 set RG_MODE=5
 set DEFAULT_FPS=

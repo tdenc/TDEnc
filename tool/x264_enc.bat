@@ -81,7 +81,6 @@ if /i "%UP_SITE%"=="y" goto :eof
 for /f "delims=" %%i in (%TEMP_INFO%) do set /a TEMP_264_BITRATE=%%i/(%TOTAL_TIME%/8)
 if "%UP_SITE%"=="N" (
    if %TEMP_264_BITRATE% LSS %BITRATE_NICO_NEW_THRESHOLD% (
-       set /a X264_BITRATE=%BITRATE_NICO_NEW_THRESHOLD%
        set /a X264_KEYINT=%KEYINT%/10
        set X264_COMMON=%X264_COMMON% -I %KEYINT%
        goto :crf_encode_end

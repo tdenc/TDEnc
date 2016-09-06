@@ -79,7 +79,6 @@ if /i "%UP_SITE%"=="y" (
     set SAMPLERATE=1
     set ENCTYPE=h
     set DECTYPE=n
-    set RESIZE=n
     set FLASH=1
     set /a T_BITRATE0=0
     goto account
@@ -522,15 +521,26 @@ if %IN_WIDTH% LSS %WIDTH% (
 set SETTING2=noresize
 exit /b
 :autoconvert
-set /a HEIGHT=%OUT_HEIGHT%
-set /a WIDTH=%OUT_WIDTH%
+if "%UP_SITE%"=="N" (
+    set /a HEIGHT=%OUT_HEIGHT_NICO_NEW%
+    set /a WIDTH=%OUT_WIDTH_NICO_NEW%
+) else (
+    set /a HEIGHT=%OUT_HEIGHT%
+    set /a WIDTH=%OUT_WIDTH%
+)
 if %IN_HEIGHT% LSS %HEIGHT% (
-    call :noconvert
-    exit /b
+    if "%UP_SITE%"=="N" (
+        set SETTING2=up_convert
+        if not defined RESIZER set RESIZER=BlackmanResize
+        exit /b
+    ) else (
+        call :noconvert
+        exit /b
+    )
 )
 if %IN_HEIGHT% GTR %HEIGHT% (
     set SETTING2=down_convert
-    set RESIZER=Spline16Resize
+    if not defined RESIZER set RESIZER=Spline16Resize
     exit /b
 )
 set SETTING2=noresize

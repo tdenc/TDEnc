@@ -103,6 +103,10 @@ if defined DEFAULT_WIDTH (
 )
 for /f "delims=" %%i in (%TEMP_DIR%\out_width.txt) do set /a OUT_WIDTH_TEMP=%%i
 set /a OUT_WIDTH=%OUT_WIDTH_TEMP% + %OUT_WIDTH_TEMP% %% 2
+rem ニコニコ新仕様用
+set /a OUT_HEIGHT_NICO_NEW=%DEFAULT_HEIGHT_NEW% + %DEFAULT_HEIGHT_NEW% %% 2
+set /a OUT_WIDTH_TEMP=%DEFAULT_HEIGHT_NEW% * %IN_WIDTH_MOD% / %IN_HEIGHT%
+set /a OUT_WIDTH_NICO_NEW=%OUT_WIDTH_TEMP% + %OUT_WIDTH_TEMP% %% 2
 
 :info_check
 echo;

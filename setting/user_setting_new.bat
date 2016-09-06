@@ -1,4 +1,4 @@
-set USER_VERSION=23
+set USER_VERSION=24
 
 rem ↓ここから下を適当に弄って自分好みの設定にしてくだしあ↓
 
@@ -50,12 +50,14 @@ set I_MAX_HEIGHT=720
 rem リサイズの質問時にyを答えたときの高さと幅の設定
 rem 高さのデフォルトは480pixels。変えたいときは「DEFAULT_HEIGHT=720」などのようにする
 rem 幅は、空欄のときは自動計算（動画ファイルのアスペクト比を維持）
+rem DEFAULT_HEIGHT_NEWはニコニコ新仕様用
 rem 指定したい場合は「DEFAULT_WIDTH=640」などのようにする
 rem ===============================！注意！===================================
 rem バージョン2.72からはWIDTHではなくHEIGHTを指定するように仕様が変更されました
 rem ==========================================================================
 set DEFAULT_WIDTH=
 set DEFAULT_HEIGHT=480
+set DEFAULT_HEIGHT_NEW=720
 
 rem リサイザの指定
 rem Avisynthのリサイザから選んでください（Spline36Resize、Lanczos4Resizeなど）
