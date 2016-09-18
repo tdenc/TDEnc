@@ -1,7 +1,7 @@
 rem このファイルはいじらないでくだしあ。
 rem いじるならuser_setting.batの方をいじってくだしあ＞＜
 
-set THIS_VERSION=24
+set THIS_VERSION=25
 set DEFAULT_VERSION_CHECK=true
 set I_TARGET_BITRATE=600
 set I_MAX_BITRATE=654
@@ -39,6 +39,7 @@ set DEFAULT_PASS_SPEED=1
 set DEFAULT_PASS_BALANCE=0
 set DEFAULT_PASS_QUALITY=0
 set MOVIE_CHECK=y
+set MOVIE_PLAYER=html5
 set MP4_DIR=..\MP4
 set SHUTDOWN=n
 set Q_LEVEL=

@@ -8,7 +8,7 @@ echo;
 echo ^>^>%PAUSE_MESSAGE2%
 pause>nul
 start %MP4_DIR%
-if "%MOVIE_CHECK%"=="y" call "..\MP4\ここにD&Dして動画をチェック.bat" "%MP4_DIR%\%FINAL_MP4%"
+if "%MOVIE_CHECK%"=="y" call "..\MP4\ここにD&Dして動画をチェック_%MOVIE_PLAYER%.bat" "%MP4_DIR%\%FINAL_MP4%"
 exit
 
 :shut

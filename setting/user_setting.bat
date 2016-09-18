@@ -1,4 +1,4 @@
-set USER_VERSION=24
+set USER_VERSION=25
 
 rem ↓ここから下を適当に弄って自分好みの設定にしてくだしあ↓
 
@@ -134,9 +134,14 @@ set DEFAULT_PASS_BALANCE=0
 set DEFAULT_PASS_QUALITY=0
 
 rem エンコード後にプレイヤーを開くかどうか（開く場合はy、開かない場合はn）
-rem ほかのプレイヤーで見ると、ニコニコ動画上で見るときと見え方が違う場合があるので
 rem デフォルトのyをお勧めします
 set MOVIE_CHECK=y
+
+rem プレイヤーの種類（html5かflash）
+rem デフォルトはhtml5
+rem インストールされているFlash PlayerのバージョンによってFlash Playerで再生ができなくなるので
+rem html5での再生をおすすめします（ニコニコもそのうちhtml5になるとのことです）
+set MOVIE_PLAYER=html5
 
 rem ファイルの出力先の指定（デフォルト推奨）
 rem 指定したフォルダに同名のmp4がある場合は以前のファイルをold.mp4に変えてしまいます

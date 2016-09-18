@@ -7,5 +7,9 @@
   ニコニコ新仕様のビットレート処理の調整
   ニコニコ新仕様向けのリサイズ処理の変更
 
+2.88(16/09/18)
+  再生確認をFlash PlayerからHTML5に変更
+  （user_setting.batを弄ることでFlash Playerに戻すことも可能）
+
 ※ニコニコ新仕様については http://tdenc.com/blog/2016/08/22/nico-new-format-2/ を参照してください
 
