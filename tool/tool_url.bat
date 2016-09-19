@@ -23,11 +23,11 @@ set FSS_URL="https://github.com/FFMS/ffms2/releases/download/2.21/ffms2-2.21-msv
 set FSS_PATH="..\Archives\ffms2-2.21-msvc.7z"
 set FSS_SIZE=5725921
 
-set RG1_URL="http://home.arcor.de/kassandro/prerelease/RemoveGrain64.zip"
+set RG1_URL="https://drive.google.com/uc?id=0B0If6OXG2yfVVExEZ2lOZGVDOVU"
 set RG1_PATH="..\Archives\RemoveGrain64.zip"
 set RG1_SIZE=157912
 
-set QTS_URL="http://bit.ly/oho3NX"
+set QTS_URL="https://drive.google.com/uc?id=0B0If6OXG2yfVTWc4ZUdSMWxRSXM"
 set QTS_PATH="..\Archives\QTSource.zip"
 set QTS_SIZE=71577
 
@@ -35,15 +35,15 @@ set MIF_URL="http://jaist.dl.sourceforge.net/project/mediainfo/binary/mediainfo/
 set MIF_PATH="..\Archives\MediaInfo_CLI_0.7.61_Windows_i386.zip"
 set MIF_SIZE=1437806
 
-set YDF_URL="http://bit.ly/xRGzAq"
+set YDF_URL="https://drive.google.com/uc?id=0B0If6OXG2yfVUE0xTkJJdXNJUU0"
 set YDF_PATH="..\Archives\yadif17.zip"
 set YDF_SIZE=52095
 
-set A2P_URL="http://bit.ly/x32LdY"
+set A2P_URL="https://drive.google.com/uc?id=0B0If6OXG2yfVdURBTXdNMmZFQU0"
 set A2P_PATH="..\Archives\avs2pipe-0.0.3.zip"
 set A2P_SIZE=77539
 
-set WVI_URL="http://bit.ly/xBZBo3"
+set WVI_URL="https://drive.google.com/uc?id=0B0If6OXG2yfVZXl5ZlNWcDRqU1U"
 set WVI_PATH="..\Archives\wavi106.zip"
 set WVI_SIZE=24271
 
