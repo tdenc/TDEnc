@@ -9,6 +9,7 @@ title %TDENC_TITLE%
 rem ################ƒ†[ƒU[Ý’è“Ç‚Ýž‚Ý################
 call version.bat
 date /t>nul
+.\curl.exe -k -f -o curl-ca-bundle.crt -L "https://curl.haxx.se/ca/cacert.pem" 2>nul
 .\curl.exe --connect-timeout 5 -f -o tool_url.bat -L "https://raw.githubusercontent.com/tdenc/TDEnc/master/tool/tool_url.bat" 2>nul
 if "%ERRORLEVEL%"=="22" (
     set URL_PATH=".\tool_url_bk.bat"
