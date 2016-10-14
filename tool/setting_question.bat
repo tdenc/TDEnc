@@ -76,7 +76,6 @@ if /i "%UP_SITE%"=="y" (
 ) else if "%UP_SITE%"=="N" (
     set PRETYPE=y
     set ACTYPE=y
-    set SAMPLERATE=1
     set ENCTYPE=h
     set DECTYPE=n
     set FLASH=1

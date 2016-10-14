@@ -51,6 +51,6 @@ set NERO_URL="http://ftp6.nero.com/tools/NeroAACCodec-1.5.1.zip"
 set NERO_PATH="..\Archives\NeroAACCodec-1.5.1.zip"
 set NERO_SIZE=2050564
 
-set X264_VERSION=2692
-set X264_URL="http://komisar.gin.by/old/2692/x264.2692.x86.exe"
+set X264_VERSION=2721
+set X264_URL="http://komisar.gin.by/old/2721/x264.2721.x86.exe"
 set X264_PATH="..\Archives\x264.exe"
