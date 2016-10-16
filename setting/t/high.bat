@@ -1,4 +1,4 @@
-rem プリセット用オプション設定（YouTube）
+rem プリセット用オプション設定（Twitter）
 
 set BFRAMES=2
 set B_ADAPT=2
