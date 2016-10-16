@@ -73,7 +73,7 @@ rem ÇªÇÃëºÇÃèÓïÒÇÃéÊìæ
     echo _premium_bitrate = String^(Floor^(Float^(%DEFAULT_SIZE_PREMIUM%^) * 1024 * 1024 * 8 / %TOTAL_TIME%^)^)
     echo _normal_bitrate = String^(Floor^(Float^(%DEFAULT_SIZE_NORMAL%^) * 1024 * 1024 * 8 / %TOTAL_TIME%^)^)
     echo _premium_bitrate_new = String^(Floor^(Float^(%DEFAULT_SIZE_PREMIUM_NEW%^) * 1024 * 1024 * 8 / %TOTAL_TIME%^)^)
-    echo _twitter_bitrate = String^(Floor^(Float^(%DEFAULT_SIZE_PREMIUM_TWITTER%^) * 1024 * 1024 * 8 / %TOTAL_TIME%^)^)
+    echo _twitter_bitrate = String^(Floor^(Float^(%DEFAULT_SIZE_TWITTER%^) * 1024 * 1024 * 8 / %TOTAL_TIME%^)^)
     echo WriteFileStart^("premium_bitrate.txt","_premium_bitrate",append = false^)
     echo WriteFileStart^("normal_bitrate.txt","_normal_bitrate",append = false^)
     echo WriteFileStart^("premium_bitrate_new.txt","_premium_bitrate_new",append = false^)

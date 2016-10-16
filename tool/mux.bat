@@ -29,7 +29,7 @@ set FPS=10
     echo _premium_bitrate_new = String^(Floor^(Float^(%DEFAULT_SIZE_PREMIUM_NEW%^) * 1024 * 1024 * 8 / %TOTAL_TIME%^)^)
     echo _youtube_partner_bitrate = String^(Floor^(Float^(%DEFAULT_SIZE_YOUTUBE_PARTNER%^) * 1024 * 1024 * 8 / %TOTAL_TIME%^)^)
     echo _youtube_normal_bitrate = String^(Floor^(Float^(%DEFAULT_SIZE_YOUTUBE_NORMAL%^) * 1024 * 1024 * 8 / %TOTAL_TIME%^)^)
-    echo _twitter_bitrate = String^(Floor^(Float^(%DEFAULT_SIZE_PREMIUM_TWITTER%^) * 1024 * 1024 * 8 / %TOTAL_TIME%^)^)
+    echo _twitter_bitrate = String^(Floor^(Float^(%DEFAULT_SIZE_TWITTER%^) * 1024 * 1024 * 8 / %TOTAL_TIME%^)^)
     echo WriteFileStart^("premium_bitrate.txt","_premium_bitrate",append = false^)
     echo WriteFileStart^("normal_bitrate.txt","_normal_bitrate",append = false^)
     echo WriteFileStart^("premium_bitrate_new.txt","_premium_bitrate_new",append = false^)
@@ -328,7 +328,7 @@ if "%VFR%"=="true" (
     echo _premium_bitrate_new = String^(Floor^(Float^(%DEFAULT_SIZE_PREMIUM_NEW%^) * 1024 * 1024 * 8 / %TOTAL_TIME%^)^)
     echo _youtube_partner_bitrate = String^(Floor^(Float^(%DEFAULT_SIZE_YOUTUBE_PARTNER%^) * 1024 * 1024 * 8 / %TOTAL_TIME%^)^)
     echo _youtube_normal_bitrate = String^(Floor^(Float^(%DEFAULT_SIZE_YOUTUBE_NORMAL%^) * 1024 * 1024 * 8 / %TOTAL_TIME%^)^)
-    echo _twitter_bitrate = String^(Floor^(Float^(%DEFAULT_SIZE_PREMIUM_TWITTER%^) * 1024 * 1024 * 8 / %TOTAL_TIME%^)^)
+    echo _twitter_bitrate = String^(Floor^(Float^(%DEFAULT_SIZE_TWITTER%^) * 1024 * 1024 * 8 / %TOTAL_TIME%^)^)
     echo _in_width = String^(Floor^(Float^(%IN_WIDTH%^) * %P_ASPECT%^)^)
     echo;
     echo WriteFileStart^("yv12.txt","_isyv12",append = false^)
