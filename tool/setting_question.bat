@@ -81,6 +81,24 @@ if /i "%UP_SITE%"=="y" (
     set FLASH=1
     set /a T_BITRATE0=0
     goto account
+) else if "%UP_SITE%"=="t" (
+    set /a TOTAL_TIME_SEC=%TOTAL_TIME% / 1000
+    set /a TOTAL_TIME_LIM=140
+    if %TOTAL_TIME_SEC% GEQ %TOTAL_TIME_LIM% (
+        echo ^>^>%TWITTER_ERROR1%
+        echo ^>^>%TWITTER_ERROR2%
+        echo;
+        rmdir /s /q %TEMP_DIR%
+        call error.bat
+    )
+    set PRETYPE=t
+    set ACTYPE=y
+    set ENCTYPE=h
+    set DECTYPE=n
+    set FLASH=1
+    set AAC_PROFILE=lc
+    set /a T_BITRATE0=0
+    goto account
 ) else if "%UP_SITE%"=="n" (
     goto preset
 ) else (
@@ -220,6 +238,7 @@ call :decode
 call :flash
 call :interlace
 call :resize
+call :resize_check
 call :colormatrix
 call :denoise
 call :audio_bitrate
@@ -297,6 +316,8 @@ if /i "%UP_SITE%"=="y" (
         set /a T_BITRATE=%Y_I_TEMP_BITRATE%
         set /a TP_TEMP_BITRATE=%Y_I_TEMP_BITRATE%
     )
+) else if "%UP_SITE%"=="t" (
+    set /a TP_TEMP_BITRATE=%TW_TEMP_BITRATE%
 ) else if "%UP_SITE%"=="N" (
     set /a TP_TEMP_BITRATE=%P_TEMP_BITRATE_NEW%
 ) else (
@@ -554,8 +575,17 @@ if defined IN_WIDTH_MOD (
 set /a HEIGHT=%IN_HEIGHT% - %IN_HEIGHT% %% 2
 exit /b
 :resize_check
-if %WIDTH% LEQ %I_MAX_WIDTH% (
-    if %HEIGHT% LEQ %I_MAX_HEIGHT% (
+if "%UP_SITE%"=="t" (
+    LIMIT_WIDTH=%T_MAX_WIDTH%
+    LIMIT_HEIGHT=%T_MAX_HEIGHT%
+) else if "%ACTYPE%"=="n" (
+    LIMIT_WIDTH=%I_MAX_WIDTH%
+    LIMIT_HEIGHT=%I_MAX_HEIGHT%
+) else (
+    exit /b
+)
+if %WIDTH% LEQ %LIMIT_WIDTH% (
+    if %HEIGHT% LEQ %LIMIT_HEIGHT% (
         exit /b
     )
 )
@@ -566,6 +596,13 @@ if /i "%PRETYPE%"=="s" (
     echo;
     rmdir /s /q %TEMP_DIR%
     call error.bat
+) else if "%UP_SITE%"=="t"(
+    echo ^>^>%RETURN_MESSAGE12%
+    echo ^>^>%RETURN_MESSAGE13%
+    echo;
+    echo ^>^>%PAUSE_MESSAGE2%
+    pause>nul
+    set RESIZE=
 ) else (
     echo ^>^>%RETURN_MESSAGE10%
     echo ^>^>%RETURN_MESSAGE11%
@@ -624,6 +661,8 @@ if /i "%PRETYPE%"=="s" (
         set /a TEMP_BITRATE=320
     ) else if "%UP_SITE%"=="N" (
         set /a TEMP_BITRATE=256
+    ) else if "%UP_SITE%"=="t" (
+        set /a TEMP_BITRATE=192
     ) else if %Q_LEVEL% LSS 2 (
         if /i "%ACTYPE%"=="y" (
             set /a TEMP_BITRATE=192

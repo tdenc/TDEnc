@@ -153,6 +153,7 @@ if "%VFR%"=="true" (
     echo _premium_bitrate_new = String^(Floor^(Float^(%DEFAULT_SIZE_PREMIUM_NEW%^) * 1024 * 1024 * 8 / %TOTAL_TIME%^)^)
     echo _youtube_partner_bitrate = String^(Floor^(Float^(%DEFAULT_SIZE_YOUTUBE_PARTNER%^) * 1024 * 1024 * 8 / %TOTAL_TIME%^)^)
     echo _youtube_normal_bitrate = String^(Floor^(Float^(%DEFAULT_SIZE_YOUTUBE_NORMAL%^) * 1024 * 1024 * 8 / %TOTAL_TIME%^)^)
+    echo _twitter_bitrate = String^(Floor^(Float^(%DEFAULT_SIZE_PREMIUM_TWITTER%^) * 1024 * 1024 * 8 / %TOTAL_TIME%^)^)
     echo _in_width = String^(Floor^(Float^(%IN_WIDTH%^) * %P_ASPECT%^)^)
     echo;
     echo WriteFileStart^("yv12.txt","_isyv12",append = false^)
@@ -165,6 +166,7 @@ if "%VFR%"=="true" (
     echo WriteFileStart^("in_width.txt","_in_width",append = false^)
     echo WriteFileStart^("youtube_partner_bitrate.txt","_youtube_partner_bitrate",append = false^)
     echo WriteFileStart^("youtube_normal_bitrate.txt","_youtube_normal_bitrate",append = false^)
+    echo WriteFileStart^("twitter_bitrate.txt","_twitter_bitrate",append = false^)
     echo;
     echo Trim^(0,-1^)
     echo;
@@ -182,6 +184,7 @@ if exist %TEMP_DIR%\yv12.txt (
     for /f "delims=" %%i in (%TEMP_DIR%\premium_bitrate_new.txt) do set /a P_TEMP_BITRATE_NEW=%%i>nul
     for /f "delims=" %%i in (%TEMP_DIR%\youtube_partner_bitrate.txt) do set /a Y_P_TEMP_BITRATE=%%i>nul
     for /f "delims=" %%i in (%TEMP_DIR%\youtube_normal_bitrate.txt) do set /a Y_I_TEMP_BITRATE=%%i>nul
+    for /f "delims=" %%i in (%TEMP_DIR%\twitter_bitrate.txt) do set /a TW_TEMP_BITRATE=%%i>nul
     for /f "delims=" %%i in (%TEMP_DIR%\in_width.txt) do set IN_WIDTH_MOD=%%i>nul
 
     for /f "delims=" %%i in (%TEMP_DIR%\fps.txt) do set AVS_FPS=%%i>nul 2>&1

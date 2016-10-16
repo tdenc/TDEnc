@@ -76,11 +76,13 @@ rem ビットレート情報の取得
     echo _premium_bitrate_new = String^(Floor^(Float^(%DEFAULT_SIZE_PREMIUM_NEW%^) * 1024 * 1024 * 8 / %TOTAL_TIME%^)^)
     echo _youtube_partner_bitrate = String^(Floor^(Float^(%DEFAULT_SIZE_YOUTUBE_PARTNER%^) * 1024 * 1024 * 8 / %TOTAL_TIME%^)^)
     echo _youtube_normal_bitrate = String^(Floor^(Float^(%DEFAULT_SIZE_YOUTUBE_NORMAL%^) * 1024 * 1024 * 8 / %TOTAL_TIME%^)^)
+    echo _twitter_bitrate = String^(Floor^(Float^(%DEFAULT_SIZE_PREMIUM_TWITTER%^) * 1024 * 1024 * 8 / %TOTAL_TIME%^)^)
     echo WriteFileStart^("premium_bitrate.txt","_premium_bitrate",append = false^)
     echo WriteFileStart^("normal_bitrate.txt","_normal_bitrate",append = false^)
     echo WriteFileStart^("premium_bitrate_new.txt","_premium_bitrate_new",append = false^)
     echo WriteFileStart^("youtube_partner_bitrate.txt","_youtube_partner_bitrate",append = false^)
     echo WriteFileStart^("youtube_normal_bitrate.txt","_youtube_normal_bitrate",append = false^)
+    echo WriteFileStart^("twitter_bitrate.txt","_twitter_bitrate",append = false^)
     echo;
     echo return last
 )> %INFO_AVS2%
@@ -92,6 +94,7 @@ for /f "delims=" %%i in (%TEMP_DIR%\normal_bitrate.txt) do set /a I_TEMP_BITRATE
 for /f "delims=" %%i in (%TEMP_DIR%\premium_bitrate_new.txt) do set /a P_TEMP_BITRATE_NEW=%%i>nul
 for /f "delims=" %%i in (%TEMP_DIR%\youtube_partner_bitrate.txt) do set /a Y_P_TEMP_BITRATE=%%i>nul
 for /f "delims=" %%i in (%TEMP_DIR%\youtube_normal_bitrate.txt) do set /a Y_I_TEMP_BITRATE=%%i>nul
+for /f "delims=" %%i in (%TEMP_DIR%\twitter_bitrate.txt) do set /a TW_TEMP_BITRATE=%%i>nul
 
 rem 出力解像度の設定
 set /a IN_WIDTH_ODD=%IN_WIDTH% %% 2

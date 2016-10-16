@@ -1,4 +1,4 @@
-set USER_VERSION=25
+set USER_VERSION=26
 
 rem ↓ここから下を適当に弄って自分好みの設定にしてくだしあ↓
 
@@ -46,6 +46,11 @@ rem 一般アカウントの解像度の上限の設定
 rem 幅のデフォルトは1280pixels、高さのデフォルトは720pixels
 set I_MAX_WIDTH=1280
 set I_MAX_HEIGHT=720
+
+rem Twitterの解像度の上限の設定
+rem 幅のデフォルトは1280pixels、高さのデフォルトは1024pixels
+set T_MAX_WIDTH=1280
+set T_MAX_HEIGHT=1024
 
 rem リサイズの質問時にyを答えたときの高さと幅の設定
 rem 高さのデフォルトは480pixels。変えたいときは「DEFAULT_HEIGHT=720」などのようにする
@@ -121,6 +126,9 @@ rem YouTube用の設定
 rem 上限は20480MB（YouTubeパートナー）か2024MB（YouTube一般）
 set DEFAULT_SIZE_YOUTUBE_PARTNER=20000
 set DEFAULT_SIZE_YOUTUBE_NORMAL=2000
+rem Twitter用の設定
+rem 上限は512MB
+set DEFAULT_SIZE_TWITTER=510
 
 rem パス数の設定（画像＆音声の同時D&Dのときはこの設定は無効です）
 rem 強制的に1passや2passや3passにしたいときはここを弄る
