@@ -409,6 +409,8 @@ if /i "%CRF_ENC%"=="n" (
         set CRF=--crf %CRF_YOU%
     ) else if "%UP_SITE%"=="N" (
         set CRF=--crf %CRF_YOU%
+    ) else if /i "%UP_SITE%"=="t" (
+        set CRF=--crf %CRF_YOU%
     ) else if /i "%ACTYPE%"=="n" (
         set CRF=--crf %CRF_LOW%
     ) else if /i "%ACTYPE%"=="y" (
