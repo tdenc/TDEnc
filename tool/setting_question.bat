@@ -576,11 +576,11 @@ set /a HEIGHT=%IN_HEIGHT% - %IN_HEIGHT% %% 2
 exit /b
 :resize_check
 if "%UP_SITE%"=="t" (
-    LIMIT_WIDTH=%T_MAX_WIDTH%
-    LIMIT_HEIGHT=%T_MAX_HEIGHT%
+    set LIMIT_WIDTH=%T_MAX_WIDTH%
+    set LIMIT_HEIGHT=%T_MAX_HEIGHT%
 ) else if "%ACTYPE%"=="n" (
-    LIMIT_WIDTH=%I_MAX_WIDTH%
-    LIMIT_HEIGHT=%I_MAX_HEIGHT%
+    set LIMIT_WIDTH=%I_MAX_WIDTH%
+    set LIMIT_HEIGHT=%I_MAX_HEIGHT%
 ) else (
     exit /b
 )
