@@ -140,9 +140,9 @@ set DEFAULT_SIZE_TWITTER=510
 
 rem ファイル容量（最終チェック用）
 rem これは弄らないことを勧めます
-set A_BITRATE_YOUTUBE=320
-set A_BITRATE_NICO_NEW=256
-set A_BITRATE_TWITTER=192
+set MP4_FILESIZE_NICO_PREMIUM=104857600
+set MP4_FILESIZE_NICO_NORMAL=41943040
+set MP4_FILESIZE_TWITTER=536870912
 
 rem パス数の設定（画像＆音声の同時D&Dのときはこの設定は無効です）
 rem 強制的に1passや2passや3passにしたいときはここを弄る

@@ -138,6 +138,12 @@ rem Twitter用の設定
 rem 上限は512MB
 set DEFAULT_SIZE_TWITTER=510
 
+rem ファイル容量（最終チェック用）
+rem これは弄らないことを勧めます
+set MP4_FILESIZE_NICO_PREMIUM=104857600
+set MP4_FILESIZE_NICO_NORMAL=41943040
+set MP4_FILESIZE_TWITTER=536870912
+
 rem パス数の設定（画像＆音声の同時D&Dのときはこの設定は無効です）
 rem 強制的に1passや2passや3passにしたいときはここを弄る
 rem 「DEFAULT_PASS_**=1」「DEFAULT_PASS_**=2」「DEFAULT_PASS_**=3」でそれぞれ1pass、2pass、3passを強制する

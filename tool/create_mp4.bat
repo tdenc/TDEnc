@@ -62,8 +62,15 @@ rem ################容量チェック################
 if /i "%PRETYPE%"=="y" goto last
 .\MediaInfo.exe --Inform=General;%%FileSize%% "%MP4_DIR%\%FINAL_MP4%"> %TEMP_INFO%
 for /f %%i in (%TEMP_INFO%) do set /a FINAL_MP4_SIZE=%%i
-if /i "%ACTYPE%"=="y" goto mp4_check_premium
-if %FINAL_MP4_SIZE% LEQ 41943040 (
+if /i "%UP_SITE%"=="t" (
+    set /a MP4_FILESIZE_LIMIT=%MP4_FILESIZE_TWITTER%
+) else if /i "%ACTYPE%"=="y" (
+    set /a MP4_FILESIZE_LIMIT=%MP4_FILESIZE_NICO_PREMIUM%
+) else (
+    set /a MP4_FILESIZE_LIMIT=%MP4_FILESIZE_NICO_NORMAL%
+)
+
+if %FINAL_MP4_SIZE% LEQ %MP4_FILESIZE_LIMIT% (
     echo ^>^>%SIZE_SUCCESS1%
     echo ^>^>%SIZE_SUCCESS2%
     echo;
@@ -73,19 +80,6 @@ if %FINAL_MP4_SIZE% LEQ 41943040 (
     echo;
     goto :eof
 )
-
-:mp4_check_premium
-if %FINAL_MP4_SIZE% LEQ 104857600 (
-    echo ^>^>%SIZE_SUCCESS1%
-    echo ^>^>%SIZE_SUCCESS2%
-    echo;
-    goto last
-) else (
-    echo ^>^>%SIZE_ERROR%
-    echo;
-    goto :eof
-)
-
 
 
 rem ################後処理################
