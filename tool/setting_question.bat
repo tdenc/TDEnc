@@ -596,7 +596,7 @@ if /i "%PRETYPE%"=="s" (
     echo;
     rmdir /s /q %TEMP_DIR%
     call error.bat
-) else if "%UP_SITE%"=="t"(
+) else if "%UP_SITE%"=="t" (
     echo ^>^>%RETURN_MESSAGE12%
     echo ^>^>%RETURN_MESSAGE13%
     echo;
