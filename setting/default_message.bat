@@ -177,6 +177,7 @@ set CONFIRM_ACCOUNT3=ニコニコ（一般）
 set CONFIRM_ACCOUNT4=YouTube（上限あり）
 set CONFIRM_ACCOUNT5=YouTube（上限なし）
 set CONFIRM_ACCOUNT6=ニコニコ（新基準）
+set CONFIRM_ACCOUNT7=Twitter
 set CONFIRM_PLAYER=プレイヤー対応　
 set CONFIRM_ENCTYPE=エコ回避　　　　
 set CONFIRM_DECTYPE=低再生負荷　　　

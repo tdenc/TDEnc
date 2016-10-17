@@ -819,6 +819,8 @@ if /i "%UP_SITE%"=="y" (
     echo %CONFIRM_PRETYPE% : %PRESET_LIST9%
 ) else if "%UP_SITE%"=="N" (
     echo %CONFIRM_ACCOUNT1% : %CONFIRM_ACCOUNT6%
+) else if /i "%UP_SITE%"=="t" (
+    echo %CONFIRM_ACCOUNT1% : %CONFIRM_ACCOUNT7%
 ) else if /i "%ACTYPE%"=="y" (
     echo %CONFIRM_ACCOUNT1% : %CONFIRM_ACCOUNT2%
 ) else (
