@@ -56,6 +56,7 @@ rem リサイズの質問時にyを答えたときの高さと幅の設定
 rem 高さのデフォルトは480pixels。変えたいときは「DEFAULT_HEIGHT=720」などのようにする
 rem 幅は、空欄のときは自動計算（動画ファイルのアスペクト比を維持）
 rem DEFAULT_HEIGHT_NEWはニコニコ新仕様用
+rem DEFAULT_HEIGHT_TWITTERはTwitter用
 rem 指定したい場合は「DEFAULT_WIDTH=640」などのようにする
 rem ===============================！注意！===================================
 rem バージョン2.72からはWIDTHではなくHEIGHTを指定するように仕様が変更されました
@@ -92,6 +93,12 @@ rem これは弄らないことを勧めます
 set SAMPLERATE_LIST1=44100
 set SAMPLERATE_LIST2=48000
 set SAMPLERATE_LIST3=96000
+
+rem 再エンコ系サイト向けの音声ビットレート
+rem これは弄らないことを勧めます
+set A_BITRATE_YOUTUBE=320
+set A_BITRATE_NICO_NEW=256
+set A_BITRATE_TWITTER=192
 
 rem デコーダの選択
 rem auto、avi、ffmpeg、directshow、qtから選択(デフォルトのautoを推奨)
@@ -130,6 +137,12 @@ set DEFAULT_SIZE_YOUTUBE_NORMAL=2000
 rem Twitter用の設定
 rem 上限は512MB
 set DEFAULT_SIZE_TWITTER=510
+
+rem ファイル容量（最終チェック用）
+rem これは弄らないことを勧めます
+set A_BITRATE_YOUTUBE=320
+set A_BITRATE_NICO_NEW=256
+set A_BITRATE_TWITTER=192
 
 rem パス数の設定（画像＆音声の同時D&Dのときはこの設定は無効です）
 rem 強制的に1passや2passや3passにしたいときはここを弄る

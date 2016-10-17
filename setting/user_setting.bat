@@ -94,6 +94,12 @@ set SAMPLERATE_LIST1=44100
 set SAMPLERATE_LIST2=48000
 set SAMPLERATE_LIST3=96000
 
+rem 再エンコ系サイト向けの音声ビットレート
+rem これは弄らないことを勧めます
+set A_BITRATE_YOUTUBE=320
+set A_BITRATE_NICO_NEW=256
+set A_BITRATE_TWITTER=192
+
 rem デコーダの選択
 rem auto、avi、ffmpeg、directshow、qtから選択(デフォルトのautoを推奨)
 rem autoは自動選択、aviはAVISource、ffmpegはFFMpegSource、directshowはDirectShowSource

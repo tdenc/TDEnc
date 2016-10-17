@@ -682,11 +682,11 @@ if /i "%PRETYPE%"=="s" (
 ) else (
     set /a M_BITRATE=%T_BITRATE%
     if /i "%UP_SITE%"=="y" (
-        set /a TEMP_BITRATE=320
+        set /a TEMP_BITRATE=%A_BITRATE_YOUTUBE%
     ) else if "%UP_SITE%"=="N" (
-        set /a TEMP_BITRATE=256
+        set /a TEMP_BITRATE=%A_BITRATE_NICO_NEW%
     ) else if /i "%UP_SITE%"=="t" (
-        set /a TEMP_BITRATE=192
+        set /a TEMP_BITRATE=%A_BITRATE_TWITTER%
     ) else if %Q_LEVEL% LSS 2 (
         if /i "%ACTYPE%"=="y" (
             set /a TEMP_BITRATE=192
