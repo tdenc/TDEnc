@@ -16,7 +16,7 @@ if "%ERRORLEVEL%"=="0" (
     set DEFAULT_PASS=%DEFAULT_PASS_QUALITY%
     goto x264_option_setting
 )
-echo %PRETYPE% | findstr /i "y">nul
+echo %PRETYPE% | findstr /i "y t">nul
 if "%ERRORLEVEL%"=="0" (
     set DEFAULT_PASS=0
     goto x264_option_setting
