@@ -63,6 +63,7 @@ rem ==========================================================================
 set DEFAULT_WIDTH=
 set DEFAULT_HEIGHT=480
 set DEFAULT_HEIGHT_NEW=720
+set DEFAULT_HEIGHT_TWITTER=720
 
 rem リサイザの指定
 rem Avisynthのリサイザから選んでください（Spline36Resize、Lanczos4Resizeなど）

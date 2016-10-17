@@ -547,6 +547,9 @@ exit /b
 if "%UP_SITE%"=="N" (
     set /a HEIGHT=%OUT_HEIGHT_NICO_NEW%
     set /a WIDTH=%OUT_WIDTH_NICO_NEW%
+) else if /i "%UP_SITE%"=="t" (
+    set /a HEIGHT=%OUT_HEIGHT_TWITTER%
+    set /a WIDTH=%OUT_WIDTH_TWITTER%
 ) else (
     set /a HEIGHT=%OUT_HEIGHT%
     set /a WIDTH=%OUT_WIDTH%

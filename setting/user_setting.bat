@@ -56,6 +56,7 @@ rem リサイズの質問時にyを答えたときの高さと幅の設定
 rem 高さのデフォルトは480pixels。変えたいときは「DEFAULT_HEIGHT=720」などのようにする
 rem 幅は、空欄のときは自動計算（動画ファイルのアスペクト比を維持）
 rem DEFAULT_HEIGHT_NEWはニコニコ新仕様用
+rem DEFAULT_HEIGHT_TWITTERはTwitter用
 rem 指定したい場合は「DEFAULT_WIDTH=640」などのようにする
 rem ===============================！注意！===================================
 rem バージョン2.72からはWIDTHではなくHEIGHTを指定するように仕様が変更されました
@@ -63,6 +64,7 @@ rem ==========================================================================
 set DEFAULT_WIDTH=
 set DEFAULT_HEIGHT=480
 set DEFAULT_HEIGHT_NEW=720
+set DEFAULT_HEIGHT_TWITTER=720
 
 rem リサイザの指定
 rem Avisynthのリサイザから選んでください（Spline36Resize、Lanczos4Resizeなど）
