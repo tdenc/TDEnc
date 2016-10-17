@@ -107,6 +107,7 @@ set PREMIUM_START4=（よくわからないならnを選びなさいよね）
 set YOUTUBE_ERROR1=上限の解除をしていない場合は動画の長さは15分までよ！
 set YOUTUBE_ERROR2=動画を短く分割するか上限解除の設定をしなさいよね！
 set TWITTER_ERROR1=Twitterに上げられる動画の長さは2分20秒までよ！
+set TWITTER_ERROR2=上限以下に分割しなさいよね！
 set BR_MODE_START1=品質基準（crf）エンコを有効にする？（y/n,CRF数値）
 set BR_MODE_START2=※品質基準エンコを使うことで適切なビットレートへの調整が可能
 set BR_MODE_START3=　ビットレートがオーバーした場合は自動で無効に切り替わり、

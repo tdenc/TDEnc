@@ -81,16 +81,7 @@ if /i "%UP_SITE%"=="y" (
     set FLASH=1
     set /a T_BITRATE0=0
     goto account
-) else if "%UP_SITE%"=="t" (
-    set /a TOTAL_TIME_SEC=%TOTAL_TIME% / 1000
-    set /a TOTAL_TIME_LIM=140
-    if %TOTAL_TIME_SEC% GEQ %TOTAL_TIME_LIM% (
-        echo ^>^>%TWITTER_ERROR1%
-        echo ^>^>%TWITTER_ERROR2%
-        echo;
-        rmdir /s /q %TEMP_DIR%
-        call error.bat
-    )
+) else if /i "%UP_SITE%"=="t" (
     set PRETYPE=t
     set ACTYPE=y
     set ENCTYPE=h
@@ -206,15 +197,27 @@ if /i "%UP_SITE%"=="n" (
     echo %HORIZON_B%
 )
 :account_main
-if /i "%UP_SITE%"=="y" set ACTYPE=%YTTYPE%
 set /a TOTAL_TIME_SEC=%TOTAL_TIME% / 1000
-set /a TOTAL_TIME_LIM=15 * 60
+if /i "%UP_SITE%"=="y" (
+    set ACTYPE=%YTTYPE%
+    set /a TOTAL_TIME_LIM=15 * 60
+) else if /i "%UP_SITE%"=="t" (
+    set /a TOTAL_TIME_LIM=140
+)
 if /i "%YTTYPE%"=="n" (
     if %TOTAL_TIME_SEC% GEQ %TOTAL_TIME_LIM% (
         echo ^>^>%YOUTUBE_ERROR1%
         echo ^>^>%YOUTUBE_ERROR2%
         set YTTYPE=
         goto account_question
+    )
+)
+if /i "%UP_SITE%"=="t" (
+    if %TOTAL_TIME_SEC% GEQ %TOTAL_TIME_LIM% (
+        echo ^>^>%TWITTER_ERROR1%
+        echo ^>^>%TWITTER_ERROR2%
+        echo;
+        call error.bat
     )
 )
 if /i "%ACTYPE%"=="y" goto premium
@@ -316,7 +319,7 @@ if /i "%UP_SITE%"=="y" (
         set /a T_BITRATE=%Y_I_TEMP_BITRATE%
         set /a TP_TEMP_BITRATE=%Y_I_TEMP_BITRATE%
     )
-) else if "%UP_SITE%"=="t" (
+) else if /i "%UP_SITE%"=="t" (
     set /a TP_TEMP_BITRATE=%TW_TEMP_BITRATE%
 ) else if "%UP_SITE%"=="N" (
     set /a TP_TEMP_BITRATE=%P_TEMP_BITRATE_NEW%
@@ -575,7 +578,7 @@ if defined IN_WIDTH_MOD (
 set /a HEIGHT=%IN_HEIGHT% - %IN_HEIGHT% %% 2
 exit /b
 :resize_check
-if "%UP_SITE%"=="t" (
+if /i "%UP_SITE%"=="t" (
     set LIMIT_WIDTH=%T_MAX_WIDTH%
     set LIMIT_HEIGHT=%T_MAX_HEIGHT%
 ) else if "%ACTYPE%"=="n" (
@@ -596,7 +599,7 @@ if /i "%PRETYPE%"=="s" (
     echo;
     rmdir /s /q %TEMP_DIR%
     call error.bat
-) else if "%UP_SITE%"=="t" (
+) else if /i "%UP_SITE%"=="t" (
     echo ^>^>%RETURN_MESSAGE12%
     echo ^>^>%RETURN_MESSAGE13%
     echo;
@@ -661,7 +664,7 @@ if /i "%PRETYPE%"=="s" (
         set /a TEMP_BITRATE=320
     ) else if "%UP_SITE%"=="N" (
         set /a TEMP_BITRATE=256
-    ) else if "%UP_SITE%"=="t" (
+    ) else if /i "%UP_SITE%"=="t" (
         set /a TEMP_BITRATE=192
     ) else if %Q_LEVEL% LSS 2 (
         if /i "%ACTYPE%"=="y" (
