@@ -74,6 +74,7 @@ if /i "%UP_SITE%"=="y" (
     set FLASH=1
     goto account
 ) else if "%UP_SITE%"=="N" (
+    call :surround_check
     set PRETYPE=y
     set ACTYPE=y
     set ENCTYPE=h
@@ -82,6 +83,7 @@ if /i "%UP_SITE%"=="y" (
     set /a T_BITRATE0=0
     goto account
 ) else if /i "%UP_SITE%"=="t" (
+    call :surround_check
     set PRETYPE=t
     set ACTYPE=y
     set ENCTYPE=h
@@ -91,12 +93,26 @@ if /i "%UP_SITE%"=="y" (
     set /a T_BITRATE0=0
     goto account
 ) else if "%UP_SITE%"=="n" (
+    call :surround_check
     goto preset
 ) else (
     echo;
     echo ^>^>%RETURN_MESSAGE1%
     goto site_question
 )
+
+rem サラウンドのチェック
+:surround_check
+if %AUDIO_CHANNELS% LEQ 2 exit /b
+if /i "%UP_SITE%"=="t" (
+    echo ^>^>%CHANNEL_ERROR3%
+) else (
+    echo ^>^>%CHANNEL_ERROR1%
+)
+echo ^>^>%CHANNEL_ERROR2%
+echo;
+call error.bat
+exit /b
 
 rem プリセット選択
 :preset

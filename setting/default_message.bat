@@ -46,6 +46,7 @@ set ANALYZE_ANNOUNCE=動画解析中～♪
 set ANALYZE_END=動画解析完了～♪
 set CHANNEL_ERROR1=ニコニコはステレオ（2ch）までしか対応していないわよ！
 set CHANNEL_ERROR2=音声のみwav（2ch）で書き出して動画と一緒にD＆Dしなさいよね！
+set CHANNEL_ERROR3=Twitterはステレオ（2ch）までしか対応していないわよ！
 set ANALYZE_ERROR=動画の解析に失敗・・・
 set DECODE_ERROR1=動画のデコードに失敗したわ・・・
 set DECODE_ERROR2=インデックス処理をしてもう一度チャレンジするからそこで待っていなさい！

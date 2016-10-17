@@ -4,7 +4,7 @@ if not exist %TEMP_WAV% goto wav_not_exist
     echo WAVSource^("%TEMP_WAV%"^)
     echo;
     if "%SAMPLERATE%"=="0" (
-	echo _samplerate = AudioRate^(^) ^> 96000 ? 48000 : AudioRate^(^)
+        echo _samplerate = AudioRate^(^) ^> 96000 ? 48000 : AudioRate^(^)
         echo ResampleAudio^(_samplerate^)
     ) else (
         echo ResampleAudio^(%SAMPLERATE_HZ%^)
