@@ -216,21 +216,24 @@ if /i "%UP_SITE%"=="n" (
 )
 :account_main
 set /a TOTAL_TIME_SEC=%TOTAL_TIME% / 1000
+set /a TOTAL_TIME_LIM=0
 if /i "%UP_SITE%"=="y" (
     set ACTYPE=%YTTYPE%
     set /a TOTAL_TIME_LIM=15 * 60
 ) else if /i "%UP_SITE%"=="t" (
     set /a TOTAL_TIME_LIM=140
 )
-if /i "%YTTYPE%"=="n" (
-    if %TOTAL_TIME_SEC% GEQ %TOTAL_TIME_LIM% (
-        echo ^>^>%YOUTUBE_ERROR1%
-        echo ^>^>%YOUTUBE_ERROR2%
-        set YTTYPE=
-        goto account_question
+if /i "%UP_SITE%"=="y" (
+    if /i "%ACTYPE%"=="n" (
+        if %TOTAL_TIME_SEC% GEQ %TOTAL_TIME_LIM% (
+            echo ^>^>%YOUTUBE_ERROR1%
+            echo ^>^>%YOUTUBE_ERROR2%
+            set YTTYPE=
+            goto account_question
+        )
     )
-)
-if /i "%UP_SITE%"=="t" (
+    goto premium
+) else if /i "%UP_SITE%"=="t" (
     if %TOTAL_TIME_SEC% GEQ %TOTAL_TIME_LIM% (
         echo ^>^>%TWITTER_ERROR1%
         echo ^>^>%TWITTER_ERROR2%
@@ -239,16 +242,12 @@ if /i "%UP_SITE%"=="t" (
     )
 )
 if /i "%ACTYPE%"=="y" goto premium
-if /i "%ACTYPE%"=="n" (
-    if /i "%UP_SITE%"=="y" (
-        goto premium
-    ) else (
-        goto normal
-    )
-)
+if /i "%ACTYPE%"=="n" goto normal
+
 echo;
 echo ^>^>%RETURN_MESSAGE1%
 set YTTYPE=
+set ACTYPE=
 goto account_question
 
 :premium
