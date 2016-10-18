@@ -601,7 +601,9 @@ if defined IN_WIDTH_MOD (
 set /a HEIGHT=%IN_HEIGHT% - %IN_HEIGHT% %% 2
 exit /b
 :resize_check
-if /i "%UP_SITE%"=="t" (
+if /i "%UP_SITE%"=="y" (
+    exit /b
+) else if /i "%UP_SITE%"=="t" (
     set LIMIT_WIDTH=%T_MAX_WIDTH%
     set LIMIT_HEIGHT=%T_MAX_HEIGHT%
 ) else if "%ACTYPE%"=="n" (
