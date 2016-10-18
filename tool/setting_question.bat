@@ -179,6 +179,8 @@ if defined PRETYPE (
         set ENCTYPE=h
         set DECTYPE=n
         goto account
+    ) else if /i "%PRETYPE%"=="t" (
+        goto account
     ) else (
         echo ^>^>%RETURN_MESSAGE1%
         goto preset_question
