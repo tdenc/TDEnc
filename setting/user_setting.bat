@@ -49,8 +49,8 @@ set I_MAX_HEIGHT=720
 
 rem Twitterの解像度の上限の設定
 rem 幅のデフォルトは1280pixels、高さのデフォルトは1024pixels
-set T_MAX_WIDTH=1280
-set T_MAX_HEIGHT=1024
+set T_MAX_WIDTH=1920
+set T_MAX_HEIGHT=1200
 
 rem リサイズの質問時にyを答えたときの高さと幅の設定
 rem 高さのデフォルトは480pixels。変えたいときは「DEFAULT_HEIGHT=720」などのようにする
@@ -64,7 +64,7 @@ rem ==========================================================================
 set DEFAULT_WIDTH=
 set DEFAULT_HEIGHT=480
 set DEFAULT_HEIGHT_NEW=720
-set DEFAULT_HEIGHT_TWITTER=720
+set DEFAULT_HEIGHT_TWITTER=1080
 
 rem リサイザの指定
 rem Avisynthのリサイザから選んでください（Spline36Resize、Lanczos4Resizeなど）
