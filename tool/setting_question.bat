@@ -241,7 +241,13 @@ if /i "%UP_SITE%"=="y" (
         call error.bat
     )
 )
-if /i "%ACTYPE%"=="y" goto premium
+if /i "%ACTYPE%"=="y" (
+    echo ^>^>%PREMIUM_ERROR1%
+    echo ^>^>%PREMIUM_ERROR2%
+    echo ^>^>%PREMIUM_ERROR3%
+    echo;
+    call error.bat
+)
 if /i "%ACTYPE%"=="n" goto normal
 
 echo;
