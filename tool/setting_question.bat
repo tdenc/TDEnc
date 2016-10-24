@@ -246,7 +246,12 @@ if /i "%ACTYPE%"=="y" (
     echo ^>^>%PREMIUM_ERROR2%
     echo ^>^>%PREMIUM_ERROR3%
     echo;
-    call error.bat
+    if "%OLD_NICO_PREMIUM%"=="true" (
+        pause>nul
+        goto premium
+    ) else (
+        call error.bat
+    )
 )
 if /i "%ACTYPE%"=="n" goto normal
 
