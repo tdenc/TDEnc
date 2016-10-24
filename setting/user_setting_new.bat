@@ -144,9 +144,9 @@ set MP4_FILESIZE_NICO_PREMIUM=104857600
 set MP4_FILESIZE_NICO_NORMAL=41943040
 set MP4_FILESIZE_TWITTER=536870912
 
-rem 旧仕様のプレミアム向けエンコード
+rem 旧仕様のニコニコ向けエンコード
 rem 実験目的のみ（trueで有効化）
-set OLD_NICO_PREMIUM=false
+set OLD_NICO_FEATURE=false
 
 rem パス数の設定（画像＆音声の同時D&Dのときはこの設定は無効です）
 rem 強制的に1passや2passや3passにしたいときはここを弄る

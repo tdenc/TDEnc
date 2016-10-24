@@ -246,7 +246,7 @@ if /i "%ACTYPE%"=="y" (
     echo ^>^>%PREMIUM_ERROR2%
     echo ^>^>%PREMIUM_ERROR3%
     echo;
-    if "%OLD_NICO_PREMIUM%"=="true" (
+    if "%OLD_NICO_FEATURE%"=="true" (
         pause>nul
         goto premium
     ) else (
