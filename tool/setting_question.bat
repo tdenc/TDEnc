@@ -239,9 +239,25 @@ if /i "%UP_SITE%"=="y" (
         echo ^>^>%TWITTER_ERROR2%
         echo;
         call error.bat
+    ) else (
+        goto premium
+    )
+) else if "%UP_SITE%"=="N" (
+    goto premium
+)
+
+if /i "%ACTYPE%"=="y" (
+    echo ^>^>%PREMIUM_ERROR1%
+    echo ^>^>%PREMIUM_ERROR2%
+    echo ^>^>%PREMIUM_ERROR3%
+    echo;
+    if "%OLD_NICO_FEATURE%"=="true" (
+        pause>nul
+        goto premium
+    ) else (
+        call error.bat
     )
 )
-if /i "%ACTYPE%"=="y" goto premium
 if /i "%ACTYPE%"=="n" goto normal
 
 echo;

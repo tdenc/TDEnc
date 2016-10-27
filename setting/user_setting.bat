@@ -1,4 +1,4 @@
-set USER_VERSION=26
+set USER_VERSION=27
 
 rem ↓ここから下を適当に弄って自分好みの設定にしてくだしあ↓
 
@@ -142,7 +142,12 @@ rem ファイル容量（最終チェック用）
 rem これは弄らないことを勧めます
 set MP4_FILESIZE_NICO_PREMIUM=104857600
 set MP4_FILESIZE_NICO_NORMAL=41943040
+set MP4_FILESIZE_NICO_NEW=1610612736
 set MP4_FILESIZE_TWITTER=536870912
+
+rem 旧仕様のニコニコ向けエンコード
+rem 実験目的のみ（trueで有効化）
+set OLD_NICO_FEATURE=false
 
 rem パス数の設定（画像＆音声の同時D&Dのときはこの設定は無効です）
 rem 強制的に1passや2passや3passにしたいときはここを弄る
