@@ -240,7 +240,10 @@ if /i "%UP_SITE%"=="y" (
         echo;
         call error.bat
     )
+) else if "%UP_SITE%"=="N" (
+    goto premium
 )
+
 if /i "%ACTYPE%"=="y" (
     echo ^>^>%PREMIUM_ERROR1%
     echo ^>^>%PREMIUM_ERROR2%
