@@ -239,6 +239,8 @@ if /i "%UP_SITE%"=="y" (
         echo ^>^>%TWITTER_ERROR2%
         echo;
         call error.bat
+    ) else (
+        goto premium
     )
 ) else if "%UP_SITE%"=="N" (
     goto premium
