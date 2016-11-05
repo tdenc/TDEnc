@@ -219,9 +219,9 @@ set /a TOTAL_TIME_SEC=%TOTAL_TIME% / 1000
 set /a TOTAL_TIME_LIM=0
 if /i "%UP_SITE%"=="y" (
     set ACTYPE=%YTTYPE%
-    set /a TOTAL_TIME_LIM=15 * 60
+    set /a TOTAL_TIME_LIM=%YOUTUBE_DURATION%
 ) else if /i "%UP_SITE%"=="t" (
-    set /a TOTAL_TIME_LIM=140
+    set /a TOTAL_TIME_LIM=%TWITTER_DURATION%
 )
 if /i "%UP_SITE%"=="y" (
     if /i "%ACTYPE%"=="n" (
@@ -580,8 +580,13 @@ set SETTING2=noresize
 exit /b
 :autoconvert
 if "%UP_SITE%"=="N" (
-    set /a HEIGHT=%OUT_HEIGHT_NICO_NEW%
-    set /a WIDTH=%OUT_WIDTH_NICO_NEW%
+    if %TOTAL_TIME_SEC% LEQ %NICO_NEW_DURATION% (
+        set /a HEIGHT=%OUT_HEIGHT_NICO_NEW_HD%
+        set /a WIDTH=%OUT_WIDTH_NICO_NEW_HD%
+    ) else (
+        set /a HEIGHT=%OUT_HEIGHT_NICO_NEW_SD%
+        set /a WIDTH=%OUT_WIDTH_NICO_NEW_SD%
+    )
 ) else if /i "%UP_SITE%"=="t" (
     set /a HEIGHT=%OUT_HEIGHT_TWITTER%
     set /a WIDTH=%OUT_WIDTH_TWITTER%
