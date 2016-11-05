@@ -65,7 +65,7 @@ rem ==========================================================================
 set DEFAULT_WIDTH=
 set DEFAULT_HEIGHT=480
 set DEFAULT_HEIGHT_NEW_HD=720
-set DEFAULT_HEIGHT_NEW_SD=360
+set DEFAULT_HEIGHT_NEW_SD=576
 set DEFAULT_HEIGHT_TWITTER=1080
 
 rem リサイザの指定
