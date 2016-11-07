@@ -75,6 +75,13 @@ if /i "%UP_SITE%"=="y" (
     goto account
 ) else if "%UP_SITE%"=="N" (
     call :surround_check
+    if %TOTAL_TIME_SEC% LEQ %NICO_NEW_DURATION_H% (
+        set /a BITRATE_NICO_NEW_THRESHOLD=%BITRATE_NICO_NEW_THRESHOLD_H%
+    ) else if %TOTAL_TIME_SEC% LEQ %NICO_NEW_DURATION_M% (
+        set /a BITRATE_NICO_NEW_THRESHOLD=%BITRATE_NICO_NEW_THRESHOLD_M%
+    ) else (
+        set /a BITRATE_NICO_NEW_THRESHOLD=%BITRATE_NICO_NEW_THRESHOLD_L%
+    )
     set PRETYPE=y
     set ACTYPE=y
     set ENCTYPE=h
@@ -580,12 +587,15 @@ set SETTING2=noresize
 exit /b
 :autoconvert
 if "%UP_SITE%"=="N" (
-    if %TOTAL_TIME_SEC% LEQ %NICO_NEW_DURATION% (
-        set /a HEIGHT=%OUT_HEIGHT_NICO_NEW_HD%
-        set /a WIDTH=%OUT_WIDTH_NICO_NEW_HD%
+    if %TOTAL_TIME_SEC% LEQ %NICO_NEW_DURATION_H% (
+        set /a HEIGHT=%OUT_HEIGHT_NICO_NEW_H%
+        set /a WIDTH=%OUT_WIDTH_NICO_NEW_H%
+    ) else if %TOTAL_TIME_SEC% LEQ %NICO_NEW_DURATION_M% (
+        set /a HEIGHT=%OUT_HEIGHT_NICO_NEW_M%
+        set /a WIDTH=%OUT_WIDTH_NICO_NEW_M%
     ) else (
-        set /a HEIGHT=%OUT_HEIGHT_NICO_NEW_SD%
-        set /a WIDTH=%OUT_WIDTH_NICO_NEW_SD%
+        set /a HEIGHT=%OUT_HEIGHT_NICO_NEW_L%
+        set /a WIDTH=%OUT_WIDTH_NICO_NEW_L%
     )
 ) else if /i "%UP_SITE%"=="t" (
     set /a HEIGHT=%OUT_HEIGHT_TWITTER%
