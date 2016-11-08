@@ -65,6 +65,7 @@ echo %HORIZON%
 set /p UP_SITE=^>^>
 echo %HORIZON_B%
 :site_main
+set /a TOTAL_TIME_SEC=%TOTAL_TIME% / 1000
 if /i "%UP_SITE%"=="y" (
     set PRETYPE=y
     set SAMPLERATE=2
@@ -222,7 +223,6 @@ if /i "%UP_SITE%"=="n" (
     echo %HORIZON_B%
 )
 :account_main
-set /a TOTAL_TIME_SEC=%TOTAL_TIME% / 1000
 set /a TOTAL_TIME_LIM=0
 if /i "%UP_SITE%"=="y" (
     set ACTYPE=%YTTYPE%
