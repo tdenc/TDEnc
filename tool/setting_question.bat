@@ -76,13 +76,6 @@ if /i "%UP_SITE%"=="y" (
     goto account
 ) else if "%UP_SITE%"=="N" (
     call :surround_check
-    if %TOTAL_TIME_SEC% LEQ %NICO_NEW_DURATION_H% (
-        set /a BITRATE_NICO_NEW_THRESHOLD=%BITRATE_NICO_NEW_THRESHOLD_H%
-    ) else if %TOTAL_TIME_SEC% LEQ %NICO_NEW_DURATION_M% (
-        set /a BITRATE_NICO_NEW_THRESHOLD=%BITRATE_NICO_NEW_THRESHOLD_M%
-    ) else (
-        set /a BITRATE_NICO_NEW_THRESHOLD=%BITRATE_NICO_NEW_THRESHOLD_L%
-    )
     set PRETYPE=y
     set ACTYPE=y
     set ENCTYPE=h
