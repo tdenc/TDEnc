@@ -1,4 +1,4 @@
-set USER_VERSION=27
+set USER_VERSION=28
 
 rem ↓ここから下を適当に弄って自分好みの設定にしてくだしあ↓
 
@@ -32,7 +32,10 @@ set BITRATE_THRESHOLD=2000
 
 rem ニコニコ新仕様で2passエンコに切り替わるビットレートの閾値（kbps）
 rem この数値以下のビットレートでCRFエンコされたときに2passエンコに切り替わる
-set BITRATE_NICO_NEW_THRESHOLD=2000
+rem Hは高解像度用，Mは中解像度，Lは低解像度用
+set BITRATE_NICO_NEW_THRESHOLD_H=2000
+set BITRATE_NICO_NEW_THRESHOLD_M=1000
+set BITRATE_NICO_NEW_THRESHOLD_L=600
 
 rem crfエンコのときの値
 rem 数値が小さいほど高画質だが下げすぎるといろいろ問題が出る
@@ -48,14 +51,16 @@ set I_MAX_WIDTH=1280
 set I_MAX_HEIGHT=720
 
 rem Twitterの解像度の上限の設定
-rem 幅のデフォルトは1280pixels、高さのデフォルトは1024pixels
+rem 幅のデフォルトは1920pixels、高さのデフォルトは1200pixels
 set T_MAX_WIDTH=1920
 set T_MAX_HEIGHT=1200
 
 rem リサイズの質問時にyを答えたときの高さと幅の設定
 rem 高さのデフォルトは480pixels。変えたいときは「DEFAULT_HEIGHT=720」などのようにする
 rem 幅は、空欄のときは自動計算（動画ファイルのアスペクト比を維持）
-rem DEFAULT_HEIGHT_NEWはニコニコ新仕様用
+rem DEFAULT_HEIGHT_NEW_Hはニコニコ新仕様高解像度用
+rem DEFAULT_HEIGHT_NEW_Mはニコニコ新仕様中解像度用
+rem DEFAULT_HEIGHT_NEW_Lはニコニコ新仕様低解像度用
 rem DEFAULT_HEIGHT_TWITTERはTwitter用
 rem 指定したい場合は「DEFAULT_WIDTH=640」などのようにする
 rem ===============================！注意！===================================
@@ -63,7 +68,9 @@ rem バージョン2.72からはWIDTHではなくHEIGHTを指定するように仕様が変更されました
 rem ==========================================================================
 set DEFAULT_WIDTH=
 set DEFAULT_HEIGHT=480
-set DEFAULT_HEIGHT_NEW=720
+set DEFAULT_HEIGHT_NEW_H=720
+set DEFAULT_HEIGHT_NEW_M=540
+set DEFAULT_HEIGHT_NEW_L=320
 set DEFAULT_HEIGHT_TWITTER=1080
 
 rem リサイザの指定
@@ -144,6 +151,16 @@ set MP4_FILESIZE_NICO_PREMIUM=104857600
 set MP4_FILESIZE_NICO_NORMAL=41943040
 set MP4_FILESIZE_NICO_NEW=1610612736
 set MP4_FILESIZE_TWITTER=536870912
+
+rem 動画の長さに関する設定（単位はすべて秒）
+rem YOUTUBE_DURATIONはYouTubeパートナー閾値（初期値900）
+rem NICO_NEW_DURATION_Hはニコニコ新仕様の高解像度閾値（初期値959）
+rem NICO_NEW_DURATION_Mはニコニコ新仕様の中解像度閾値（初期値1859）
+rem TWITTER_DURATIONはTwitterのアップロード閾値（初期値140）
+set YOUTUBE_DURATION=900
+set NICO_NEW_DURATION_H=959
+set NICO_NEW_DURATION_M=1859
+set TWITTER_DURATION=140
 
 rem 旧仕様のニコニコ向けエンコード
 rem 実験目的のみ（trueで有効化）

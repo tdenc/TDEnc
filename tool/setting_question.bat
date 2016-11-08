@@ -65,6 +65,7 @@ echo %HORIZON%
 set /p UP_SITE=^>^>
 echo %HORIZON_B%
 :site_main
+set /a TOTAL_TIME_SEC=%TOTAL_TIME% / 1000
 if /i "%UP_SITE%"=="y" (
     set PRETYPE=y
     set SAMPLERATE=2
@@ -75,6 +76,13 @@ if /i "%UP_SITE%"=="y" (
     goto account
 ) else if "%UP_SITE%"=="N" (
     call :surround_check
+    if %TOTAL_TIME_SEC% LEQ %NICO_NEW_DURATION_H% (
+        set /a BITRATE_NICO_NEW_THRESHOLD=%BITRATE_NICO_NEW_THRESHOLD_H%
+    ) else if %TOTAL_TIME_SEC% LEQ %NICO_NEW_DURATION_M% (
+        set /a BITRATE_NICO_NEW_THRESHOLD=%BITRATE_NICO_NEW_THRESHOLD_M%
+    ) else (
+        set /a BITRATE_NICO_NEW_THRESHOLD=%BITRATE_NICO_NEW_THRESHOLD_L%
+    )
     set PRETYPE=y
     set ACTYPE=y
     set ENCTYPE=h
@@ -215,13 +223,12 @@ if /i "%UP_SITE%"=="n" (
     echo %HORIZON_B%
 )
 :account_main
-set /a TOTAL_TIME_SEC=%TOTAL_TIME% / 1000
 set /a TOTAL_TIME_LIM=0
 if /i "%UP_SITE%"=="y" (
     set ACTYPE=%YTTYPE%
-    set /a TOTAL_TIME_LIM=15 * 60
+    set /a TOTAL_TIME_LIM=%YOUTUBE_DURATION%
 ) else if /i "%UP_SITE%"=="t" (
-    set /a TOTAL_TIME_LIM=140
+    set /a TOTAL_TIME_LIM=%TWITTER_DURATION%
 )
 if /i "%UP_SITE%"=="y" (
     if /i "%ACTYPE%"=="n" (
@@ -580,8 +587,16 @@ set SETTING2=noresize
 exit /b
 :autoconvert
 if "%UP_SITE%"=="N" (
-    set /a HEIGHT=%OUT_HEIGHT_NICO_NEW%
-    set /a WIDTH=%OUT_WIDTH_NICO_NEW%
+    if %TOTAL_TIME_SEC% LEQ %NICO_NEW_DURATION_H% (
+        set /a HEIGHT=%OUT_HEIGHT_NICO_NEW_H%
+        set /a WIDTH=%OUT_WIDTH_NICO_NEW_H%
+    ) else if %TOTAL_TIME_SEC% LEQ %NICO_NEW_DURATION_M% (
+        set /a HEIGHT=%OUT_HEIGHT_NICO_NEW_M%
+        set /a WIDTH=%OUT_WIDTH_NICO_NEW_M%
+    ) else (
+        set /a HEIGHT=%OUT_HEIGHT_NICO_NEW_L%
+        set /a WIDTH=%OUT_WIDTH_NICO_NEW_L%
+    )
 ) else if /i "%UP_SITE%"=="t" (
     set /a HEIGHT=%OUT_HEIGHT_TWITTER%
     set /a WIDTH=%OUT_WIDTH_TWITTER%
