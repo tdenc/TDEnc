@@ -322,7 +322,6 @@ article .entry code {
   margin: 0 2px;
   font-size: 0.9em;
   border: 1px solid #ddd;
-  -webkit-border-radius: 3px;
   border-radius: 3px;
 }
 article .entry pre {
@@ -331,7 +330,6 @@ article .entry pre {
   margin-top: 15px;
   overflow: auto;
   padding: 7px 15px;
-  -webkit-border-radius: 2px;
   border-radius: 2px;
 }
 article .entry pre code {
@@ -339,7 +337,6 @@ article .entry pre code {
   padding: 0;
   margin: 0;
   border: none;
-  -webkit-border-radius: 0;
   border-radius: 0;
 }
 article .entry ul,
@@ -554,7 +551,6 @@ article footer .addthis iframe {
   border: 1px solid #ddd;
   margin-top: 15px;
   padding: 7px 15px;
-  -webkit-border-radius: 2px;
   border-radius: 2px;
   text-shadow: 0 0 1px #fff;
   line-height: 1.6;
@@ -594,7 +590,6 @@ figure.highlight {
   border: 1px solid #ddd;
   margin-top: 15px;
   padding: 7px 15px;
-  -webkit-border-radius: 2px;
   border-radius: 2px;
   text-shadow: 0 0 1px #fff;
   line-height: 1.6;
