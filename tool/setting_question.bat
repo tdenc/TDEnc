@@ -94,8 +94,18 @@ if /i "%UP_SITE%"=="y" (
     set /a T_BITRATE0=0
     goto account
 ) else if "%UP_SITE%"=="n" (
-    call :surround_check
-    goto preset
+    echo ^>^>%PREMIUM_ERROR1%
+    echo ^>^>%PREMIUM_ERROR2%
+    echo ^>^>%PREMIUM_ERROR3%
+    echo;
+    if "%OLD_NICO_FEATURE%"=="true" (
+        echo ^>^>%PAUSE_MESSAGE2%
+        pause>nul
+        call :surround_check
+        goto preset
+    ) else (
+        call error.bat
+    )
 ) else (
     echo;
     echo ^>^>%RETURN_MESSAGE1%
@@ -247,18 +257,10 @@ if /i "%UP_SITE%"=="y" (
 )
 
 if /i "%ACTYPE%"=="y" (
-    echo ^>^>%PREMIUM_ERROR1%
-    echo ^>^>%PREMIUM_ERROR2%
-    echo ^>^>%PREMIUM_ERROR3%
-    echo;
-    if "%OLD_NICO_FEATURE%"=="true" (
-        pause>nul
-        goto premium
-    ) else (
-        call error.bat
-    )
+    goto premium
+) else (
+    goto normal
 )
-if /i "%ACTYPE%"=="n" goto normal
 
 echo;
 echo ^>^>%RETURN_MESSAGE1%
