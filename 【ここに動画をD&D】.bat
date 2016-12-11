@@ -34,7 +34,7 @@ if not "%THIS_VERSION%"=="%PRESET_VERSION%" (
 rem ################フォルダ作成################
 rem 一時ファイルを保存するフォルダを変更したいときはTEMP_DIRの設定を弄ってください
 rem ただ、エンコ後に一時ファイルを全て削除するので誤作動が怖い場合は弄らないでください
-set TEMP_DIR=TEMP\%DATE:/=%%RANDOM%%RANDOM%
+set TEMP_DIR=TEMP\%RANDOM%%RANDOM%
 mkdir %TEMP_DIR%
 if not exist %MP4_DIR% mkdir %MP4_DIR%
 
