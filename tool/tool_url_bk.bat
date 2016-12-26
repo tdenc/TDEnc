@@ -11,8 +11,8 @@ set UPD_PATH="..\Archives\update.zip"
 set LOG_URL="https://raw.githubusercontent.com/tdenc/TDEnc/master/tool/ChangeLog"
 set LOG_PATH=".\ChangeLog"
 
-set AVS_URL="https://raw.githubusercontent.com/tdenc/TDEnc/master/Archives/Avisynth_260.exe"
-set AVS_PATH="..\Archives\Avisynth_260.exe"
+set AVS_URL="https://raw.githubusercontent.com/tdenc/TDEnc/master/Archives/AviSynth_260.exe"
+set AVS_PATH="..\Archives\AviSynth_260.exe"
 set AVS_SIZE=6514961
 
 set DIL_URL="https://raw.githubusercontent.com/tdenc/TDEnc/master/Archives/DevIL-EndUser-x86-1.7.8.zip"

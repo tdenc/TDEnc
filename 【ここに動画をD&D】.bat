@@ -401,7 +401,7 @@ echo ^>^>%AVS_MESSAGE3%
 echo;
 echo ^>^>%PAUSE_MESSAGE1%
 pause>nul
-..\Archives\avisynth_260.exe
+..\Archives\AviSynth_260.exe
 exit /b
 
 rem ################‚Â‚ñ‚Å‚ê‚ñ‚±I—¹..._ƒÓ(ßÍß )±Ë¬################
