@@ -18,7 +18,12 @@ if not defined TOTAL_TIME (
     echo;
     call error.bat
 )
-echo PlayTime     : %TOTAL_TIME%ms
+echo PlayTime       : %TOTAL_TIME%ms
+
+.\MediaInfo.exe --Inform=Audio;%%Channels%% --LogFile=%TEMP_INFO% %INPUT_AUDIO%>nul
+for /f "delims=" %%i in (%TEMP_INFO%) do set AUDIO_CHANNELS=%%i
+if not defined AUDIO_CHANNELS set AUDIO_CHANNELS=0
+echo Audio Channels : %AUDIO_CHANNELS%
 
 set FPS=10
 
@@ -53,10 +58,10 @@ set /a TOTAL_TIME_SECOND=%TOTAL_TIME%/100
 
 .\MediaInfo.exe --Inform=Image;%%Width%% --LogFile=%TEMP_INFO% %INPUT_VIDEO%>nul
 for /f "delims=" %%i in (%TEMP_INFO%) do set IN_WIDTH=%%i
-echo Width        : %IN_WIDTH%pixels
+echo Width          : %IN_WIDTH%pixels
 .\MediaInfo.exe --Inform=Image;%%Height%% --LogFile=%TEMP_INFO% %INPUT_VIDEO%>nul
 for /f "delims=" %%i in (%TEMP_INFO%) do set IN_HEIGHT=%%i
-echo Height       : %IN_HEIGHT%pixels
+echo Height         : %IN_HEIGHT%pixels
 
 
 rem o—Í‰ğ‘œ“x‚Ìİ’è
