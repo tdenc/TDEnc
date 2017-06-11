@@ -118,20 +118,6 @@ echo AVISource^(%INPUT_FILE_PATH%, audio = false^)> %INFO_AVS%
 goto infoavs
 
 :ffmpegsource_info
-if "%VFR%"=="true" (
-    echo;
-    echo exporting timecode... it may take a few minutes...
-    if exist %X264_TC_FILE% del %X264_TC_FILE%
-    .\x264 --preset ultrafast -q 51 -o nul --no-progress --quiet --tcfile-out %X264_TC_FILE% %INPUT_FILE_PATH% 2>nul
-    if exist %X264_TC_FILE% (
-        echo done.
-        set X264_VFR_ENC=true
-        set TEMP_264=%TEMP_DIR%\video.mp4
-    ) else (
-        echo failed.
-        echo ^(encode as cfr^)
-    )
-)
 (
     echo LoadPlugin^("ffms2.dll"^)
     echo FFVideoSource^(%INPUT_FILE_PATH%,seekmode=-1,cache=false,threads=1^)
@@ -325,11 +311,10 @@ echo;
 (
     echo LoadPlugin^("ffms2.dll"^)
     echo;
-    echo fps_num = Int^(%FPS% * 1000^)
     if "%VFR%"=="true" (
-        echo FFVideoSource^(%INPUT_FILE_PATH%,cachefile="input.ffindex",seekmode=%SEEKMODE%,threads=1^)
+        echo FFVideoSource^(%INPUT_FILE_PATH%,cachefile="input.ffindex",seekmode=%SEEKMODE%,threads=1,fpsnum=%INPUT_FPS%, fpsden=1^)
     ) else (
-        echo FFVideoSource^(%INPUT_FILE_PATH%,cachefile="input.ffindex",seekmode=%SEEKMODE%,threads=1,fpsnum=fps_num, fpsden=1000^)
+        echo FFVideoSource^(%INPUT_FILE_PATH%,cachefile="input.ffindex",seekmode=%SEEKMODE%,threads=1^)
     )
 )> %VIDEO_AVS%
 

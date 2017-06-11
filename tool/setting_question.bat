@@ -90,6 +90,8 @@ if /i "%UP_SITE%"=="y" (
     set ENCTYPE=h
     set DECTYPE=n
     set FLASH=1
+    set FPS=%TWITTER_FPS%
+    set CHANGE_FPS=true
     set AAC_PROFILE=lc
     set /a T_BITRATE0=0
     goto account
