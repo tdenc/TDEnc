@@ -18,7 +18,12 @@ if not defined TOTAL_TIME (
     echo;
     call error.bat
 )
-echo PlayTime     : %TOTAL_TIME%ms
+echo PlayTime       : %TOTAL_TIME%ms
+
+.\MediaInfo.exe --Inform=Audio;%%Channels%% --LogFile=%TEMP_INFO% %INPUT_AUDIO%>nul
+for /f "delims=" %%i in (%TEMP_INFO%) do set AUDIO_CHANNELS=%%i
+if not defined AUDIO_CHANNELS set AUDIO_CHANNELS=0
+echo Audio Channels : %AUDIO_CHANNELS%
 
 set FPS=10
 
@@ -53,10 +58,10 @@ set /a TOTAL_TIME_SECOND=%TOTAL_TIME%/100
 
 .\MediaInfo.exe --Inform=Image;%%Width%% --LogFile=%TEMP_INFO% %INPUT_VIDEO%>nul
 for /f "delims=" %%i in (%TEMP_INFO%) do set IN_WIDTH=%%i
-echo Width        : %IN_WIDTH%pixels
+echo Width          : %IN_WIDTH%pixels
 .\MediaInfo.exe --Inform=Image;%%Height%% --LogFile=%TEMP_INFO% %INPUT_VIDEO%>nul
 for /f "delims=" %%i in (%TEMP_INFO%) do set IN_HEIGHT=%%i
-echo Height       : %IN_HEIGHT%pixels
+echo Height         : %IN_HEIGHT%pixels
 
 
 rem 出力解像度の設定
@@ -71,19 +76,19 @@ set /a OUT_WIDTH_TEMP=%DEFAULT_HEIGHT% * %IN_WIDTH% / %IN_HEIGHT%
 set /a OUT_WIDTH=%OUT_WIDTH_TEMP% + %OUT_WIDTH_TEMP% %% 2
 rem ニコニコ新仕様用（高解像度）
 set /a OUT_HEIGHT_NICO_NEW_H=%DEFAULT_HEIGHT_NEW_H% + %DEFAULT_HEIGHT_NEW_H% %% 2
-set /a OUT_WIDTH_TEMP=%DEFAULT_HEIGHT_NEW_H% * %IN_WIDTH_MOD% / %IN_HEIGHT%
+set /a OUT_WIDTH_TEMP=%DEFAULT_HEIGHT_NEW_H% * %IN_WIDTH% / %IN_HEIGHT%
 set /a OUT_WIDTH_NICO_NEW_H=%OUT_WIDTH_TEMP% + %OUT_WIDTH_TEMP% %% 2
 rem ニコニコ新仕様用（中解像度）
 set /a OUT_HEIGHT_NICO_NEW_M=%DEFAULT_HEIGHT_NEW_M% + %DEFAULT_HEIGHT_NEW_M% %% 2
-set /a OUT_WIDTH_TEMP=%DEFAULT_HEIGHT_NEW_M% * %IN_WIDTH_MOD% / %IN_HEIGHT%
+set /a OUT_WIDTH_TEMP=%DEFAULT_HEIGHT_NEW_M% * %IN_WIDTH% / %IN_HEIGHT%
 set /a OUT_WIDTH_NICO_NEW_M=%OUT_WIDTH_TEMP% + %OUT_WIDTH_TEMP% %% 2
 rem ニコニコ新仕様用（低解像度）
 set /a OUT_HEIGHT_NICO_NEW_L=%DEFAULT_HEIGHT_NEW_L% + %DEFAULT_HEIGHT_NEW_L% %% 2
-set /a OUT_WIDTH_TEMP=%DEFAULT_HEIGHT_NEW_L% * %IN_WIDTH_MOD% / %IN_HEIGHT%
+set /a OUT_WIDTH_TEMP=%DEFAULT_HEIGHT_NEW_L% * %IN_WIDTH% / %IN_HEIGHT%
 set /a OUT_WIDTH_NICO_NEW_L=%OUT_WIDTH_TEMP% + %OUT_WIDTH_TEMP% %% 2
 rem Twitter用
 set /a OUT_HEIGHT_TWITTER=%DEFAULT_HEIGHT_TWITTER% + %DEFAULT_HEIGHT_TWITTER% %% 2
-set /a OUT_WIDTH_TEMP=%DEFAULT_HEIGHT_TWITTER% * %IN_WIDTH_MOD% / %IN_HEIGHT%
+set /a OUT_WIDTH_TEMP=%DEFAULT_HEIGHT_TWITTER% * %IN_WIDTH% / %IN_HEIGHT%
 set /a OUT_WIDTH_TWITTER=%OUT_WIDTH_TEMP% + %OUT_WIDTH_TEMP% %% 2
 
 :image_info_end
@@ -304,20 +309,6 @@ echo AVISource^(%INPUT_VIDEO%, audio = false^)> %INFO_AVS%
 goto infoavs
 
 :ffmpegsource_info
-if "%VFR%"=="true" (
-    echo;
-    echo exporting timecode... it may takes a few minutes...
-    if exist %X264_TC_FILE% del %X264_TC_FILE%
-    .\x264 --preset ultrafast -q 51 -o nul --no-progress --quiet --tcfile-out %X264_TC_FILE% %INPUT_VIDEO% 2>nul
-    if exist %X264_TC_FILE% (
-        echo done.
-        set X264_VFR_ENC=true
-        set TEMP_264=%TEMP_DIR%\video.mp4
-    ) else (
-        echo failed.
-        echo ^(encode as cfr^)
-    )
-)
 (
     echo LoadPlugin^("ffms2.dll"^)
     echo;
@@ -516,11 +507,10 @@ echo;
 (
     echo LoadPlugin^("ffms2.dll"^)
     echo;
-    echo fps_num = Int^(%FPS% * 1000^)
     if "%VFR%"=="true" (
-        echo FFVideoSource^(%INPUT_VIDEO%,cachefile="input.ffindex",seekmode=%SEEKMODE%,threads=1^)
+        echo FFVideoSource^(%INPUT_VIDEO%,cachefile="input.ffindex",seekmode=%SEEKMODE%,threads=1,fpsnum=%INPUT_FPS%,fpsden=1^)
     ) else (
-        echo FFVideoSource^(%INPUT_VIDEO%,cachefile="input.ffindex",seekmode=%SEEKMODE%,threads=1,fpsnum=fps_num,fpsden=1000^)
+        echo FFVideoSource^(%INPUT_VIDEO%,cachefile="input.ffindex",seekmode=%SEEKMODE%,threads=1^)
     )
 )> %VIDEO_AVS%
 

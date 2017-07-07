@@ -90,6 +90,8 @@ if /i "%UP_SITE%"=="y" (
     set ENCTYPE=h
     set DECTYPE=n
     set FLASH=1
+    set FPS=%TWITTER_FPS%
+    set CHANGE_FPS=true
     set AAC_PROFILE=lc
     set /a T_BITRATE0=0
     goto account
@@ -582,12 +584,14 @@ set SETTING2=noresize
 exit /b
 :autoconvert
 if "%UP_SITE%"=="N" (
-    if %TOTAL_TIME_SEC% LEQ %NICO_NEW_DURATION_H% (
-        set /a HEIGHT=%OUT_HEIGHT_NICO_NEW_H%
-        set /a WIDTH=%OUT_WIDTH_NICO_NEW_H%
-    ) else if %TOTAL_TIME_SEC% LEQ %NICO_NEW_DURATION_M% (
-        set /a HEIGHT=%OUT_HEIGHT_NICO_NEW_M%
-        set /a WIDTH=%OUT_WIDTH_NICO_NEW_M%
+    if %TOTAL_TIME_SEC% LEQ %NICO_NEW_DURATION_M% (
+        if %T_BITRATE% LSS %BITRATE_NICO_NEW_THRESHOLD_M% (
+            set /a HEIGHT=%OUT_HEIGHT_NICO_NEW_M%
+            set /a WIDTH=%OUT_WIDTH_NICO_NEW_M%
+        ) else (
+            set /a HEIGHT=%OUT_HEIGHT_NICO_NEW_H%
+            set /a WIDTH=%OUT_WIDTH_NICO_NEW_H%
+        )
     ) else (
         set /a HEIGHT=%OUT_HEIGHT_NICO_NEW_L%
         set /a WIDTH=%OUT_WIDTH_NICO_NEW_L%

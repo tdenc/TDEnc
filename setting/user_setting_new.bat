@@ -1,4 +1,4 @@
-set USER_VERSION=28
+set USER_VERSION=29
 
 rem ↓ここから下を適当に弄って自分好みの設定にしてくだしあ↓
 
@@ -84,8 +84,10 @@ rem よくわからない人はそのままにしておくこと
 set RG_MODE=5
 
 rem FPSを指定したいときは、「DEFAULT_FPS=24」などのようにする
+rem TWITTER_FPSはTwitter用
 rem 元の動画と同じのままなら空欄のままにしておく
 set DEFAULT_FPS=
+set TWITTER_FPS=30
 
 rem AACエンコーダの選択（NeroAacEncかQuickTimeか）
 rem neroかqt（QuickTimeがインストールされてる必要があります）かを選択

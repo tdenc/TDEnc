@@ -1,7 +1,7 @@
 rem このファイルはいじらないでくだしあ。
 rem いじるならuser_setting.batの方をいじってくだしあ＞＜
 
-set THIS_VERSION=28
+set THIS_VERSION=29
 set DEFAULT_VERSION_CHECK=true
 set I_TARGET_BITRATE=600
 set I_MAX_BITRATE=654
@@ -28,6 +28,7 @@ set DEFAULT_HEIGHT_TWITTER=1080
 set RESIZER=
 set RG_MODE=5
 set DEFAULT_FPS=
+set TWITTER_FPS=30
 set AAC_ENCODER=nero
 set AAC_PROFILE=auto
 set SAMPLERATE_LIST1=44100

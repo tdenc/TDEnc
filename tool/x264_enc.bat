@@ -38,12 +38,11 @@ if "%FULL_RANGE%"=="off" (
 ) else (
     set RANGE=auto
 )
-if "%X264_VFR_ENC%"=="true" set X264_TIMECODE=--tcfile-in %X264_TC_FILE%
 
 if %FLASH% GEQ 2 set MISC=%MISC% --no-deblock
 if %FLASH% EQU 3 set MISC=%MISC% --weightp 0
 
-set X264_COMMON=--range %RANGE% -i %MIN_KEYINT% --scenecut %SCENECUT% -b %BFRAMES% --b-adapt %B_ADAPT% --b-pyramid %B_PYRAMID% -r %REF% --rc-lookahead %RC_LOOKAHEAD% --qpstep %QPSTEP% --aq-mode %AQ_MODE% --aq-strength %AQ_STRENGTH% --qcomp %QCOMP% --weightp %WEIGHTP% --me %ME% -m %SUBME% --psy-rd %PSY_RD% -t %TRELLIS% --threads %THREADS% --colormatrix %X264_COLORMATRIX% %X264_TIMECODE% %COMMON_MISC% %QUIET% %MISC% %VIDEO_AVS%
+set X264_COMMON=--range %RANGE% -i %MIN_KEYINT% --scenecut %SCENECUT% -b %BFRAMES% --b-adapt %B_ADAPT% --b-pyramid %B_PYRAMID% -r %REF% --rc-lookahead %RC_LOOKAHEAD% --qpstep %QPSTEP% --aq-mode %AQ_MODE% --aq-strength %AQ_STRENGTH% --qcomp %QCOMP% --weightp %WEIGHTP% --me %ME% -m %SUBME% --psy-rd %PSY_RD% -t %TRELLIS% --threads %THREADS% --colormatrix %X264_COLORMATRIX% %COMMON_MISC% %QUIET% %MISC% %VIDEO_AVS%
 set /a X264_KEYINT=%KEYINT%
 set /a X264_BITRATE=%V_BITRATE% - %BITRATE_MARGIN%
 
