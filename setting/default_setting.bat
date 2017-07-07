@@ -1,7 +1,7 @@
 rem このファイルはいじらないでくだしあ。
 rem いじるならuser_setting.batの方をいじってくだしあ＞＜
 
-set THIS_VERSION=28
+set THIS_VERSION=29
 set DEFAULT_VERSION_CHECK=true
 set I_TARGET_BITRATE=600
 set I_MAX_BITRATE=654
