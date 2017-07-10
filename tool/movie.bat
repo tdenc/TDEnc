@@ -311,8 +311,9 @@ echo;
 (
     echo LoadPlugin^("ffms2.dll"^)
     echo;
+    echo fps_num = Int^(%FPS% * 1000^)
     if "%VFR%"=="true" (
-        echo FFVideoSource^(%INPUT_FILE_PATH%,cachefile="input.ffindex",seekmode=%SEEKMODE%,threads=1,fpsnum=%INPUT_FPS%, fpsden=1^)
+        echo FFVideoSource^(%INPUT_FILE_PATH%,cachefile="input.ffindex",seekmode=%SEEKMODE%,threads=1,fpsnum=fps_num,fpsden=1000^)
     ) else (
         echo FFVideoSource^(%INPUT_FILE_PATH%,cachefile="input.ffindex",seekmode=%SEEKMODE%,threads=1^)
     )
