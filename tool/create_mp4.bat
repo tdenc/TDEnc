@@ -63,7 +63,11 @@ for /f %%i in (%TEMP_INFO%) do set /a FINAL_MP4_SIZE=%%i
 if /i "%UP_SITE%"=="t" (
     set /a MP4_FILESIZE_LIMIT=%MP4_FILESIZE_TWITTER%
 ) else if "%UP_SITE%"=="N" (
-    set /a MP4_FILESIZE_LIMIT=%MP4_FILESIZE_NICO_NEW%
+    if "%ZENZA%"=="true" (
+        set /a MP4_FILESIZE_LIMIT=%MP4_FILESIZE_NICO_PREMIUM%
+    ) else (
+        set /a MP4_FILESIZE_LIMIT=%MP4_FILESIZE_NICO_NEW%
+    )
 ) else if /i "%ACTYPE%"=="y" (
     set /a MP4_FILESIZE_LIMIT=%MP4_FILESIZE_NICO_PREMIUM%
 ) else (
