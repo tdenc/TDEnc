@@ -33,7 +33,8 @@ set BITRATE_THRESHOLD=2000
 rem ニコニコ新仕様で2passエンコに切り替わるビットレートの閾値（kbps）
 rem この数値以下のビットレートでCRFエンコされたときに2passエンコに切り替わる
 rem Hは高解像度用，Mは中解像度，Lは低解像度用
-set BITRATE_NICO_NEW_THRESHOLD_H=2000
+rem set BITRATE_NICO_NEW_THRESHOLD_H=2000
+set BITRATE_NICO_NEW_THRESHOLD_H=3000
 set BITRATE_NICO_NEW_THRESHOLD_M=1000
 set BITRATE_NICO_NEW_THRESHOLD_L=600
 
