@@ -68,7 +68,8 @@ rem バージョン2.72からはWIDTHではなくHEIGHTを指定するように仕様が変更されました
 rem ==========================================================================
 set DEFAULT_WIDTH=
 set DEFAULT_HEIGHT=480
-set DEFAULT_HEIGHT_NEW_H=720
+rem set DEFAULT_HEIGHT_NEW_H=720
+set DEFAULT_HEIGHT_NEW_H=1080
 set DEFAULT_HEIGHT_NEW_M=540
 set DEFAULT_HEIGHT_NEW_L=360
 set DEFAULT_HEIGHT_TWITTER=1080
