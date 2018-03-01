@@ -38,6 +38,10 @@ set BITRATE_NICO_NEW_THRESHOLD_H=3000
 set BITRATE_NICO_NEW_THRESHOLD_M=1000
 set BITRATE_NICO_NEW_THRESHOLD_L=600
 
+rem ニコニコ新仕様で1passエンコに切り替わるビットレートの閾値（kbps）
+rem この数値以下のビットレートでCRFエンコされたときに2passエンコに切り替わる
+set BITRATE_NICO_NEW_THRESHOLD=6000
+
 rem crfエンコのときの値
 rem 数値が小さいほど高画質だが下げすぎるといろいろ問題が出る
 rem YouTube用エンコ、ニコニコ新基準のときはCRF_YOUを使用する
