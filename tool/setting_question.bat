@@ -350,7 +350,11 @@ if /i "%UP_SITE%"=="y" (
 ) else if /i "%UP_SITE%"=="t" (
     set /a TP_TEMP_BITRATE=%TW_TEMP_BITRATE%
 ) else if "%UP_SITE%"=="N" (
-    set /a TP_TEMP_BITRATE=%P_TEMP_BITRATE_NEW%
+    if "%ZENZA%"=="true" (
+        set /a TP_TEMP_BITRATE=%P_TEMP_BITRATE%
+    ) else (
+        set /a TP_TEMP_BITRATE=%P_TEMP_BITRATE_NEW%
+    )
 ) else (
     set /a TP_TEMP_BITRATE=%P_TEMP_BITRATE%
 )
@@ -420,7 +424,11 @@ if /i "%CRF_ENC%"=="n" (
     if /i "%UP_SITE%"=="y" (
         set CRF=--crf %CRF_YOU%
     ) else if "%UP_SITE%"=="N" (
-        set CRF=--crf %CRF_YOU%
+        if "%ZENZA%"=="true" (
+            set CRF=--crf %CRF_HIGH%
+        ) else (
+            set CRF=--crf %CRF_YOU%
+        )
     ) else if /i "%UP_SITE%"=="t" (
         set CRF=--crf %CRF_YOU%
     ) else if /i "%ACTYPE%"=="n" (

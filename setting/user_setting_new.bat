@@ -173,6 +173,10 @@ rem 旧仕様のニコニコ向けエンコード
 rem 実験目的のみ（trueで有効化）
 set OLD_NICO_FEATURE=false
 
+rem ZenzaWatch対応
+rem 旧APIを使う非公式プレイヤー向けの機能（trueで有効化）
+set ZENZA=false
+
 rem パス数の設定（画像＆音声の同時D&Dのときはこの設定は無効です）
 rem 強制的に1passや2passや3passにしたいときはここを弄る
 rem 「DEFAULT_PASS_**=1」「DEFAULT_PASS_**=2」「DEFAULT_PASS_**=3」でそれぞれ1pass、2pass、3passを強制する

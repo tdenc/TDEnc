@@ -60,14 +60,17 @@ rem ################容量チェック################
 if /i "%PRETYPE%"=="y" goto last
 .\MediaInfo.exe --Inform=General;%%FileSize%% "%MP4_DIR%\%FINAL_MP4%"> %TEMP_INFO%
 for /f %%i in (%TEMP_INFO%) do set FINAL_MP4_SIZE=%%i
-set FINAL_MP4_SIZE_MB1=%FINAL_MP4_SIZE:~0,-6%
-if not defined FINAL_MP4_SIZE_MB1 set FINAL_MP4_SIZE_MB1=0
-set MP4_FILESIZE_NICO_NEW_MB1=%MP4_FILESIZE_NICO_NEW:~0,-6%
 if /i "%UP_SITE%"=="t" (
     set /a MP4_FILESIZE_LIMIT=%MP4_FILESIZE_TWITTER%
 ) else if "%UP_SITE%"=="N" (
-    set MP4_FILESIZE_NICO_NEW_MB1=%MP4_FILESIZE_NICO_NEW%
-    set FINAL_MP4_SIZE=%FINAL_MP4_SIZE_MB1%
+    if "%ZENZA%"=="true" (
+        set /a MP4_FILESIZE_LIMIT=%MP4_FILESIZE_NICO_PREMIUM%
+    ) else (
+        set MP4_FILESIZE_LIMIT_MB=%MP4_FILESIZE_NICO_NEW:~0,-6%
+        set /a MP4_FILESIZE_LIMIT=%MP4_FILESIZE_LIMIT_MB%
+        set FINAL_MP4_SIZE_MB=%FINAL_MP4_SIZE:~0,-6%
+        set /a FINAL_MP4_SIZE=%FINAL_MP4_SIZE_MB%
+    )
 ) else if /i "%ACTYPE%"=="y" (
     set /a MP4_FILESIZE_LIMIT=%MP4_FILESIZE_NICO_PREMIUM%
 ) else (

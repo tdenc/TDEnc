@@ -2,4 +2,5 @@
   1080p制限緩和(30分、3GB)に対応
   neroAACencをダウンロード出来なくなったので、ffmpegに変更
   それに伴い、音ズレの自動修正を無効に
+  Zenza Watchサポート（user_setting.batで設定可能）
   Twitterの時間制限を削除
