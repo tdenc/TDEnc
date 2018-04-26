@@ -1,4 +1,4 @@
-set USER_VERSION=29
+set USER_VERSION=30
 
 rem ↓ここから下を適当に弄って自分好みの設定にしてくだしあ↓
 
@@ -95,9 +95,9 @@ rem 元の動画と同じのままなら空欄のままにしておく
 set DEFAULT_FPS=
 set TWITTER_FPS=30
 
-rem AACエンコーダの選択（NeroAacEncかQuickTimeか）
-rem neroかqt（QuickTimeがインストールされてる必要があります）かを選択
-set AAC_ENCODER=nero
+rem AACエンコーダの選択（ffmpegかQuickTimeか）
+rem ffmpegかqt（QuickTimeがインストールされてる必要があります）かを選択
+set AAC_ENCODER=ffmpeg
 
 rem AACエンコードのプロファイル選択(hev2はAAC_ENCODER=neroの時のみ有効)
 rem auto、lc、he、hev2から選択(デフォルトのautoを推奨)
@@ -144,7 +144,7 @@ rem 初期設定は「DEFAULT_SIZE_PREMIUM=98.5」、「DEFAULT_SIZE_NOMAL=39」「DEFAULT_
 rem 容量オーバーするときは「DEFAULT_SIZE_PREMIUM=98」、「DEFAULT_SIZE_NOMAL=38」などにしてみる
 set DEFAULT_SIZE_PREMIUM=98.5
 set DEFAULT_SIZE_NORMAL=39
-set DEFAULT_SIZE_PREMIUM_NEW=1495
+set DEFAULT_SIZE_PREMIUM_NEW=2995
 rem YouTube用の設定
 rem 上限は20480MB（YouTubeパートナー）か2024MB（YouTube一般）
 set DEFAULT_SIZE_YOUTUBE_PARTNER=20000
@@ -157,7 +157,7 @@ rem ファイル容量（最終チェック用）
 rem これは弄らないことを勧めます
 set MP4_FILESIZE_NICO_PREMIUM=104857600
 set MP4_FILESIZE_NICO_NORMAL=41943040
-set MP4_FILESIZE_NICO_NEW=1610612736
+set MP4_FILESIZE_NICO_NEW=3221225472
 set MP4_FILESIZE_TWITTER=536870912
 
 rem 動画の長さに関する設定（単位はすべて秒）
@@ -166,9 +166,8 @@ rem NICO_NEW_DURATION_Hはニコニコ新仕様の高解像度閾値（初期値959）
 rem NICO_NEW_DURATION_Mはニコニコ新仕様の中解像度閾値（初期値1859）
 rem TWITTER_DURATIONはTwitterのアップロード閾値（初期値140）
 set YOUTUBE_DURATION=900
-set NICO_NEW_DURATION_H=959
-set NICO_NEW_DURATION_M=1859
-set TWITTER_DURATION=140
+set NICO_NEW_DURATION_H=1859
+set NICO_NEW_DURATION_M=3659
 
 rem 旧仕様のニコニコ向けエンコード
 rem 実験目的のみ（trueで有効化）

@@ -277,7 +277,7 @@ if not exist MediaInfo.dll start /wait call initialize.bat
 if not exist yadif.dll start /wait call initialize.bat
 if not exist avs2pipe_gcc.exe start /wait call initialize.bat
 if not exist silence.exe start /wait call initialize.bat
-if not exist neroAacEnc.exe start /wait call initialize.bat
+if not exist ffmpeg.exe start /wait call initialize.bat
 if not exist x264.exe start /wait call initialize.bat
 .\x264.exe --version>"%TEMP_DIR%\x264_version.txt" 2>nul
 date /t>nul

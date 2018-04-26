@@ -232,8 +232,6 @@ set /a TOTAL_TIME_LIM=0
 if /i "%UP_SITE%"=="y" (
     set ACTYPE=%YTTYPE%
     set /a TOTAL_TIME_LIM=%YOUTUBE_DURATION%
-) else if /i "%UP_SITE%"=="t" (
-    set /a TOTAL_TIME_LIM=%TWITTER_DURATION%
 )
 if /i "%UP_SITE%"=="y" (
     if /i "%ACTYPE%"=="n" (
@@ -246,14 +244,7 @@ if /i "%UP_SITE%"=="y" (
     )
     goto premium
 ) else if /i "%UP_SITE%"=="t" (
-    if %TOTAL_TIME_SEC% GEQ %TOTAL_TIME_LIM% (
-        echo ^>^>%TWITTER_ERROR1%
-        echo ^>^>%TWITTER_ERROR2%
-        echo;
-        call error.bat
-    ) else (
-        goto premium
-    )
+    goto premium
 ) else if "%UP_SITE%"=="N" (
     goto premium
 )

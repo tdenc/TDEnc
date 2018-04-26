@@ -7,7 +7,11 @@ echo %HORIZON%
 echo;
 
 call version.bat
-call tool_url.bat
+if exist .\tool_url2.bat (
+  call tool_url2.bat
+) else (
+  call tool_url.bat
+)
 
 echo ^>^>%INSTALLER_ANNOUNCE%
 echo;
@@ -24,7 +28,7 @@ echo;
 .\7z.exe e -bd -y %YDF_PATH% "yadif.dll"
 .\7z.exe e -bd -y %A2P_PATH% "avs2pipe_gcc.exe"
 .\7z.exe e -bd -y %WVI_PATH% "silence.exe"
-.\7z.exe e -bd -y %NERO_PATH% "win32\neroAacEnc.exe"
+.\7z.exe e -bd -y %FFMPEG_PATH% "ffmpeg-%FFMPEG_VERSION%-win32-static\bin\ffmpeg.exe"
 echo;
 copy /y %X264_PATH% ".\x264.exe"
 
