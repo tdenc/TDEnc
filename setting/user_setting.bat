@@ -112,7 +112,7 @@ set SAMPLERATE_LIST3=96000
 rem 再エンコ系サイト向けの音声ビットレート
 rem これは弄らないことを勧めます
 set A_BITRATE_YOUTUBE=320
-set A_BITRATE_NICO_NEW=256
+set A_BITRATE_NICO_NEW=192
 set A_BITRATE_TWITTER=256
 
 rem デコーダの選択
