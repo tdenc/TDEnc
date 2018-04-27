@@ -18,10 +18,10 @@ set MIF=f
 set YDF=f
 set A2P=f
 set WVI=f
-set NERO=f
+set FFMPEG=f
 set X264=f
 call :file_check_sub
-echo %AVS%%DIL%%FSS%%RG1%%QTS%%MIF%%YDF%%A2P%%WVI%%NERO%%X264% | findstr "f">nul
+echo %AVS%%DIL%%FSS%%RG1%%QTS%%MIF%%YDF%%A2P%%WVI%%FFMPEG%%X264% | findstr "f">nul
 if "%ERRORLEVEL%"=="1" exit
 
 rem ################モード選択################
@@ -96,36 +96,11 @@ if "%X264%"=="f" (
     .\curl.exe --connect-timeout 5 -f -o %X264_PATH% -L %X264_URL%
     echo;
 )
-if "%NERO%"=="t" goto check
-echo;
-echo;
-echo;
-echo ^>^>%NERO_LICENSE1%
-echo ^>^>%NERO_LICENSE2%
-echo ^>^>%NERO_LICENSE3%
-echo;
-echo ^>^>%PAUSE_MESSAGE2%
-pause>nul
-echo;
-start rundll32 url.dll,FileProtocolHandler "http://www.nero.com/jpn/downloads-nerodigital-nero-aac-codec.php"
-
-:agree
-echo ^>^>%NERO_QUESTION%
-set /p AGREE=^>^>
-
-if /i "%AGREE%"=="y" goto agree_main
-if /i "%AGREE%"=="n" exit
-
-echo;
-echo ^>^>%RETURN_MESSAGE1%
-echo;
-goto agree
-
-:agree_main
-echo ^>^>neroAacEnc
-.\curl.exe --connect-timeout 5 -f -o %NERO_PATH% -L %NERO_URL%
-echo;
-
+if "%FFMPEG%"=="f" (
+    echo ^>^>FFmpeg
+    .\curl.exe --connect-timeout 5 -f -o %FFMPEG_PATH% -L %FFMPEG_URL%
+    echo;
+)
 goto check
 
 
@@ -142,7 +117,7 @@ if "%MIF%"=="f" echo MediaInfo→%MIF_URL%
 if "%YDF%"=="f" echo yadif→%YDF_URL%
 if "%A2P%"=="f" echo avs2pipe→%A2P_URL%
 if "%WVI%"=="f" echo wavi→%WVI_URL%
-if "%NERO%"=="f" echo NeroDigitalAudio→%NERO_URL%
+if "%FFMPEG%"=="f" echo FFmpeg→%FFMPEG_URL%
 if "%X264%"=="f" echo x264→%X264_URL%
 echo;
 
@@ -156,7 +131,7 @@ rem ################落とせたかどうかをチェック################
 :check
 call :file_check_sub
 date /t>nul
-echo %AVS%%DIL%%FSS%%RG1%%QTS%%MIF%%YDF%%A2P%%WVI%%NERO%%X264% | findstr "f">nul
+echo %AVS%%DIL%%FSS%%RG1%%QTS%%MIF%%YDF%%A2P%%WVI%%FFMPEG%%X264% | findstr "f">nul
 if "%ERRORLEVEL%"=="0" goto dl_fail
 
 
@@ -185,7 +160,7 @@ if "%MIF%"=="f" echo MediaInfo
 if "%YDF%"=="f" echo yadif
 if "%A2P%"=="f" echo avs2pipe
 if "%WVI%"=="f" echo wavi
-if "%NERO%"=="f" echo NeroDigitalAudio
+if "%FFMPEG%"=="f" echo FFmpeg
 if "%X264%"=="f" echo x264
 echo;
 echo;
@@ -208,7 +183,7 @@ for %%i in (%MIF_PATH%) do if %%~zi EQU %MIF_SIZE% set MIF=t
 for %%i in (%YDF_PATH%) do if %%~zi EQU %YDF_SIZE% set YDF=t
 for %%i in (%A2P_PATH%) do if %%~zi EQU %A2P_SIZE% set A2P=t
 for %%i in (%WVI_PATH%) do if %%~zi EQU %WVI_SIZE% set WVI=t
-for %%i in (%NERO_PATH%) do if %%~zi EQU %NERO_SIZE% set NERO=t
+for %%i in (%FFMPEG_PATH%) do if %%~zi EQU %FFMPEG_SIZE% set FFMPEG=t
 if not exist %X264_PATH% exit /b
 %X264_PATH% --version>"%TEMP_DIR%\x264_version.txt" 2>nul
 date /t>nul

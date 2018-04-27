@@ -48,7 +48,7 @@ set M4A_LAG=%A_SYNC%
 goto wav_avs
 
 :auto_sync
-if /i "%AAC_ENCODER%"=="qt" (
+if /i "%AAC_ENCODER%" NEQ "nero" (
     .\avs2pipe_gcc.exe audio %AUDIO_AVS% > %FINAL_WAV%
     goto m4a_encode
 )
@@ -103,6 +103,8 @@ echo ^>^>%M4A_ENC_ANNOUNCE%
 echo;
 if /i "%AAC_ENCODER%"=="nero" (
     .\neroAacEnc.exe %AAC% -2pass -br %A_BITRATE%000 -if %FINAL_WAV% -of %TEMP_M4A%
+) else if /i "%AAC_ENCODER%"=="ffmpeg" (
+    .\ffmpeg.exe -i %FINAL_WAV% -vn -c:a aac -b:a %A_BITRATE%k %TEMP_M4A%
 ) else if "%AAC%"=="-lc" (
     .\qtaacenc.exe --highest --cvbr %A_BITRATE% %FINAL_WAV% %TEMP_M4A%
 ) else (
@@ -115,7 +117,7 @@ if not exist %TEMP_M4A% (
     echo ^>^>%WAV_ERROR%
     echo;
     .\silence.exe %FINAL_WAV% -l 0.1 -c 2 -s 44100 -b 16
-    .\neroAacEnc.exe -lc -br 0 -if %FINAL_WAV% -of %TEMP_M4A%
+    .\ffmpeg.exe -i %FINAL_WAV% -vn -c:a aac -b:a 1k %TEMP_M4A%
 )
 echo ^>^>%M4A_SUCCESS%
 echo;
