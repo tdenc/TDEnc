@@ -151,7 +151,7 @@ if "%ERRORLEVEL%"=="0" (
     call :normal_main
     call shut.bat
 )
-echo %INPUT_FILE_TYPE% | findstr /i "mkv mp4 m4v mov flv ogm ogv vob m2v mpeg mpg m2ts mts ts dv">nul
+echo %INPUT_FILE_TYPE% | findstr /i "mkv mp4 m4v mov flv ogm ogv vob m2v mpeg mpg m2ts mts ts dv webm y4m">nul
 if "%ERRORLEVEL%"=="0" (
     set DECODER=ffmpeg
     set INPUT_FILE_PATH="%~1"
@@ -187,7 +187,7 @@ if "%ERRORLEVEL%"=="0" (
     set INPUT_FILE_PATH="%~1"
     goto ext_check
 )
-echo %INPUT_FILE_TYPE% | findstr /i "mkv mp4 m4v mov flv ogm ogv vob m2v mpeg mpg m2ts mts ts dv">nul
+echo %INPUT_FILE_TYPE% | findstr /i "mkv mp4 m4v mov flv ogm ogv vob m2v mpeg mpg m2ts mts ts dv webm y4m">nul
 if "%ERRORLEVEL%"=="0" (
     set DECODER=ffmpeg
     set INPUT_FILE_PATH="%~1"
@@ -364,7 +364,7 @@ if /i "%INPUT_FILE_TYPE%"==".nvv" (
 )
 if /i not "%DECODER%"=="auto" exit /b
 date /t>nul
-echo %INPUT_FILE_TYPE% | findstr /i "mkv flv mp4 mov dv ts mts m2ts">nul
+echo %INPUT_FILE_TYPE% | findstr /i "mkv mp4 m4v mov flv ogm ogv vob m2v mpeg mpg m2ts mts ts dv webm y4m">nul
 if "%ERRORLEVEL%"=="0" (
     set DECODER=ffmpeg
     exit /b
