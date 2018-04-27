@@ -59,11 +59,18 @@ echo;
 rem ################容量チェック################
 if /i "%PRETYPE%"=="y" goto last
 .\MediaInfo.exe --Inform=General;%%FileSize%% "%MP4_DIR%\%FINAL_MP4%"> %TEMP_INFO%
-for /f %%i in (%TEMP_INFO%) do set /a FINAL_MP4_SIZE=%%i
+for /f %%i in (%TEMP_INFO%) do set FINAL_MP4_SIZE=%%i
 if /i "%UP_SITE%"=="t" (
     set /a MP4_FILESIZE_LIMIT=%MP4_FILESIZE_TWITTER%
 ) else if "%UP_SITE%"=="N" (
-    set /a MP4_FILESIZE_LIMIT=%MP4_FILESIZE_NICO_NEW%
+    if "%ZENZA%"=="true" (
+        set /a MP4_FILESIZE_LIMIT=%MP4_FILESIZE_NICO_PREMIUM%
+    ) else (
+        set MP4_FILESIZE_LIMIT_MB=%MP4_FILESIZE_NICO_NEW:~0,-6%
+        set /a MP4_FILESIZE_LIMIT=%MP4_FILESIZE_LIMIT_MB%
+        set FINAL_MP4_SIZE_MB=%FINAL_MP4_SIZE:~0,-6%
+        set /a FINAL_MP4_SIZE=%FINAL_MP4_SIZE_MB%
+    )
 ) else if /i "%ACTYPE%"=="y" (
     set /a MP4_FILESIZE_LIMIT=%MP4_FILESIZE_NICO_PREMIUM%
 ) else (

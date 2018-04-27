@@ -19,5 +19,4 @@
 　avs2pipe_gcc.exe(Chris Beswick、http://doobrymedia.com/avs2pipe-0.0.3.zip )
 　silence.exe(Tamas Kurucsai、http://sourceforge.net/projects/wavi-avi2wav/ )
 　x264.exe(x264 team、http://www.videolan.org/developers/x264.html )
-　neroAacEnc.exe(Nero AG、http://www.nero.com/jpn/downloads-nerodigital-nero-aac-codec.php )
-※neroAacEnc.exe以外はソースも上記URLから取得できます。
+　ffmpeg.exe(FFmpeg team、https://www.ffmpeg.org/ )

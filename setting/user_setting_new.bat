@@ -1,4 +1,4 @@
-set USER_VERSION=29
+set USER_VERSION=30
 
 rem ↓ここから下を適当に弄って自分好みの設定にしてくだしあ↓
 
@@ -33,9 +33,14 @@ set BITRATE_THRESHOLD=2000
 rem ニコニコ新仕様で2passエンコに切り替わるビットレートの閾値（kbps）
 rem この数値以下のビットレートでCRFエンコされたときに2passエンコに切り替わる
 rem Hは高解像度用，Mは中解像度，Lは低解像度用
-set BITRATE_NICO_NEW_THRESHOLD_H=2000
+rem set BITRATE_NICO_NEW_THRESHOLD_H=2000
+set BITRATE_NICO_NEW_THRESHOLD_H=3000
 set BITRATE_NICO_NEW_THRESHOLD_M=1000
 set BITRATE_NICO_NEW_THRESHOLD_L=600
+
+rem ニコニコ新仕様で1passエンコに切り替わるビットレートの閾値（kbps）
+rem この数値以下のビットレートでCRFエンコされたときに2passエンコに切り替わる
+set BITRATE_NICO_NEW_THRESHOLD=6000
 
 rem crfエンコのときの値
 rem 数値が小さいほど高画質だが下げすぎるといろいろ問題が出る
@@ -68,7 +73,8 @@ rem バージョン2.72からはWIDTHではなくHEIGHTを指定するように仕様が変更されました
 rem ==========================================================================
 set DEFAULT_WIDTH=
 set DEFAULT_HEIGHT=480
-set DEFAULT_HEIGHT_NEW_H=720
+rem set DEFAULT_HEIGHT_NEW_H=720
+set DEFAULT_HEIGHT_NEW_H=1080
 set DEFAULT_HEIGHT_NEW_M=540
 set DEFAULT_HEIGHT_NEW_L=360
 set DEFAULT_HEIGHT_TWITTER=1080
@@ -89,9 +95,9 @@ rem 元の動画と同じのままなら空欄のままにしておく
 set DEFAULT_FPS=
 set TWITTER_FPS=30
 
-rem AACエンコーダの選択（NeroAacEncかQuickTimeか）
-rem neroかqt（QuickTimeがインストールされてる必要があります）かを選択
-set AAC_ENCODER=nero
+rem AACエンコーダの選択（ffmpegかQuickTimeか）
+rem ffmpegかqt（QuickTimeがインストールされてる必要があります）かを選択
+set AAC_ENCODER=ffmpeg
 
 rem AACエンコードのプロファイル選択(hev2はAAC_ENCODER=neroの時のみ有効)
 rem auto、lc、he、hev2から選択(デフォルトのautoを推奨)
@@ -106,7 +112,7 @@ set SAMPLERATE_LIST3=96000
 rem 再エンコ系サイト向けの音声ビットレート
 rem これは弄らないことを勧めます
 set A_BITRATE_YOUTUBE=320
-set A_BITRATE_NICO_NEW=256
+set A_BITRATE_NICO_NEW=192
 set A_BITRATE_TWITTER=256
 
 rem デコーダの選択
@@ -138,7 +144,7 @@ rem 初期設定は「DEFAULT_SIZE_PREMIUM=98.5」、「DEFAULT_SIZE_NOMAL=39」「DEFAULT_
 rem 容量オーバーするときは「DEFAULT_SIZE_PREMIUM=98」、「DEFAULT_SIZE_NOMAL=38」などにしてみる
 set DEFAULT_SIZE_PREMIUM=98.5
 set DEFAULT_SIZE_NORMAL=39
-set DEFAULT_SIZE_PREMIUM_NEW=1495
+set DEFAULT_SIZE_PREMIUM_NEW=2995
 rem YouTube用の設定
 rem 上限は20480MB（YouTubeパートナー）か2024MB（YouTube一般）
 set DEFAULT_SIZE_YOUTUBE_PARTNER=20000
@@ -151,7 +157,7 @@ rem ファイル容量（最終チェック用）
 rem これは弄らないことを勧めます
 set MP4_FILESIZE_NICO_PREMIUM=104857600
 set MP4_FILESIZE_NICO_NORMAL=41943040
-set MP4_FILESIZE_NICO_NEW=1610612736
+set MP4_FILESIZE_NICO_NEW=3221225472
 set MP4_FILESIZE_TWITTER=536870912
 
 rem 動画の長さに関する設定（単位はすべて秒）
@@ -160,13 +166,16 @@ rem NICO_NEW_DURATION_Hはニコニコ新仕様の高解像度閾値（初期値959）
 rem NICO_NEW_DURATION_Mはニコニコ新仕様の中解像度閾値（初期値1859）
 rem TWITTER_DURATIONはTwitterのアップロード閾値（初期値140）
 set YOUTUBE_DURATION=900
-set NICO_NEW_DURATION_H=959
-set NICO_NEW_DURATION_M=1859
-set TWITTER_DURATION=140
+set NICO_NEW_DURATION_H=1859
+set NICO_NEW_DURATION_M=3659
 
 rem 旧仕様のニコニコ向けエンコード
 rem 実験目的のみ（trueで有効化）
 set OLD_NICO_FEATURE=false
+
+rem ZenzaWatch対応
+rem 旧APIを使う非公式プレイヤー向けの機能（trueで有効化）
+set ZENZA=false
 
 rem パス数の設定（画像＆音声の同時D&Dのときはこの設定は無効です）
 rem 強制的に1passや2passや3passにしたいときはここを弄る

@@ -78,13 +78,6 @@ call :crf_encode
 if /i "%UP_SITE%"=="y" goto :eof
 .\MediaInfo.exe --Inform=General;%%FileSize%% --LogFile=%TEMP_INFO% %TEMP_264%>nul
 for /f "delims=" %%i in (%TEMP_INFO%) do set /a TEMP_264_BITRATE=%%i/(%TOTAL_TIME%/8)
-if %TOTAL_TIME_SEC% LEQ %NICO_NEW_DURATION_H% (
-    set /a BITRATE_NICO_NEW_THRESHOLD=%BITRATE_NICO_NEW_THRESHOLD_H%
-) else if %TOTAL_TIME_SEC% LEQ %NICO_NEW_DURATION_M% (
-    set /a BITRATE_NICO_NEW_THRESHOLD=%BITRATE_NICO_NEW_THRESHOLD_M%
-) else (
-    set /a BITRATE_NICO_NEW_THRESHOLD=%BITRATE_NICO_NEW_THRESHOLD_L%
-)
 if "%UP_SITE%"=="N" (
    if %TEMP_264_BITRATE% LSS %BITRATE_NICO_NEW_THRESHOLD% (
        set /a X264_KEYINT=%KEYINT%/10

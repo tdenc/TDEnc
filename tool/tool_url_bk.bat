@@ -47,9 +47,10 @@ set WVI_URL="https://raw.githubusercontent.com/tdenc/TDEnc/master/Archives/wavi1
 set WVI_PATH="..\Archives\wavi106.zip"
 set WVI_SIZE=24271
 
-set NERO_URL="http://ftp6.nero.com/tools/NeroAACCodec-1.5.1.zip"
-set NERO_PATH="..\Archives\NeroAACCodec-1.5.1.zip"
-set NERO_SIZE=2050564
+set FFMPEG_VERSION=3.4.2
+set FFMPEG_URL="https://ffmpeg.zeranoe.com/builds/win32/static/ffmpeg-%FFMPEG_VERSION%-win32-static.zip"
+set FFMPEG_PATH="..\Archives\ffmpeg-%FFMPEG_VERSION%-win32-static.zip"
+set FFMPEG_SIZE=45708063
 
 set X264_VERSION=2721
 set X264_URL="https://raw.githubusercontent.com/tdenc/TDEnc/master/Archives/x264.exe"
