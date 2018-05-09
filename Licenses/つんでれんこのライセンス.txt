@@ -20,3 +20,4 @@
 　silence.exe(Tamas Kurucsai、http://sourceforge.net/projects/wavi-avi2wav/ )
 　x264.exe(x264 team、http://www.videolan.org/developers/x264.html )
 　ffmpeg.exe(FFmpeg team、https://www.ffmpeg.org/ )
+  ffmpeg patch(Reino17、https://github.com/Reino17/ffmpeg-windows-build-helpers )
