@@ -2,7 +2,7 @@
 title %INSTALLER_TITLE%
 
 echo %HORIZON%
-echo ÔøΩ@%TDENC_NAME%  installer
+echo Å@%TDENC_NAME%  installer
 echo %HORIZON%
 echo;
 
@@ -24,7 +24,7 @@ echo;
 .\7z.exe e -bd -y %FSS_PATH% "*\x86\ffms2.dll" "*\x86\ffmsindex.exe"
 .\7z.exe e -bd -y %RG1_PATH% "RemoveGrain.dll" "Repair.dll"
 .\7z.exe e -bd -y %QTS_PATH% "QTSource.dll"
-.\7z.exe e -bd -y %MIF_PATH% "MediaInfo.exe" "MediaInfo.dll"
+.\7z.exe e -bd -y %MIF_PATH% "MediaInfo.exe"
 .\7z.exe e -bd -y %YDF_PATH% "yadif.dll"
 .\7z.exe e -bd -y %A2P_PATH% "avs2pipe_gcc.exe"
 .\7z.exe e -bd -y %WVI_PATH% "silence.exe"

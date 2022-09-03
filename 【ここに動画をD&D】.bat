@@ -13,7 +13,7 @@ date /t>nul
 if "%ERRORLEVEL%"=="22" (
     copy /y curl-ca-bundle.bk.crt curl-ca-bundle.crt 1>nul 2>&1
 )
-.\curl.exe --connect-timeout 5 -f -o tool_url.bat -L "https://raw.githubusercontent.com/tdenc/TDEnc/master/tool/tool_url.bat" 2>nul
+.\curl.exe --connect-timeout 5 -f -o tool_url.bat -L "https://raw.githubusercontent.com/tdenc/TDEnc/devel/tool/tool_url.bat" 2>nul
 if "%ERRORLEVEL%"=="22" (
     set URL_PATH=".\tool_url_bk.bat"
 ) else (
