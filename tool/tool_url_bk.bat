@@ -5,7 +5,7 @@ call "version.bat"
 set VER_URL="https://raw.githubusercontent.com/tdenc/TDEnc/master/tool/current_version"
 set VER_PATH=".\latest_version"
 
-set UPD_URL="https://github.com/tdenc/TDEnc/archive/master.zip"
+set UPD_URL="https://codeload.github.com/tdenc/TDEnc/zip/refs/heads/master"
 set UPD_PATH="..\Archives\update.zip"
 
 set LOG_URL="https://raw.githubusercontent.com/tdenc/TDEnc/master/tool/ChangeLog"
