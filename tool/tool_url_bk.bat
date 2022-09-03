@@ -19,7 +19,7 @@ set DIL_URL="https://raw.githubusercontent.com/tdenc/TDEnc/master/Archives/DevIL
 set DIL_PATH="..\Archives\DevIL-EndUser-x86-1.7.8.zip"
 set DIL_SIZE=676737
 
-set FSS_URL="https://github.com/FFMS/ffms2/releases/download/2.21/ffms2-2.40-msvc.7z"
+set FSS_URL="https://github.com/FFMS/ffms2/releases/download/2.40/ffms2-2.40-msvc.7z"
 set FSS_PATH="..\Archives\ffms2-2.40-msvc.7z"
 set FSS_SIZE=8786299
 
