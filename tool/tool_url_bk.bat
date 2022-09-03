@@ -48,7 +48,7 @@ set WVI_PATH="..\Archives\wavi106.zip"
 set WVI_SIZE=24271
 
 set FFMPEG_VERSION=n5.1
-set FFMPEG_URL="https://raw.githubusercontent.com/tdenc/TDEnc/devel/Archives/ffmpeg-%FFMPEG_VERSION%-win32"
+set FFMPEG_URL="https://raw.githubusercontent.com/tdenc/TDEnc/devel/Archives/ffmpeg-%FFMPEG_VERSION%-win32.zip"
 set FFMPEG_PATH="..\Archives\ffmpeg-%FFMPEG_VERSION%-win32.zip"
 set FFMPEG_SIZE=26750067
 
