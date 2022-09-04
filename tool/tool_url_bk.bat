@@ -52,6 +52,6 @@ set FFMPEG_URL="https://raw.githubusercontent.com/tdenc/TDEnc/devel/Archives/ffm
 set FFMPEG_PATH="..\Archives\ffmpeg-%FFMPEG_VERSION%-win32.zip"
 set FFMPEG_SIZE=26750067
 
-set X264_VERSION=3096
+set X264_VERSION=3020
 set X264_URL="https://raw.githubusercontent.com/tdenc/TDEnc/devel/Archives/x264.exe"
 set X264_PATH="..\Archives\x264.exe"
