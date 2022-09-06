@@ -18,5 +18,5 @@
 　avs2pipe_gcc.exe( http://doobrymedia.com/avs2pipe-0.0.3.zip )
 　silence.exe( http://sourceforge.net/projects/wavi-avi2wav/ )
 　ffmpeg.exe( https://www.ffmpeg.org/ )
-　iconv.exe( https://www.ffmpeg.org/ )
+　iconv.exe( https://www.gnu.org/software/libiconv/ )
 　x264.exe( http://www.videolan.org/developers/x264.html )
