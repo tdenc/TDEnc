@@ -1,23 +1,22 @@
 つんでれんこに関しては、再配布、同梱等含めご自由にどうぞ(特に制限することはありません)。
-ただし、同梱している7zip、MP4Box、JWPlayer、qtaacenc、DevIL、curlについては各ライセンス(同梱してあります)に従ってください。
-　7z.exe、7z.dll(Igor Pavlov、http://sevenzip.sourceforge.jp/ )
-　MP4Box.exe(Jean Le Feuver & ENST、http://kurtnoise.free.fr/ )
-　MP4Box patch(VFR maniac、http://www.esnips.com/web/VFRmaniac-Softwares )
-　player-viral.swf、swfobject.js（LongTail Video、http://www.longtailvideo.com/players/jw-flv-player/ ）
-　qtaacenc.exe（tmkk、http://tmkk.pv.land.to/qtaacenc/ ）
-　curl.exe(Daniel Stenberg、http://curl.haxx.se/ )
-
+ただし、同梱している7zip、MP4Box、qtaacenc、curlについては各ライセンス(同梱してあります)に従ってください。
+　7z.exe、7z.dll( http://sevenzip.sourceforge.jp/ )
+　MP4Box.exe( http://kurtnoise.free.fr/ )
+　MP4Box patch( http://www.esnips.com/web/VFRmaniac-Softwares )
+　qtaacenc.exe（ http://tmkk.pv.land.to/qtaacenc/ ）
+　curl.exe( http://curl.haxx.se/ )
 
 また、以下のソフトに関しても各々のライセンスに従ってください。
-　Avisynth.dll(AviSynth developers、http://sourceforge.net/projects/avisynth2/ )
-　DirectShowSource.dll（AviSynth developers、http://sourceforge.net/projects/avisynth2/ ）
-　DevIL.dll（Denton Woods & Nicolas Weber & Meloni Dario、http://openil.sourceforge.net/ ）
-　FFMS2.dll(Myrsloik、http://code.google.com/p/ffmpegsource/ )
-　QTSource.dll(Josh Harris、http://www.tateu.net/software/ )
-　MediaInfo.dll、MediaInfo.exe(MediaArea.net SARL.、http://mediainfo.sourceforge.net/ )
-　yadif.dll(Fizick、http://avisynth.org.ru/yadif/yadif.html )
-　avs2pipe_gcc.exe(Chris Beswick、http://doobrymedia.com/avs2pipe-0.0.3.zip )
-　silence.exe(Tamas Kurucsai、http://sourceforge.net/projects/wavi-avi2wav/ )
-　x264.exe(x264 team、http://www.videolan.org/developers/x264.html )
-　ffmpeg.exe(FFmpeg team、https://www.ffmpeg.org/ )
-  ffmpeg patch(Reino17、https://github.com/Reino17/ffmpeg-windows-build-helpers )
+　Avisynth.dll( http://sourceforge.net/projects/avisynth2/ )
+　DirectShowSource.dll（ http://sourceforge.net/projects/avisynth2/ ）
+　DevIL.dll（ http://openil.sourceforge.net/ ）
+　ffms2.dll、ffmsindex.exe( http://code.google.com/p/ffmpegsource/ )
+　RemoveGrain.dll、Repair.dll( http://web.archive.org/web/20120817121654/http://home.pages.at/kassandro/RemoveGrain/ )
+　QTSource.dll( http://www.tateu.net/software/ )
+　MediaInfo.dll、MediaInfo.exe( http://mediainfo.sourceforge.net/ )
+　yadif.dll( http://avisynth.org.ru/yadif/yadif.html )
+　avs2pipe_gcc.exe( http://doobrymedia.com/avs2pipe-0.0.3.zip )
+　silence.exe( http://sourceforge.net/projects/wavi-avi2wav/ )
+　ffmpeg.exe( https://www.ffmpeg.org/ )
+　iconv.exe( https://www.ffmpeg.org/ )
+　x264.exe( http://www.videolan.org/developers/x264.html )
