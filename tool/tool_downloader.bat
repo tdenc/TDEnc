@@ -19,9 +19,10 @@ set YDF=f
 set A2P=f
 set WVI=f
 set FFMPEG=f
+set ICV=f
 set X264=f
 call :file_check_sub
-echo %AVS%%DIL%%FSS%%RG1%%QTS%%MIF%%YDF%%A2P%%WVI%%FFMPEG%%X264% | findstr "f">nul
+echo %AVS%%DIL%%FSS%%RG1%%QTS%%MIF%%YDF%%A2P%%WVI%%FFMPEG%%ICV%%X264% | findstr "f">nul
 if "%ERRORLEVEL%"=="1" exit
 
 rem ################モード選択################
@@ -91,16 +92,22 @@ if "%WVI%"=="f" (
     .\curl.exe --connect-timeout 5 -f -o %WVI_PATH% -L %WVI_URL%
     echo;
 )
-if "%X264%"=="f" (
-    echo ^>^>x264
-    .\curl.exe --connect-timeout 5 -f -o %X264_PATH% -L %X264_URL%
-    echo;
-)
 if "%FFMPEG%"=="f" (
     echo ^>^>FFmpeg
     .\curl.exe --connect-timeout 5 -f -o %FFMPEG_PATH% -L %FFMPEG_URL%
     echo;
 )
+if "%ICV%"=="f" (
+    echo ^>^>Iconv
+    .\curl.exe --connect-timeout 5 -f -o %ICV_PATH% -L %ICV_URL%
+    echo;
+)
+if "%X264%"=="f" (
+    echo ^>^>x264
+    .\curl.exe --connect-timeout 5 -f -o %X264_PATH% -L %X264_URL%
+    echo;
+)
+
 goto check
 
 
@@ -118,6 +125,7 @@ if "%YDF%"=="f" echo yadif→%YDF_URL%
 if "%A2P%"=="f" echo avs2pipe→%A2P_URL%
 if "%WVI%"=="f" echo wavi→%WVI_URL%
 if "%FFMPEG%"=="f" echo FFmpeg→%FFMPEG_URL%
+if "%ICV%"=="f" echo Iconv→%ICV_URL%
 if "%X264%"=="f" echo x264→%X264_URL%
 echo;
 
@@ -131,7 +139,7 @@ rem ################落とせたかどうかをチェック################
 :check
 call :file_check_sub
 date /t>nul
-echo %AVS%%DIL%%FSS%%RG1%%QTS%%MIF%%YDF%%A2P%%WVI%%FFMPEG%%X264% | findstr "f">nul
+echo %AVS%%DIL%%FSS%%RG1%%QTS%%MIF%%YDF%%A2P%%WVI%%FFMPEG%%ICV%%X264% | findstr "f">nul
 if "%ERRORLEVEL%"=="0" goto dl_fail
 
 
@@ -161,6 +169,7 @@ if "%YDF%"=="f" echo yadif
 if "%A2P%"=="f" echo avs2pipe
 if "%WVI%"=="f" echo wavi
 if "%FFMPEG%"=="f" echo FFmpeg
+if "%ICV%"=="f" echo Iconv
 if "%X264%"=="f" echo x264
 echo;
 echo;
@@ -184,6 +193,7 @@ for %%i in (%YDF_PATH%) do if %%~zi EQU %YDF_SIZE% set YDF=t
 for %%i in (%A2P_PATH%) do if %%~zi EQU %A2P_SIZE% set A2P=t
 for %%i in (%WVI_PATH%) do if %%~zi EQU %WVI_SIZE% set WVI=t
 for %%i in (%FFMPEG_PATH%) do if %%~zi EQU %FFMPEG_SIZE% set FFMPEG=t
+for %%i in (%ICV_PATH%) do if %%~zi EQU %ICV_SIZE% set ICV=t
 if not exist %X264_PATH% exit /b
 %X264_PATH% --version>"%TEMP_DIR%\x264_version.txt" 2>nul
 date /t>nul

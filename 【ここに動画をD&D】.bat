@@ -44,6 +44,7 @@ set TEMP_INFO=%TEMP_DIR%\temp.txt
 set PROCESS_S_FILE=%TEMP_DIR%\proccess.txt
 set PROCESS_E_FILE=%TEMP_DIR%\end.txt
 set VIDEO_AVS=%TEMP_DIR%\video.avs
+set VIDEO_AVS_UTF8=%TEMP_DIR%\video_utf8.avs
 set AUDIO_AVS=%TEMP_DIR%\audio.avs
 set TEMP_264=%TEMP_DIR%\video.264
 set TEMP_WAV=%TEMP_DIR%\audio.wav

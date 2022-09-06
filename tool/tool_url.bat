@@ -52,6 +52,10 @@ set FFMPEG_URL="https://raw.githubusercontent.com/tdenc/TDEnc/devel/Archives/ffm
 set FFMPEG_PATH="..\Archives\ffmpeg-%FFMPEG_VERSION%-win32.zip"
 set FFMPEG_SIZE=26750067
 
-set X264_VERSION=3020
+set ICV_URL="https://github.com/mlocati/gettext-iconv-windows/releases/download/v0.21-v1.16/gettext0.21-iconv1.16-static-32.zip"
+set ICV_PATH="..\Archives\gettext0.21-iconv1.16-static-32.zip"
+set ICV_SIZE=20794672
+
+set X264_VERSION=3096
 set X264_URL="https://raw.githubusercontent.com/tdenc/TDEnc/devel/Archives/x264.exe"
 set X264_PATH="..\Archives\x264.exe"

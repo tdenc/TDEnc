@@ -29,6 +29,7 @@ echo;
 .\7z.exe e -bd -y %A2P_PATH% "avs2pipe_gcc.exe"
 .\7z.exe e -bd -y %WVI_PATH% "silence.exe"
 .\7z.exe e -bd -y %FFMPEG_PATH% "ffmpeg-%FFMPEG_VERSION%-win32\bin\ffmpeg.exe"
+.\7z.exe e -bd -y %ICV_PATH% "bin\iconv.exe"
 echo;
 copy /y %X264_PATH% ".\x264.exe"
 
