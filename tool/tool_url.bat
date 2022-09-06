@@ -56,6 +56,6 @@ set ICV_URL="https://github.com/mlocati/gettext-iconv-windows/releases/download/
 set ICV_PATH="..\Archives\gettext0.21-iconv1.16-static-32.zip"
 set ICV_SIZE=20794672
 
-set X264_VERSION=3096
+set X264_VERSION=3098
 set X264_URL="https://raw.githubusercontent.com/tdenc/TDEnc/devel/Archives/x264.exe"
 set X264_PATH="..\Archives\x264.exe"
