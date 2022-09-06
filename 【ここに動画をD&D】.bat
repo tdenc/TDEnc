@@ -271,14 +271,14 @@ rem ################ŠÖ”‚Á‚Û‚¢‚à‚Ì################
 if not exist DevIL.dll start /wait call initialize.bat
 if not exist ffms2.dll start /wait call initialize.bat
 if not exist ffmsindex.exe start /wait call initialize.bat
-rem for %%i in (ffms2.dll) do if %%~zi NEQ 8989696 start /wait call initialize.bat
+for %%i in (ffms2.dll) do if %%~zi NEQ 13077504 start /wait call initialize.bat
 if not exist QTSource.dll start /wait call initialize.bat
 if not exist MediaInfo.exe start /wait call initialize.bat
-rem if not exist MediaInfo.dll start /wait call initialize.bat
 if not exist yadif.dll start /wait call initialize.bat
 if not exist avs2pipe_gcc.exe start /wait call initialize.bat
 if not exist silence.exe start /wait call initialize.bat
 if not exist ffmpeg.exe start /wait call initialize.bat
+if not exist iconv.exe start /wait call initialize.bat
 if not exist x264.exe start /wait call initialize.bat
 .\x264.exe --version>"%TEMP_DIR%\x264_version.txt" 2>nul
 date /t>nul
