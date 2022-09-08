@@ -192,12 +192,6 @@ rem エンコード後にプレイヤーを開くかどうか（開く場合はy、開かない場合はn）
 rem デフォルトのyをお勧めします
 set MOVIE_CHECK=y
 
-rem プレイヤーの種類（html5かflash）
-rem デフォルトはhtml5
-rem インストールされているFlash PlayerのバージョンによってFlash Playerで再生ができなくなるので
-rem html5での再生をおすすめします（ニコニコもそのうちhtml5になるとのことです）
-set MOVIE_PLAYER=html5
-
 rem ファイルの出力先の指定（デフォルト推奨）
 rem 指定したフォルダに同名のmp4がある場合は以前のファイルをold.mp4に変えてしまいます
 rem またパス、ファイル名に日本語がある場合は不具合が起きる場合があります
