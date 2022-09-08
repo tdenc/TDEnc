@@ -17,7 +17,7 @@ if "%ERRORLEVEL%"=="22" (
 .\7z.exe x -bd -y %UPD_PATH% -o"..\Archives\"
 
 echo;
-move ..\Archives\TDEnc-devel ..\Archives\update
+move ..\Archives\TDEnc-master ..\Archives\update
 move /y ..\Archives\update\setting\user_setting.bat ..\Archives\update\setting\user_setting_new.bat
 copy /y ..\setting\user_message.bat ..\setting\user_message_old.bat 1>nul 2>&1
 
