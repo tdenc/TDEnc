@@ -42,7 +42,6 @@ echo ^>^>%UPDATE_QUESTION2%
 echo ^>^>%UPDATE_QUESTION3%
 set /p VERSION_UP=^>^>
 if /i "%VERSION_UP%"=="y" (
-    echo %L_VERSION%> current_version
     call ".\update.bat"
     goto :eof
 )
